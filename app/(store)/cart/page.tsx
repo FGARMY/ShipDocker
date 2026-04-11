@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Tag, ArrowLeft } from "lucide-react";
+import { TrustBarCompact } from "@/components/storefront/TrustBar";
 import { useCartStore, type CartItem } from "@/lib/store/cart";
 import { formatCurrency } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
@@ -156,6 +157,8 @@ export default function CartPage() {
             <p className="text-xs text-muted-foreground text-center mt-3">
               Taxes calculated at checkout
             </p>
+
+            <TrustBarCompact />
           </div>
         </div>
       </div>

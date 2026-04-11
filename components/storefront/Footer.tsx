@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Package, Mail, Instagram, Twitter, Facebook } from "lucide-react";
+import { Package, Mail, Instagram, Twitter, Facebook, Check, Loader2 } from "lucide-react";
 
 const FOOTER_LINKS = {
   Shop: [
@@ -24,6 +25,72 @@ const FOOTER_LINKS = {
   ],
 };
 
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const isValidEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) { setErrorMsg("Please enter your email"); return; }
+    if (!isValidEmail(email)) { setErrorMsg("Please enter a valid email"); return; }
+
+    setStatus("loading");
+    setErrorMsg("");
+
+    // Simulate API call — replace with actual newsletter endpoint
+    await new Promise((r) => setTimeout(r, 800));
+    setStatus("success");
+    setEmail("");
+  };
+
+  if (status === "success") {
+    return (
+      <div className="flex items-center gap-3 px-4 py-3 bg-green-500/10 border border-green-500/20 rounded-xl">
+        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+          <Check size={16} className="text-white" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-green-600 dark:text-green-400">You&apos;re in! 🎉</p>
+          <p className="text-xs text-muted-foreground">Check your inbox for your 10% off code.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="w-full md:w-auto">
+      <div className="flex gap-2">
+        <div className="relative flex-1 md:w-72">
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => { setEmail(e.target.value); setErrorMsg(""); }}
+            placeholder="Enter your email"
+            className="w-full pl-10 pr-4 py-2.5 text-sm bg-background border border-border rounded-lg outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            aria-label="Email for newsletter"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap disabled:opacity-60 flex items-center gap-2"
+        >
+          {status === "loading" ? (
+            <><Loader2 size={14} className="animate-spin" /> Subscribing...</>
+          ) : (
+            "Get 10% Off"
+          )}
+        </button>
+      </div>
+      {errorMsg && <p className="text-xs text-red-500 mt-1.5 ml-1">{errorMsg}</p>}
+    </form>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="bg-card border-t border-border mt-auto">
@@ -32,24 +99,12 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-lg font-bold">Stay in the loop</h3>
+              <h3 className="text-lg font-bold">Get 10% Off Your First Order</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Get the latest drops, exclusive deals and 10% off your first order.
+                Join 8,000+ Indian shoppers. Get exclusive deals, new drops & your discount code instantly.
               </p>
             </div>
-            <form className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
-              <div className="relative flex-1 md:w-72">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full pl-10 pr-4 py-2.5 text-sm bg-background border border-border rounded-lg outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                />
-              </div>
-              <button className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap">
-                Subscribe
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
       </div>
@@ -66,7 +121,7 @@ export function Footer() {
               <span className="text-lg font-bold">ShipDocker</span>
             </Link>
             <p className="text-sm text-muted-foreground mt-3 max-w-xs">
-              Premium products, unbeatable prices. Your one-stop shop for trending products delivered worldwide.
+              Premium products, unbeatable prices. Your one-stop shop for trending products delivered across India.
             </p>
             <div className="flex items-center gap-3 mt-4">
               {[Instagram, Twitter, Facebook].map((Icon, i) => (

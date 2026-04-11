@@ -3,8 +3,9 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingBag, Star, Eye } from "lucide-react";
+import { ShoppingBag, Star, Eye, Heart } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
+import { useWishlistStore } from "@/lib/store/wishlist";
 import { formatCurrency } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
 
@@ -20,6 +21,7 @@ interface ProductCardProps {
   rating?: number;
   variantId?: string;
   sku?: string;
+  priority?: boolean;
 }
 
 export function ProductCard({
@@ -34,8 +36,11 @@ export function ProductCard({
   rating,
   variantId,
   sku,
+  priority = false,
 }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
+  const wishlisted = isInWishlist(id);
   const discount = comparePrice ? Math.round(((comparePrice - price) / comparePrice) * 100) : 0;
 
   const handleQuickAdd = (e: React.MouseEvent) => {
@@ -56,6 +61,16 @@ export function ProductCard({
     }
   };
 
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (wishlisted) {
+      removeFromWishlist(id);
+    } else {
+      addToWishlist({ productId: id, title, slug, image, price, comparePrice });
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -72,6 +87,8 @@ export function ProductCard({
               alt={title}
               fill
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+              quality={75}
+              priority={priority}
               className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
@@ -86,6 +103,20 @@ export function ProductCard({
               -{discount}%
             </span>
           )}
+
+          {/* Wishlist heart */}
+          <button
+            onClick={handleWishlist}
+            className={cn(
+              "absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shadow-md z-10",
+              wishlisted
+                ? "bg-red-500 text-white scale-110"
+                : "bg-white/80 dark:bg-black/40 backdrop-blur-sm text-muted-foreground hover:bg-red-500 hover:text-white"
+            )}
+            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            <Heart size={14} className={wishlisted ? "fill-current" : ""} />
+          </button>
 
           {/* Out of stock */}
           {stock <= 0 && (

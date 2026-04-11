@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -13,8 +14,12 @@ import {
   TrendingUp,
   Package,
   Sparkles,
+  Clock,
+  Copy,
+  Check,
 } from "lucide-react";
 import { ProductCard, ProductCardSkeleton } from "@/components/storefront/ProductCard";
+import { Testimonials } from "@/components/storefront/Testimonials";
 
 // ═══ Demo Data ═══
 const FEATURED_PRODUCTS = [
@@ -37,22 +42,84 @@ const COLLECTIONS = [
 
 const TRUST_BADGES = [
   { icon: Truck, title: "Free Shipping", desc: "On orders over ₹999" },
-  { icon: Shield, title: "Secure Payments", desc: "256-bit SSL encryption" },
-  { icon: RotateCcw, title: "Easy Returns", desc: "30-day return policy" },
-  { icon: Zap, title: "Fast Delivery", desc: "3–7 business days" },
+  { icon: Shield, title: "Secure Payments", desc: "UPI, Cards & COD accepted" },
+  { icon: RotateCcw, title: "Easy Returns", desc: "7-day no-questions-asked" },
+  { icon: Zap, title: "Fast Delivery", desc: "3–7 business days PAN India" },
 ];
 
 const stagger = {
   hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
 };
 const item = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+function CouponCopyButton() {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText("FIRST10");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <button
+      onClick={handleCopy}
+      className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-mono text-white transition-colors"
+    >
+      FIRST10
+      {copied ? <Check size={14} /> : <Copy size={14} />}
+    </button>
+  );
+}
+
+function CountdownTimer() {
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    // Set deadline to midnight tonight
+    const getDeadline = () => {
+      const now = new Date();
+      const deadline = new Date(now);
+      deadline.setHours(23, 59, 59, 999);
+      return deadline;
+    };
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const distance = getDeadline().getTime() - now;
+      if (distance <= 0) return;
+      setTimeLeft({
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+      });
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="inline-flex items-center gap-2 text-sm">
+      <Clock size={14} className="text-amber-400" />
+      <span className="text-muted-foreground">Ends in</span>
+      <div className="flex gap-1">
+        {[
+          { v: timeLeft.hours, l: "h" },
+          { v: timeLeft.minutes, l: "m" },
+          { v: timeLeft.seconds, l: "s" },
+        ].map((u) => (
+          <span key={u.l} className="px-1.5 py-0.5 bg-foreground/10 rounded font-mono text-xs font-bold">
+            {String(u.v).padStart(2, "0")}{u.l}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -75,21 +142,21 @@ export default function HomePage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 bg-red-500/10 border border-red-500/20 rounded-full text-sm font-medium text-red-500 mb-6"
             >
               <Sparkles size={14} />
-              New Collection Dropped
+              Flat 10% Off — Use FIRST10 · <CountdownTimer />
             </motion.div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
-              Discover Premium{" "}
-              <span className="gradient-text">Products</span>{" "}
-              at Unbeatable Prices
+              ₹399 se Shuru.{" "}
+              <span className="gradient-text">Premium Quality</span>{" "}
+              Guaranteed.
             </h1>
 
             <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-xl leading-relaxed">
-              Curated collection of trending products from global suppliers.
-              Free shipping, easy returns, and satisfaction guaranteed.
+              8,000+ Indians already shop with us. Free shipping over ₹999,
+              7-day easy returns, and UPI / COD accepted. Why pay more?
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
@@ -97,7 +164,7 @@ export default function HomePage() {
                 href="/products"
                 className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-0.5"
               >
-                Shop Now
+                Grab the Deal — 10% Off
                 <ArrowRight size={18} />
               </Link>
               <Link
@@ -105,18 +172,20 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 px-8 py-3.5 border border-border font-semibold rounded-xl hover:bg-accent transition-all"
               >
                 <TrendingUp size={18} />
-                Trending
+                See What&apos;s Trending
               </Link>
             </div>
 
             {/* Social proof */}
             <div className="mt-10 flex items-center gap-4">
               <div className="flex -space-x-2">
-                {[1, 2, 3, 4, 5].map((i) => (
+                {["PS", "RV", "AR", "VP", "SN"].map((initials, i) => (
                   <div
                     key={i}
-                    className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/50 to-purple-500/50 border-2 border-background"
-                  />
+                    className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/60 to-purple-500/60 border-2 border-background flex items-center justify-center"
+                  >
+                    <span className="text-[9px] font-bold text-white">{initials}</span>
+                  </div>
                 ))}
               </div>
               <div>
@@ -124,9 +193,10 @@ export default function HomePage() {
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={14} className="text-amber-400 fill-amber-400" />
                   ))}
+                  <span className="text-sm font-semibold ml-1">4.8</span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Trusted by <span className="font-semibold text-foreground">10,000+</span> happy customers
+                  from <span className="font-semibold text-foreground">2,400+</span> verified reviews
                 </p>
               </div>
             </div>
@@ -193,6 +263,7 @@ export default function HomePage() {
                   alt={col.title}
                   fill
                   sizes="(min-width: 1024px) 25vw, 50vw"
+                  quality={75}
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -232,9 +303,9 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
           >
-            {FEATURED_PRODUCTS.map((product) => (
+            {FEATURED_PRODUCTS.map((product, i) => (
               <motion.div key={product.id} variants={item}>
-                <ProductCard {...product} />
+                <ProductCard {...product} priority={i < 4} />
               </motion.div>
             ))}
           </motion.div>
@@ -251,6 +322,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ TESTIMONIALS (Problem 3) ═══ */}
+      <Testimonials />
+
       {/* ═══ PROMO BANNER ═══ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <motion.div
@@ -264,17 +338,20 @@ export default function HomePage() {
 
           <div className="relative max-w-xl">
             <h2 className="text-3xl sm:text-4xl font-bold text-white">
-              Get 10% Off Your First Order
+              First Time Here? Save ₹250+
             </h2>
             <p className="mt-3 text-white/80 text-lg">
-              Use code <span className="font-bold text-white">FIRST10</span> at checkout.
-              Valid on orders above ₹499. Limited time offer.
+              Use code <CouponCopyButton /> at checkout.
+              Valid on orders above ₹499. Today only.
             </p>
+            <div className="mt-4">
+              <CountdownTimer />
+            </div>
             <Link
               href="/products"
               className="mt-6 inline-flex items-center gap-2 px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-white/90 transition-all shadow-2xl"
             >
-              Shop Now
+              Claim My 10% Off
               <ArrowRight size={18} />
             </Link>
           </div>
@@ -286,9 +363,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {[
-              { value: "10K+", label: "Happy Customers" },
+              { value: "8,000+", label: "Happy Indian Customers" },
               { value: "500+", label: "Premium Products" },
-              { value: "50+", label: "Countries Served" },
+              { value: "2,400+", label: "Verified Reviews" },
               { value: "4.8★", label: "Average Rating" },
             ].map((stat, i) => (
               <motion.div
