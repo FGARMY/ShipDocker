@@ -1,4 +1,6 @@
 import { NextRequest } from "next/server";
+
+export const dynamic = "force-dynamic";
 import prisma from "@/lib/db";
 import { hashPassword, verifyPassword } from "@/lib/security/hash";
 import { signAccessToken, signRefreshToken } from "@/lib/security/jwt";
