@@ -234,16 +234,27 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Add to cart */}
-          <div className="flex gap-3 mt-8">
+          <div className="flex flex-col gap-4 mt-8">
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={handleAddToCart}
               disabled={selectedVariant.stock <= 0}
-              className="flex-1 flex items-center justify-center gap-2 py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:opacity-90 transition-all shadow-xl shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:opacity-90 transition-all shadow-xl shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ShoppingBag size={18} />
               Add to Cart — {formatCurrency(selectedVariant.sellPrice * quantity)}
             </motion.button>
+            
+            {/* Urgency/Promo Banner */}
+            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center text-white flex-shrink-0 animate-pulse">
+                <Zap size={20} fill="currentColor" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-amber-700 dark:text-amber-400 leading-tight">Bundle & Save 15%</p>
+                <p className="text-[10px] text-amber-600/80 dark:text-amber-500/60 uppercase font-black tracking-widest mt-0.5">Use code: BUNDLE15</p>
+              </div>
+            </div>
           </div>
 
           {/* Trust badges */}

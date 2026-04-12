@@ -1,53 +1,63 @@
-import { ShieldCheck, Truck, RotateCcw, Lock } from "lucide-react";
+"use client";
+
+import { Truck, RotateCcw, Zap } from "lucide-react";
 
 export function TrustBar() {
   return (
-    <div className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-8">
+    // FILE: components/TrustBar.tsx
+    <div className="w-full border-t border-border bg-card/50 backdrop-blur-sm py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
-          {/* Main Trust Signal */}
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-              <ShieldCheck size={24} />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 items-center">
+          
+          {/* Item 1: Free Shipping */}
+          <div className="flex flex-col items-center text-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <Truck size={20} />
             </div>
-            <div>
-              <p className="font-bold text-sm">100% Secure Checkout</p>
-              <p className="text-xs text-muted-foreground">Certified SSL security and encrypted data</p>
-            </div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Free Shipping</span>
           </div>
 
-          {/* Payment Badges */}
-          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+          {/* Item 2: Secure Payments (Icons) */}
+          <div className="flex flex-col items-center gap-3">
             <div className="flex items-center gap-2">
-              <span className="font-black text-xl italic tracking-tighter text-[#1a1f71]">VISA</span>
+              {/* UPI */}
+              <svg width="32" height="14" viewBox="0 0 80 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="0" y="26" fontSize="28" fontWeight="700" fill="#6B3FA0">UPI</text>
+              </svg>
+              {/* Visa */}
+              <svg width="38" height="14" viewBox="0 0 750 471" xmlns="http://www.w3.org/2000/svg">
+                <rect width="750" height="471" rx="40" fill="#1A1F71"/>
+                <text x="375" y="320" textAnchor="middle" fontSize="280" fontWeight="700" fill="white" fontStyle="italic">VISA</text>
+              </svg>
+              {/* Mastercard */}
+              <svg width="28" height="18" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="14" cy="12" r="12" fill="#EB001B"/>
+                <circle cx="24" cy="12" r="12" fill="#F79E1B" opacity="0.9"/>
+              </svg>
+              {/* Razorpay */}
+              <svg width="14" height="18" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="0,30 10,0 24,0 14,30" fill="#3395FF"/>
+              </svg>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="font-black text-xl italic tracking-tighter text-[#eb001b]">Mastercard</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-16 h-4 bg-[#707070] rounded-sm opacity-20 relative">
-                 <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white font-bold">UPI</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-               <span className="font-bold text-lg text-[#001d3d] flex items-center gap-1">
-                 <Lock size={14} className="text-green-500" />
-                 RAZORPAY
-               </span>
-            </div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Secure Payments</span>
           </div>
 
-          {/* Benefits */}
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Truck size={16} className="text-muted-foreground" />
-              <span className="text-xs font-medium">Fast Pan-India Delivery</span>
+          {/* Item 3: Easy Returns */}
+          <div className="flex flex-col items-center text-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <RotateCcw size={20} />
             </div>
-            <div className="flex items-center gap-2">
-              <RotateCcw size={16} className="text-muted-foreground" />
-              <span className="text-xs font-medium">Easy 7-Day Returns</span>
-            </div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Easy Returns</span>
           </div>
+
+          {/* Item 4: Fast Delivery */}
+          <div className="flex flex-col items-center text-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <Zap size={20} />
+            </div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Fast Delivery</span>
+          </div>
+
         </div>
       </div>
     </div>

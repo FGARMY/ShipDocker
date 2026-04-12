@@ -45,19 +45,33 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="w-20 h-20 mx-auto rounded-2xl bg-accent flex items-center justify-center mb-6">
-            <ShoppingBag size={32} className="text-muted-foreground" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center"
+        >
+          <div className="relative w-64 h-64 mb-8">
+            <Image 
+              src="https://images.unsplash.com/photo-1586769852044-692d6e3703f0?w=600" 
+              alt="Empty Cart" 
+              fill
+              className="object-contain opacity-20 grayscale"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <ShoppingBag size={80} className="text-muted-foreground/20" />
+            </div>
           </div>
-          <h1 className="text-2xl font-bold">Your cart is empty</h1>
-          <p className="text-muted-foreground mt-2 mb-8">Looks like you haven&apos;t added anything yet.</p>
+          <h1 className="text-3xl font-bold tracking-tight">Your cart is feeling lonely</h1>
+          <p className="text-muted-foreground mt-3 mb-10 max-w-sm mx-auto">
+            Discover our latest arrivals and fill it with things you&apos;ll love. Free shipping on your first order.
+          </p>
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all shadow-xl shadow-primary/25"
+            className="inline-flex items-center gap-2 px-10 py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:opacity-90 transition-all shadow-2xl shadow-primary/25"
           >
-            Start Shopping
-            <ArrowRight size={18} />
+            Explore Trending Items
+            <ArrowRight size={20} />
           </Link>
         </motion.div>
       </div>

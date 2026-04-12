@@ -36,8 +36,10 @@ export function Navbar() {
   return (
     <>
       {/* Announcement Bar */}
-      <div className="bg-primary text-primary-foreground text-xs sm:text-sm text-center py-1.5 px-4 font-medium">
-        🚀 Free shipping on orders over ₹999 — Use code <span className="font-bold">FIRST10</span> for 10% off
+      <div className="bg-gradient-to-r from-primary via-purple-600 to-blue-600 text-white text-[10px] sm:text-xs text-center py-2 px-4 font-bold tracking-widest uppercase">
+        <span className="opacity-90 inline-flex items-center gap-2">
+          ⚡ Limited Offer: Free pan-india shipping on orders above ₹999 — Code: <span className="text-white border-b border-white/50">FIRST10</span>
+        </span>
       </div>
 
       {/* Main Navbar */}

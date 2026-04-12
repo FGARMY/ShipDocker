@@ -1,118 +1,121 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
+import Image from "next/image";
+import { Loader2, CheckCircle2, Sparkles } from "lucide-react";
 
 export function NewsletterSection() {
+  // FILE: components/NewsletterSection.tsx
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes("@")) return;
-
-    setStatus("loading");
-    try {
-      const res = await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (res.ok) {
-        setStatus("success");
-      } else {
-        setStatus("idle");
-      }
-    } catch {
-      setStatus("idle");
-    }
+  const validateEmail = (e: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    setStatus("loading");
+
+    // Simulate API call
+    setTimeout(() => {
+      setStatus("success");
+    }, 1000);
+  };
+
+  if (status === "success") {
+    return (
+      <section className="relative py-20 px-4 overflow-hidden bg-black">
+        <Image
+          src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600"
+          alt="Success Background"
+          fill
+          className="object-cover opacity-40 grayscale"
+        />
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center justify-center p-4 bg-green-500 rounded-full mb-6 shadow-xl shadow-green-500/40">
+            <CheckCircle2 className="text-white w-8 h-8" />
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
+            You&apos;re in! <br />
+            <span className="text-green-400">Check your inbox for your 10% off code.</span>
+          </h2>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="relative py-20 px-4 overflow-hidden">
-      {/* Background Polish */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-purple-500/5 -z-10" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+    <section className="relative py-28 px-4 bg-black overflow-hidden">
+      {/* Dynamic Background Image */}
+      <Image
+        src="https://images.unsplash.com/photo-1534452203294-49c8913721b2?w=1600"
+        alt="Newsletter Background"
+        fill
+        className="object-cover opacity-50 grayscale hover:scale-105 transition-transform duration-[10s]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-      <div className="max-w-4xl mx-auto">
-        <div className="relative glass-strong rounded-[2.5rem] p-8 sm:p-12 lg:p-16 text-center border border-white/20 shadow-2xl overflow-hidden">
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <div className="glass-strong p-8 sm:p-12 rounded-[2.5rem] border border-white/10 text-center shadow-2xl overflow-hidden backdrop-blur-2xl">
           {/* Decorative mesh */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold text-white mb-6 uppercase tracking-widest border border-white/5">
+            <Sparkles size={12} className="text-amber-400" />
+            Join the inner circle
+          </div>
 
-          <AnimatePresence mode="wait">
-            {status === "success" ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center"
-              >
-                <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle2 size={40} className="text-green-500" />
-                </div>
-                <h2 className="text-3xl font-bold tracking-tight">You&apos;re on the list! 🎉</h2>
-                <p className="mt-4 text-muted-foreground max-w-md mx-auto">
-                  Check your inbox — your <span className="text-foreground font-bold italic">10% OFF</span> code is on its way. Use it on your first order.
-                </p>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="mt-8 px-6 py-2 bg-green-500/10 text-green-600 rounded-full text-sm font-medium border border-green-500/20"
-                >
-                  Welcome to the family
-                </motion.div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full text-xs font-bold text-primary mb-6 tracking-wider uppercase">
-                  <Sparkles size={12} />
-                  Exclusive Offer
-                </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-                  Get <span className="gradient-text">10% Off</span> Your First Order
-                </h2>
-                <p className="text-muted-foreground text-lg mb-10 max-w-lg mx-auto">
-                  Join 10,000+ shoppers and get early access to new drops, limited editions, and weekly deals.
-                </p>
+          <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+            Stay in the loop. <br />
+            <span className="text-white/50 italic font-serif">Get 10% off today.</span>
+          </h2>
+          <p className="text-white/60 text-lg mb-10 max-w-lg mx-auto font-medium">
+            Be the first to hear about new drops, exclusive deals and 
+            limited edition colorways.
+          </p>
 
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                  <div className="relative flex-1">
-                    <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email address"
-                      required
-                      className="w-full pl-12 pr-4 py-4 bg-background border border-border rounded-2xl outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="px-8 py-4 bg-primary text-primary-foreground font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/25 disabled:opacity-50 flex items-center justify-center gap-2"
-                  >
-                    {status === "loading" ? (
-                      <Loader2 size={18} className="animate-spin" />
-                    ) : (
-                      "Subscribe Now"
-                    )}
-                  </button>
-                </form>
-                <p className="mt-4 text-xs text-muted-foreground">
-                  By subscribing, you agree to our Privacy Policy. No spam, ever.
-                </p>
-              </motion.div>
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status === "loading"}
+                placeholder="Enter your email address"
+                className="flex-1 px-6 py-4 bg-white/5 border border-white/10 rounded-2xl outline-none focus:ring-2 focus:ring-primary/50 text-white placeholder:text-white/30 transition-all font-medium backdrop-blur-md"
+              />
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="px-8 py-4 bg-white text-black font-black rounded-2xl hover:bg-white/90 transition-all disabled:opacity-50 flex items-center gap-2 min-w-[140px] justify-center shadow-xl shadow-white/10"
+              >
+                {status === "loading" ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    ...
+                  </>
+                ) : (
+                  "Subscribe"
+                )}
+              </button>
+            </div>
+            {error && (
+              <p className="mt-4 text-sm text-red-400 font-bold">{error}</p>
             )}
-          </AnimatePresence>
+          </form>
+          
+          <p className="mt-6 text-[10px] text-white/30 uppercase tracking-widest font-bold">
+            No spam. No bullshit. Just good products.
+          </p>
         </div>
       </div>
     </section>

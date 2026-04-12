@@ -164,6 +164,27 @@ export default function HomePage() {
             <CategoryCard key={col.slug} {...col} />
           ))}
         </motion.div>
+      {/* ═══ PROMOTIONAL BANNER (User Provided) ═══ */}
+      <section className="px-4 sm:px-6 lg:px-8 py-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative h-[250px] sm:h-[400px] rounded-[2rem] overflow-hidden group shadow-2xl shadow-primary/10"
+        >
+          <Image
+            src="/home-banner.png"
+            alt="Flash Deals - SM Drop"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-1000"
+            priority
+          />
+          <Link 
+            href="/products" 
+            className="absolute inset-0 z-10"
+            aria-label="Shop now"
+          />
+        </motion.div>
       </section>
 
       {/* ═══ TRENDING PRODUCTS ═══ */}
@@ -247,9 +268,6 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* ═══ NEWSLETTER ═══ */}
-      <NewsletterSection />
-
       {/* ═══ STATS ═══ */}
       <section className="border-t border-border bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -274,6 +292,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ═══ NEWSLETTER ═══ */}
+      <NewsletterSection />
     </>
   );
 }

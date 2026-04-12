@@ -38,28 +38,51 @@ export const FEATURED_PRODUCTS: Product[] = [
     variantId: "v1", 
     sku: "WL-001", 
     badge: 'bestseller',
-    description: "Premium genuine leather bifold wallet with RFID protection. Crafted from full-grain Italian leather."
+    description: "Premium genuine leather bifold wallet with RFID protection. Crafted from full-grain Italian leather, this minimalist design fits comfortably in your pocket while holding all your essentials.",
+    shippingDays: 3,
+    variants: [
+      { id: "v1-black", title: "Black Leather", price: 599, stock: 100 },
+      { id: "v1-brown", title: "Cognac Brown", price: 649, stock: 50 },
+      { id: "v1-tan", title: "British Tan", price: 599, stock: 50 },
+    ]
   },
   { 
     id: "2", 
     title: "Smart Watch Ultra Fitness", 
     slug: "smart-watch-ultra-fitness", 
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
-    images: ["https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800"],
+    images: [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+      "https://images.unsplash.com/photo-1544117518-30df578096a4?w=800",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800",
+      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800",
+    ],
     price: 1799, 
     comparePrice: 2499, 
     stock: 150, 
     reviewCount: 89, 
     rating: 4.7, 
     variantId: "v2", 
-    sku: "WH-002" 
+    sku: "WH-002",
+    badge: 'new',
+    description: "The ultimate fitness companion. Track your heart rate, sleep, steps, and blood oxygen levels with precision. Features a high-resolution AMOLED display and 10-day battery life.",
+    shippingDays: 2,
+    variants: [
+      { id: "v2-silver", title: "Space Silver", price: 1799, stock: 80 },
+      { id: "v2-black", title: "Midnight Black", price: 1799, stock: 70 },
+    ]
   },
   { 
     id: "3", 
     title: "Wireless NC Headphones", 
     slug: "wireless-nc-headphones", 
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800", 
-    images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800"],
+    images: [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800",
+      "https://images.unsplash.com/photo-1491929007750-dce8ba77e610?w=800",
+      "https://images.unsplash.com/photo-1524670404268-382300e475c3?w=800",
+    ],
     price: 2499, 
     comparePrice: 3499, 
     stock: 80, 
@@ -67,28 +90,40 @@ export const FEATURED_PRODUCTS: Product[] = [
     rating: 4.8, 
     variantId: "v3", 
     sku: "HP-003", 
-    badge: 'bestseller' 
+    badge: 'bestseller',
+    description: "Immerse yourself in sound. Our Active Noise Cancelling technology blocks background noise so you can focus on your music. Features premium memory foam ear cushions and 40-hour playback.",
+    shippingDays: 4
   },
   { 
     id: "4", 
     title: "Urban Travel Backpack", 
     slug: "urban-travel-backpack", 
     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800", 
-    images: ["https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800"],
+    images: [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800",
+      "https://images.unsplash.com/photo-1544816153-12ad5d714b43?w=800",
+      "https://images.unsplash.com/photo-1546754020-f1c6db8ba4c9?w=800",
+    ],
     price: 1299, 
     comparePrice: 1699, 
     stock: 250, 
     reviewCount: 67, 
     rating: 4.3, 
     variantId: "v4", 
-    sku: "BG-004" 
+    sku: "BG-004",
+    description: "Designed for the modern traveller. This water-resistant backpack features a 16-inch laptop compartment, hidden anti-theft pockets, and an integrated USB charging port.",
+    shippingDays: 3
   },
   { 
     id: "5", 
     title: "Polarized Aviator Sunglasses", 
     slug: "polarized-aviator-sunglasses", 
     image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800", 
-    images: ["https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800"],
+    images: [
+      "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800",
+      "https://images.unsplash.com/photo-1511499767390-a8a19799ef60?w=800",
+      "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800",
+    ],
     price: 699, 
     comparePrice: 999, 
     stock: 300, 
@@ -96,14 +131,20 @@ export const FEATURED_PRODUCTS: Product[] = [
     rating: 4.6, 
     variantId: "v5", 
     sku: "SG-005", 
-    badge: 'new' 
+    badge: 'new',
+    description: "Classic style meets modern protection. Our polarized lenses eliminate glare and block 100% of harmful UV rays. Features lightweight titanium frames for all-day comfort.",
+    shippingDays: 3
   },
   { 
     id: "6", 
     title: "Portable Bluetooth Speaker", 
     slug: "portable-bluetooth-speaker", 
     image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800", 
-    images: ["https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800"],
+    images: [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1558239443-183653187ad0?w=800",
+      "https://images.unsplash.com/photo-1589003077984-894e133dabab?w=800",
+    ],
     price: 1199, 
     comparePrice: 1599, 
     stock: 120, 
@@ -111,14 +152,19 @@ export const FEATURED_PRODUCTS: Product[] = [
     rating: 4.4, 
     variantId: "v6", 
     sku: "SP-006", 
-    badge: 'new' 
+    badge: 'new',
+    description: "Big sound in a small package. This IPX7 waterproof speaker delivers deep bass and crystal clear highs. Perfect for the beach, the pool, or your living room.",
+    shippingDays: 2
   },
   { 
     id: "7", 
     title: "Magnetic Phone Mount", 
     slug: "magnetic-phone-mount", 
     image: "https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=800", 
-    images: ["https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=800"],
+    images: [
+      "https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=800",
+      "https://images.unsplash.com/photo-1614713781297-c250875955ba?w=800",
+    ],
     price: 399, 
     comparePrice: 599, 
     stock: 500, 
@@ -126,29 +172,37 @@ export const FEATURED_PRODUCTS: Product[] = [
     rating: 4.2, 
     variantId: "v7", 
     sku: "PH-007", 
-    badge: 'limited' 
+    badge: 'limited',
+    description: "Secure your device on any road. This cradle-less magnetic mounting system works with all smartphones. Features a powerful N52 neodymium magnet and 360-degree rotation.",
+    shippingDays: 3
   },
   { 
     id: "8", 
     title: "LED Desk Lamp + Charger", 
     slug: "led-desk-lamp-charger", 
     image: "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=800", 
-    images: ["https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=800"],
+    images: [
+      "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=800",
+      "https://images.unsplash.com/photo-1534073828943-f801091bb18c?w=800",
+      "https://images.unsplash.com/photo-1517991104123-1d56a6e81ed9?w=800",
+    ],
     price: 1599, 
     comparePrice: 2199, 
     stock: 100, 
     reviewCount: 78, 
     rating: 4.5, 
     variantId: "v8", 
-    sku: "LT-008" 
+    sku: "LT-008",
+    description: "The perfect workspace companion. Adjust the brightness and color temperature to suit your mood. Features a built-in 10W wireless fast charger and USB charging port.",
+    shippingDays: 3
   },
 ];
 
 export const COLLECTIONS = [
-  { title: "Electronics", slug: "electronics", image: "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=600", count: 24 },
-  { title: "Accessories", slug: "accessories", image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600", count: 18 },
-  { title: "Home & Living", slug: "home-living", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600", count: 15 },
-  { title: "Sports & Fitness", slug: "sports-fitness", image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600", count: 12 },
+  { title: "Electronics", slug: "electronics", image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800", count: 24 },
+  { title: "Accessories", slug: "accessories", image: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=800", count: 18 },
+  { title: "Home & Living", slug: "home-living", image: "https://images.unsplash.com/photo-1484101403633-562f891dc8d7?w=800", count: 15 },
+  { title: "Sports & Fitness", slug: "sports-fitness", image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", count: 12 },
 ];
 
 export const TESTIMONIALS = [

@@ -2,23 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { SlidersHorizontal, X, ChevronDown } from "lucide-react";
+import { SlidersHorizontal, X, ChevronDown, Sparkles, Zap, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { ProductCard, ProductCardSkeleton } from "@/components/storefront/ProductCard";
+import { FEATURED_PRODUCTS } from "@/lib/utils/demo";
 
-const DEMO_PRODUCTS = [
-  { id: "1", title: "Minimalist Leather Wallet", slug: "minimalist-leather-wallet", image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600", price: 599, comparePrice: 899, stock: 200, reviewCount: 124, rating: 4.5, variantId: "v1", sku: "WL-001" },
-  { id: "2", title: "Smart Watch Ultra Fitness", slug: "smart-watch-ultra-fitness", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600", price: 1799, comparePrice: 2499, stock: 150, reviewCount: 89, rating: 4.7, variantId: "v2", sku: "WH-002" },
-  { id: "3", title: "Wireless NC Headphones", slug: "wireless-nc-headphones", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600", price: 2499, comparePrice: 3499, stock: 80, reviewCount: 203, rating: 4.8, variantId: "v3", sku: "HP-003" },
-  { id: "4", title: "Urban Travel Backpack", slug: "urban-travel-backpack", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600", price: 1299, comparePrice: 1699, stock: 250, reviewCount: 67, rating: 4.3, variantId: "v4", sku: "BG-004" },
-  { id: "5", title: "Polarized Aviator Sunglasses", slug: "polarized-aviator-sunglasses", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600", price: 699, comparePrice: 999, stock: 300, reviewCount: 156, rating: 4.6, variantId: "v5", sku: "SG-005" },
-  { id: "6", title: "Portable Bluetooth Speaker", slug: "portable-bluetooth-speaker", image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600", price: 1199, comparePrice: 1599, stock: 120, reviewCount: 92, rating: 4.4, variantId: "v6", sku: "SP-006" },
-  { id: "7", title: "Magnetic Phone Mount", slug: "magnetic-phone-mount", image: "https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=600", price: 399, comparePrice: 599, stock: 500, reviewCount: 45, rating: 4.2, variantId: "v7", sku: "PH-007" },
-  { id: "8", title: "LED Desk Lamp + Charger", slug: "led-desk-lamp-charger", image: "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=600", price: 1599, comparePrice: 2199, stock: 100, reviewCount: 78, rating: 4.5, variantId: "v8", sku: "LT-008" },
-  { id: "9", title: "Mechanical Gaming Keyboard", slug: "mechanical-gaming-keyboard", image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=600", price: 2299, comparePrice: 2999, stock: 170, reviewCount: 56, rating: 4.6, variantId: "v9", sku: "KB-009" },
-  { id: "10", title: "Ergonomic Wireless Mouse", slug: "ergonomic-wireless-mouse", image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600", price: 899, comparePrice: 1199, stock: 200, reviewCount: 34, rating: 4.3, variantId: "v10", sku: "MS-010" },
-  { id: "11", title: "Insulated Water Bottle", slug: "insulated-water-bottle", image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600", price: 699, comparePrice: 899, stock: 300, reviewCount: 88, rating: 4.4, variantId: "v11", sku: "BT-011" },
-  { id: "12", title: "Non-Slip Yoga Mat", slug: "non-slip-yoga-mat", image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600", price: 999, comparePrice: 1299, stock: 150, reviewCount: 41, rating: 4.1, variantId: "v12", sku: "YG-012" },
-];
+const DEMO_PRODUCTS = FEATURED_PRODUCTS;
 
 const CATEGORIES = ["All", "Electronics", "Accessories", "Home", "Sports", "Bags"];
 const SORT_OPTIONS = [
@@ -55,12 +45,37 @@ export default function ProductsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      {/* ═══ PRODUCTS BANNER ═══ */}
+      <div className="mb-12 relative h-48 sm:h-64 rounded-3xl overflow-hidden group">
+        <Image
+          src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600"
+          alt="Products Banner"
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-1000"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex flex-col justify-center px-8 sm:px-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold text-white mb-3 w-fit tracking-widest uppercase">
+            <Zap size={12} className="text-amber-400" />
+            Seasonal Sale
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
+            Premium Picks. <br />
+            <span className="text-white/60 lowercase italic">Curated for you.</span>
+          </h1>
+          <p className="mt-2 text-white/50 text-xs sm:text-sm font-medium">
+            Explore our widest range of electronics and lifestyle essentials.
+          </p>
+        </div>
+      </div>
+
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold">All Products</h1>
-        <p className="text-muted-foreground mt-2">
-          Showing {sorted.length} products
-        </p>
+      <div className="mb-8 flex items-end justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">Browse All</h2>
+          <p className="text-muted-foreground text-sm mt-1">
+            Showing {sorted.length} premium products
+          </p>
+        </div>
       </div>
 
       {/* Filters bar */}

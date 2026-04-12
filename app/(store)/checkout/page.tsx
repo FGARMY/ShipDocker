@@ -138,6 +138,20 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* ═══ CHECKOUT BANNER ═══ */}
+      <div className="mb-10 relative h-32 rounded-2xl overflow-hidden bg-primary shadow-xl shadow-primary/20">
+        <div className="absolute inset-0 bg-gradient-mesh opacity-30 mix-blend-overlay" />
+        <div className="absolute inset-0 flex items-center justify-between px-8 sm:px-12">
+          <div className="relative z-10 text-white">
+            <h1 className="text-xl sm:text-2xl font-black tracking-tight">Secure Checkout</h1>
+            <p className="text-[10px] sm:text-xs text-white/60 font-medium uppercase tracking-widest mt-1">Certified Safe — Ends in 10:00</p>
+          </div>
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md">
+            <ShieldCheck size={32} className="text-white" />
+          </div>
+        </div>
+      </div>
+
       {/* Stepper */}
       <div className="flex items-center justify-center gap-2 sm:gap-4 mb-10">
         {STEPS.map((s, i) => (
