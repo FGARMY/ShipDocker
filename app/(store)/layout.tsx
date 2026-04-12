@@ -1,7 +1,6 @@
 import { Navbar } from "@/components/storefront/Navbar";
 import { Footer } from "@/components/storefront/Footer";
 import { TrustBar } from "@/components/TrustBar";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { WishlistProvider } from "@/context/WishlistContext";
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
@@ -12,7 +11,6 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
         <main className="flex-1">{children}</main>
         <TrustBar />
         <Footer />
-        <WhatsAppButton />
       </div>
     </WishlistProvider>
   );
