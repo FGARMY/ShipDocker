@@ -22,6 +22,7 @@ interface ProductCardProps {
   variantId?: string;
   sku?: string;
   priority?: boolean;
+  badge?: 'bestseller' | 'new' | 'limited';
 }
 
 export function ProductCard({
@@ -37,6 +38,7 @@ export function ProductCard({
   variantId,
   sku,
   priority = false,
+  badge,
 }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
   const { toggle, isWishlisted } = useWishlist();
@@ -76,7 +78,7 @@ export function ProductCard({
     >
       <Link href={`/products/${slug}`} className="block">
         {/* Image */}
-        <div className="relative aspect-square rounded-2xl overflow-hidden bg-accent/50 mb-3">
+        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-accent/50 mb-3">
           {image ? (
             <Image
               src={image}
@@ -93,12 +95,29 @@ export function ProductCard({
             </div>
           )}
 
-          {/* Discount Badge */}
-          {discount > 0 && (
-            <span className="absolute top-3 left-3 px-2.5 py-1 bg-red-500 text-white text-xs font-bold rounded-full shadow-lg">
-              -{discount}%
-            </span>
-          )}
+          {/* Badges Container */}
+          <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 items-start pointer-events-none">
+            {discount > 0 && (
+              <span className="px-2.5 py-1 bg-red-500 text-white text-xs font-bold rounded-full shadow-lg">
+                -{discount}%
+              </span>
+            )}
+            {badge === 'bestseller' && (
+              <span className="px-2.5 py-1 bg-amber-500 text-white text-xs font-bold rounded-full shadow-lg">
+                Best Seller
+              </span>
+            )}
+            {badge === 'new' && (
+              <span className="px-2.5 py-1 bg-blue-500 text-white text-xs font-bold rounded-full shadow-lg">
+                New Arrival
+              </span>
+            )}
+            {badge === 'limited' && (
+              <span className="px-2.5 py-1 bg-red-600 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
+                Limited Stock
+              </span>
+            )}
+          </div>
 
           {/* Wishlist heart */}
           <button
