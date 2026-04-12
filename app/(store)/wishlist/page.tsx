@@ -1,5 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { Heart } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { FEATURED_PRODUCTS } from "@/lib/utils/demo";

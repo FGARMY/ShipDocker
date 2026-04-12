@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Package, Mail, Instagram, Twitter, Facebook, Check, Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils/cn";
 
 const FOOTER_LINKS = {
   Shop: [

@@ -75,8 +75,15 @@
   h3 { @apply text-lg md:text-xl font-bold; }
   
   p, span, div { @apply text-sm md:text-base; }
-  .text-xs { @apply text-[10px] md:text-xs; }
-  .text-sm { @apply text-xs md:text-sm; }
+  .text-xs { font-size: 10px; }
+  @media (min-width: 768px) {
+    .text-xs { font-size: 0.75rem; }
+  }
+
+  .text-sm { font-size: 12px; }
+  @media (min-width: 768px) {
+    .text-sm { font-size: 0.875rem; }
+  }
 
   ::selection {
     @apply bg-primary/20 text-primary;
