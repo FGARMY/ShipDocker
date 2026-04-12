@@ -19,7 +19,7 @@ import {
   Check,
 } from "lucide-react";
 import { ProductCard, ProductCardSkeleton } from "@/components/storefront/ProductCard";
-import { Testimonials } from "@/components/storefront/Testimonials";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { NewsletterSection } from "@/components/NewsletterSection";
 
 // ═══ Demo Data ═══
@@ -324,7 +324,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══ TESTIMONIALS (Problem 3) ═══ */}
-      <Testimonials />
+      <TestimonialsSection />
 
       {/* ═══ PROMO BANNER ═══ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
