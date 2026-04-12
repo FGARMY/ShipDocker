@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { ProductCard, ProductCardSkeleton } from "@/components/storefront/ProductCard";
 import { Testimonials } from "@/components/storefront/Testimonials";
+import { NewsletterSection } from "@/components/NewsletterSection";
 
 // ═══ Demo Data ═══
 const FEATURED_PRODUCTS = [
@@ -357,6 +358,9 @@ export default function HomePage() {
           </div>
         </motion.div>
       </section>
+
+      {/* ═══ NEWSLETTER ═══ */}
+      <NewsletterSection />
 
       {/* ═══ STATS ═══ */}
       <section className="border-t border-border bg-card/50">
