@@ -84,8 +84,8 @@ export function ProductCard({
               src={image}
               alt={title}
               fill
-              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-              quality={75}
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+              quality={60}
               priority={priority}
               className="object-cover group-hover:scale-105 transition-transform duration-500"
             />

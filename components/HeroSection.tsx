@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ArrowRight, TrendingUp, Sparkles, Star, Clock } from "lucide-react";
 
 export type HeroVariant = "A" | "B" | "C";
@@ -106,11 +107,22 @@ export function HeroSection({ variant = "A" }: HeroSectionProps) {
   };
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden bg-black/90">
+      {/* Background Image Optimized for LCP */}
+      <Image
+        src="https://images.unsplash.com/photo-1620825937374-87fc1e6aaf36?w=1600&q=80"
+        alt="Electronics Store Hero"
+        fill
+        sizes="100vw"
+        priority
+        quality={60}
+        className="object-cover opacity-30 pointer-events-none"
+      />
+      
       {/* Background mesh glow */}
-      <div className="absolute inset-0 bg-gradient-mesh opacity-60" />
-      <div className="absolute top-20 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 left-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-mesh opacity-40 mix-blend-overlay" />
+      <div className="absolute top-20 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-1/4 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
         <motion.div

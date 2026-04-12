@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { HeroSection } from "@/components/HeroSection";
 import { ProductCard, ProductCardSkeleton } from "@/components/storefront/ProductCard";
+import { CategoryCard } from "@/components/CategoryCard";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { NewsletterSection } from "@/components/NewsletterSection";
 
@@ -175,29 +176,10 @@ export default function HomePage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
           {COLLECTIONS.map((col) => (
-            <motion.div key={col.slug} variants={item}>
-              <Link
-                href={`/collections/${col.slug}`}
-                className="group block relative aspect-[4/5] rounded-2xl overflow-hidden"
-              >
-                <Image
-                  src={col.image}
-                  alt={col.title}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, 50vw"
-                  quality={75}
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-white font-bold text-lg">{col.title}</h3>
-                  <p className="text-white/70 text-sm mt-0.5">{col.count} products</p>
-                </div>
-              </Link>
-            </motion.div>
+            <CategoryCard key={col.slug} {...col} />
           ))}
         </motion.div>
       </section>
