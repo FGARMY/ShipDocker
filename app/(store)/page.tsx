@@ -18,6 +18,7 @@ import {
   Copy,
   Check,
 } from "lucide-react";
+import { HeroSection } from "@/components/HeroSection";
 import { ProductCard, ProductCardSkeleton } from "@/components/storefront/ProductCard";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { NewsletterSection } from "@/components/NewsletterSection";
@@ -126,84 +127,7 @@ export default function HomePage() {
   return (
     <>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden">
-        {/* Background mesh */}
-        <div className="absolute inset-0 bg-gradient-mesh opacity-60" />
-        <div className="absolute top-20 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-3xl"
-          >
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 bg-red-500/10 border border-red-500/20 rounded-full text-sm font-medium text-red-500 mb-6"
-            >
-              <Sparkles size={14} />
-              Flat 10% Off — Use FIRST10 · <CountdownTimer />
-            </motion.div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
-              ₹399 se Shuru.{" "}
-              <span className="gradient-text">Premium Quality</span>{" "}
-              Guaranteed.
-            </h1>
-
-            <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-xl leading-relaxed">
-              8,000+ Indians already shop with us. Free shipping over ₹999,
-              7-day easy returns, and UPI / COD accepted. Why pay more?
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/products"
-                className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-0.5"
-              >
-                Grab the Deal — 10% Off
-                <ArrowRight size={18} />
-              </Link>
-              <Link
-                href="/collections/trending"
-                className="inline-flex items-center gap-2 px-8 py-3.5 border border-border font-semibold rounded-xl hover:bg-accent transition-all"
-              >
-                <TrendingUp size={18} />
-                See What&apos;s Trending
-              </Link>
-            </div>
-
-            {/* Social proof */}
-            <div className="mt-10 flex items-center gap-4">
-              <div className="flex -space-x-2">
-                {["PS", "RV", "AR", "VP", "SN"].map((initials, i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/60 to-purple-500/60 border-2 border-background flex items-center justify-center"
-                  >
-                    <span className="text-[9px] font-bold text-white">{initials}</span>
-                  </div>
-                ))}
-              </div>
-              <div>
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="text-amber-400 fill-amber-400" />
-                  ))}
-                  <span className="text-sm font-semibold ml-1">4.8</span>
-                </div>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  from <span className="font-semibold text-foreground">2,400+</span> verified reviews
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <HeroSection variant="C" />
 
       {/* ═══ TRUST BADGES ═══ */}
       <section className="border-y border-border bg-card/50">
