@@ -36,8 +36,8 @@ export function Navbar() {
   return (
     <>
       {/* Announcement Bar */}
-      <div className="bg-gradient-to-r from-primary via-purple-600 to-blue-600 text-white text-[10px] sm:text-xs text-center py-2 px-4 font-bold tracking-widest uppercase">
-        <span className="opacity-90 inline-flex items-center gap-2">
+      <div className="bg-gradient-to-r from-primary via-purple-600 to-blue-600 text-white text-[10px] sm:text-xs text-center py-2 px-4 font-bold tracking-widest uppercase overflow-hidden">
+        <span className="opacity-90 inline-flex items-center gap-2 max-w-full truncate md:whitespace-normal">
           ⚡ Limited Offer: Free pan-india shipping on orders above ₹999 — Code: <span className="text-white border-b border-white/50">FIRST10</span>
         </span>
       </div>
@@ -52,121 +52,139 @@ export function Navbar() {
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Left: Mobile menu + Logo */}
+          <div className="flex items-center justify-between h-16 md:h-20">
+            {/* Left: Logo */}
             <div className="flex items-center gap-3">
-              <button
-                className="lg:hidden p-2 rounded-lg hover:bg-accent transition-colors"
-                onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="Toggle menu"
-              >
-                {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-              <Link href="/" className="flex items-center gap-2.5 group">
+              <Link href="/" className="flex items-center gap-2.5 group min-h-[44px]">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg shadow-primary/25">
                   <span className="text-white font-bold text-sm">SD</span>
                 </div>
-                <span className="text-lg font-bold tracking-tight hidden sm:block">
+                <span className="text-lg font-bold tracking-tight">
                   Ship<span className="gradient-text">Docker</span>
                 </span>
               </Link>
             </div>
 
-            {/* Center: Nav links */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* Center: Nav links (Tablet/Desktop) */}
+            <div className="hidden md:flex items-center gap-1 lg:gap-2">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg hover:bg-accent transition-all duration-200"
+                  className="relative px-3 lg:px-4 py-2 text-[13px] lg:text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg transition-all duration-200 group min-h-[44px] flex items-center"
                 >
                   {link.label}
+                  <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-2/3" />
                 </Link>
               ))}
             </div>
 
             {/* Right: Actions */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5 sm:gap-1">
               <button
                 onClick={() => setSearchOpen(true)}
-                className="p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                className="p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Search"
               >
-                <Search size={18} />
+                <Search size={20} />
               </button>
-              <button
-                onClick={toggleTheme}
-                className="p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-              <Link
-                href="/account"
-                className="p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
-                aria-label="Account"
-              >
-                <User size={18} />
-              </Link>
+              
               <Link
                 href="/wishlist"
-                className="relative p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                className="relative p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Wishlist"
               >
-                <Heart size={18} />
+                <Heart size={20} />
                 {wishlistCount > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute top-0.5 right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-md"
+                    className="absolute top-1.5 right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-md"
                   >
                     {wishlistCount > 99 ? "99+" : wishlistCount}
                   </motion.span>
                 )}
               </Link>
+              
               <Link
                 href="/cart"
-                className="relative p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                className="relative p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Cart"
               >
-                <ShoppingBag size={18} />
+                <ShoppingBag size={20} />
                 {itemCount > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center shadow-lg"
+                    className="absolute top-1 right-1 w-5 h-5 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center shadow-lg"
                   >
                     {itemCount > 99 ? "99+" : itemCount}
                   </motion.span>
                 )}
               </Link>
+              
+              <button
+                onClick={toggleTheme}
+                className="hidden sm:flex p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground min-w-[44px] min-h-[44px] items-center justify-center"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+
+              {/* Hamburger Mobile */}
+              <button
+                className="md:hidden p-2.5 rounded-lg hover:bg-accent transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label="Toggle menu"
+              >
+                {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
           </div>
         </nav>
 
-        {/* Mobile Nav */}
+        {/* Mobile Nav Slide-down */}
         <AnimatePresence>
           {mobileOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="lg:hidden overflow-hidden border-t border-border/50"
-            >
-              <div className="px-4 py-3 space-y-1">
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="block px-4 py-2.5 text-sm font-medium rounded-lg hover:bg-accent transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
+            <>
+              {/* Backdrop to close on click outside */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 top-[104px] bg-black/20 backdrop-blur-sm md:hidden"
+                onClick={() => setMobileOpen(false)}
+              />
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="md:hidden overflow-hidden bg-background border-t border-border/50 relative z-20"
+              >
+                <div className="px-4 py-6 space-y-1">
+                  {NAV_LINKS.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center px-4 h-12 text-base font-semibold rounded-xl hover:bg-accent transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                  <div className="pt-4 mt-4 border-t border-border flex items-center justify-between px-4">
+                    <span className="text-sm font-medium text-muted-foreground">Appearance</span>
+                    <button
+                      onClick={toggleTheme}
+                      className="p-3 bg-accent rounded-xl text-foreground"
+                    >
+                      {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </header>

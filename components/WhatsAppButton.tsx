@@ -1,23 +1,40 @@
 "use client";
 
+import { useState } from "react";
 import { MessageCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function WhatsAppButton() {
+  const [showTooltip, setShowTooltip] = useState(false);
   const url = "https://wa.me/919999999999?text=Hi%2C%20I%20have%20a%20question%20about%20ShipDocker";
 
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed z-50 bottom-20 right-4 lg:bottom-8 lg:right-8 bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110 flex items-center justify-center group"
-      aria-label="Chat with us on WhatsApp"
-    >
-      <MessageCircle size={28} />
-      {/* Tooltip */}
-      <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 whitespace-nowrap bg-black/80 text-white text-xs font-medium py-1.5 px-3 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        Chat with us · Mon–Sat 10am–7pm IST
-      </span>
-    </a>
+    <div className="fixed bottom-6 right-6 z-[9999] flex items-center gap-3">
+      {/* Tooltip - Desktop only */}
+      <AnimatePresence>
+        {showTooltip && (
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            className="hidden lg:block bg-card border border-border px-4 py-2 rounded-xl shadow-xl text-xs font-bold whitespace-nowrap"
+          >
+            Chat with us · Mon–Sat 10am–7pm IST
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+        className="w-[56px] h-[56px] rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300"
+        aria-label="Chat on WhatsApp"
+      >
+        <MessageCircle size={32} />
+      </a>
+    </div>
   );
 }

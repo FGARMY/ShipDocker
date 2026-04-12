@@ -113,8 +113,8 @@ export default function HomePage() {
       <HeroSection />
 
       {/* ═══ TRUST BADGES ═══ */}
-      <section className="border-y border-border bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <section className="border-y border-border bg-card/50 section-padding">
+        <div className="container-max">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {TRUST_BADGES.map((badge, i) => (
               <motion.div
@@ -139,15 +139,15 @@ export default function HomePage() {
       </section>
 
       {/* ═══ COLLECTIONS ═══ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <section className="container-max section-padding">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold">Shop by Category</h2>
-            <p className="text-muted-foreground mt-1">Browse our curated collections</p>
+            <h1 className="text-2xl sm:text-3xl font-bold">Shop by Category</h1>
+            <p className="text-muted-foreground mt-1 text-sm">Browse our curated collections</p>
           </div>
           <Link
             href="/collections"
-            className="text-sm font-medium text-primary hover:underline hidden sm:flex items-center gap-1"
+            className="text-sm font-medium text-primary hover:underline hidden sm:flex items-center gap-1 min-h-[44px]"
           >
             View All <ArrowRight size={14} />
           </Link>
@@ -158,7 +158,7 @@ export default function HomePage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
         >
           {COLLECTIONS.map((col) => (
             <CategoryCard key={col.slug} {...col} />
@@ -190,11 +190,11 @@ export default function HomePage() {
       </section>
 
       {/* ═══ TRENDING PRODUCTS ═══ */}
-      <section className="bg-accent/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <section className="bg-accent/30 section-padding">
+        <div className="container-max">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-xs font-semibold text-primary mb-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-[10px] font-semibold text-primary mb-3">
                 <TrendingUp size={12} />
                 TRENDING NOW
               </div>
@@ -202,7 +202,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/products"
-              className="text-sm font-medium text-primary hover:underline hidden sm:flex items-center gap-1"
+              className="text-sm font-medium text-primary hover:underline hidden sm:flex items-center gap-1 min-h-[44px]"
             >
               See All <ArrowRight size={14} />
             </Link>
@@ -213,7 +213,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+            className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] lg:grid-cols-4 gap-4 sm:gap-6"
           >
             {FEATURED_PRODUCTS.map((product, i) => (
               <motion.div key={product.id} variants={item}>
@@ -238,7 +238,7 @@ export default function HomePage() {
       <TestimonialsSection />
 
       {/* ═══ PROMO BANNER ═══ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <section className="container-max section-padding">
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -261,7 +261,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/products"
-              className="mt-6 inline-flex items-center gap-2 px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-white/90 transition-all shadow-2xl"
+              className="mt-6 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-white/90 transition-all shadow-2xl min-h-[44px]"
             >
               Claim My 10% Off
               <ArrowRight size={18} />
@@ -271,8 +271,8 @@ export default function HomePage() {
       </section>
 
       {/* ═══ STATS ═══ */}
-      <section className="border-t border-border bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section className="border-t border-border bg-card/50 section-padding">
+        <div className="container-max">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {[
               { value: "8,000+", label: "Happy Indian Customers" },

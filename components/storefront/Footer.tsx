@@ -92,78 +92,110 @@ function NewsletterForm() {
 }
 
 export function Footer() {
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+
+  const toggleSection = (title: string) => {
+    setOpenSections(prev => ({ ...prev, [title]: !prev[title] }));
+  };
+
   return (
-    <footer className="bg-card border-t border-border mt-auto">
-      {/* Newsletter */}
-      <div className="border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-lg font-bold">Get 10% Off Your First Order</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                Join 8,000+ Indian shoppers. Get exclusive deals, new drops & your discount code instantly.
-              </p>
-            </div>
+    <footer className="bg-card border-t border-border mt-auto pt-12 pb-8">
+      <div className="container-max">
+        {/* Top Section: Desktop layout */}
+        <div className="hidden lg:flex flex-row gap-12 mb-16">
+          {/* Logo & Tagline */}
+          <div className="flex-1 max-w-sm">
+            <Logo />
+            <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
+              Premium products, unbeatable prices. Your one-stop shop for trending products delivered across India.
+            </p>
+            <SocialLinks />
+          </div>
+
+          {/* Links Grid */}
+          <div className="flex-[2] grid grid-cols-3 gap-8">
+            {Object.entries(FOOTER_LINKS).map(([title, links]) => (
+              <div key={title}>
+                <h4 className="font-bold text-sm mb-6 uppercase tracking-widest">{title}</h4>
+                <ul className="space-y-4">
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Newsletter */}
+          <div className="flex-1 max-w-sm">
+            <h4 className="font-bold text-sm mb-6 uppercase tracking-widest text-primary">Get 10% Off</h4>
+            <p className="text-sm text-muted-foreground mb-6">
+              Join 8,000+ Indian shoppers. Get exclusive deals & your discount code instantly.
+            </p>
             <NewsletterForm />
           </div>
         </div>
-      </div>
 
-      {/* Links Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">SD</span>
-              </div>
-              <span className="text-lg font-bold">ShipDocker</span>
-            </Link>
-            <p className="text-sm text-muted-foreground mt-3 max-w-xs">
-              Premium products, unbeatable prices. Your one-stop shop for trending products delivered across India.
-            </p>
-            <div className="flex items-center gap-3 mt-4">
-              {[Instagram, Twitter, Facebook].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-9 h-9 rounded-lg bg-accent hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-200"
-                  aria-label="Social"
+        {/* Mobile/Tablet Layout */}
+        <div className="lg:hidden flex flex-col gap-10">
+          {/* Tablet Grid for Links */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+            {/* Logo Section (Mobile/Tablet) */}
+            <div className="md:col-span-1">
+              <Logo />
+              <p className="text-sm text-muted-foreground mt-4 mb-6">
+                Premium products delivered across India.
+              </p>
+              <SocialLinks />
+            </div>
+
+            {/* Newsletter (Mobile/Tablet) */}
+            <div className="md:col-span-1">
+              <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-primary">Stay in the loop</h4>
+              <NewsletterForm />
+            </div>
+
+            {/* Links - Accordion on Mobile, Static on Tablet */}
+            {Object.entries(FOOTER_LINKS).map(([title, links]) => (
+              <div key={title} className="border-b border-border md:border-none">
+                <button
+                  onClick={() => toggleSection(title)}
+                  className="w-full py-4 flex items-center justify-between md:cursor-default md:pointer-events-none min-h-[44px]"
                 >
-                  <Icon size={16} />
-                </a>
-              ))}
-            </div>
+                  <h4 className="font-bold text-sm uppercase tracking-widest">{title}</h4>
+                  <span className={cn(
+                    "md:hidden transition-transform duration-200",
+                    openSections[title] ? "rotate-180" : ""
+                  )}>
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </span>
+                </button>
+                <ul className={cn(
+                  "space-y-3 pb-4 md:pb-0 md:block",
+                  openSections[title] ? "block" : "hidden"
+                )}>
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href} className="text-[13px] md:text-sm text-muted-foreground hover:text-foreground py-2 block min-h-[44px]">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-
-          {/* Link columns */}
-          {Object.entries(FOOTER_LINKS).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="font-semibold text-sm mb-4">{title}</h4>
-              <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} ShipDocker. All rights reserved.</p>
+        {/* Bottom bar */}
+        <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest font-bold">
+          <p>© {new Date().getFullYear()} ShipDocker India. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1.5 grayscale opacity-50">
               <Package size={14} />
               Powered by ShipDocker
             </span>
@@ -171,5 +203,33 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function Logo() {
+  return (
+    <Link href="/" className="flex items-center gap-2.5 min-h-[44px]">
+      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
+        <span className="text-white font-bold text-sm">SD</span>
+      </div>
+      <span className="text-lg font-bold">ShipDocker</span>
+    </Link>
+  );
+}
+
+function SocialLinks() {
+  return (
+    <div className="flex items-center gap-3">
+      {[Instagram, Twitter, Facebook].map((Icon, i) => (
+        <a
+          key={i}
+          href="#"
+          className="w-11 h-11 rounded-xl bg-accent hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-200"
+          aria-label="Social"
+        >
+          <Icon size={18} />
+        </a>
+      ))}
+    </div>
   );
 }

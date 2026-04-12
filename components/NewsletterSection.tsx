@@ -54,18 +54,22 @@ export function NewsletterSection() {
   }
 
   return (
-    <section className="relative py-28 px-4 bg-black overflow-hidden">
+    <section className="relative overflow-hidden bg-black">
       {/* Dynamic Background Image */}
-      <Image
-        src="https://images.unsplash.com/photo-1534452203294-49c8913721b2?w=1600"
-        alt="Newsletter Background"
-        fill
-        className="object-cover opacity-50 grayscale hover:scale-105 transition-transform duration-[10s]"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+      <div className="absolute inset-0">
+        <Image
+          src="https://images.unsplash.com/photo-1534452203294-49c8913721b2?w=1600"
+          alt="Newsletter Background"
+          fill
+          sizes="100vw"
+          quality={85}
+          className="object-cover opacity-40 grayscale"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+      </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto">
-        <div className="glass-strong p-8 sm:p-12 rounded-[2.5rem] border border-white/10 text-center shadow-2xl overflow-hidden backdrop-blur-2xl">
+      <div className="relative z-10 container-max section-padding">
+        <div className="glass-strong p-6 sm:p-12 rounded-[2.5rem] border border-white/10 text-center shadow-2xl overflow-hidden backdrop-blur-2xl">
           {/* Decorative mesh */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           
@@ -74,11 +78,11 @@ export function NewsletterSection() {
             Join the inner circle
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
             Stay in the loop. <br />
             <span className="text-white/50 italic font-serif">Get 10% off today.</span>
-          </h2>
-          <p className="text-white/60 text-lg mb-10 max-w-lg mx-auto font-medium">
+          </h1>
+          <p className="text-white/60 text-base md:text-lg mb-8 md:mb-10 max-w-lg mx-auto font-medium">
             Be the first to hear about new drops, exclusive deals and 
             limited edition colorways.
           </p>
@@ -91,18 +95,15 @@ export function NewsletterSection() {
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={status === "loading"}
                 placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 bg-white/5 border border-white/10 rounded-2xl outline-none focus:ring-2 focus:ring-primary/50 text-white placeholder:text-white/30 transition-all font-medium backdrop-blur-md"
+                className="w-full sm:flex-1 px-6 py-4 h-12 md:h-14 bg-white/5 border border-white/10 rounded-2xl md:rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-white placeholder:text-white/30 transition-all font-medium backdrop-blur-md text-sm md:text-base"
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="px-8 py-4 bg-white text-black font-black rounded-2xl hover:bg-white/90 transition-all disabled:opacity-50 flex items-center gap-2 min-w-[140px] justify-center shadow-xl shadow-white/10"
+                className="w-full sm:w-[140px] h-12 md:h-14 bg-white text-black font-black rounded-2xl md:rounded-xl hover:bg-white/90 transition-all disabled:opacity-50 flex items-center gap-2 justify-center shadow-xl shadow-white/10 text-sm uppercase tracking-wider"
               >
                 {status === "loading" ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    ...
-                  </>
+                  <Loader2 size={18} className="animate-spin" />
                 ) : (
                   "Subscribe"
                 )}

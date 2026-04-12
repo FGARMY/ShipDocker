@@ -77,14 +77,14 @@ export function ProductCard({
       className="group"
     >
       <Link href={`/products/${slug}`} className="block">
-        {/* Image */}
-        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-accent/50 mb-3">
+        {/* Image Container */}
+        <div className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden bg-accent/50 mb-3 border border-transparent group-hover:border-border transition-colors duration-300">
           {image ? (
             <Image
               src={image}
               alt={title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               quality={85}
               priority={priority}
               className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -95,97 +95,83 @@ export function ProductCard({
             </div>
           )}
 
-          {/* Badges Container */}
-          <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 items-start pointer-events-none">
+          {/* Badges Container - Fix 4: Smaller on mobile */}
+          <div className="absolute top-2 left-2 flex flex-col gap-1 z-10 items-start pointer-events-none">
             {discount > 0 && (
-              <span className="px-2.5 py-1 bg-red-500 text-white text-xs font-bold rounded-full shadow-lg">
+              <span className="px-1.5 md:px-2.5 py-0.5 md:py-1 bg-red-500 text-white text-[10px] md:text-xs font-bold rounded-full shadow-lg uppercase tracking-wider">
                 -{discount}%
               </span>
             )}
-            {badge === 'bestseller' && (
-              <span className="px-2.5 py-1 bg-amber-500 text-white text-xs font-bold rounded-full shadow-lg">
-                Best Seller
-              </span>
-            )}
-            {badge === 'new' && (
-              <span className="px-2.5 py-1 bg-blue-500 text-white text-xs font-bold rounded-full shadow-lg">
-                New Arrival
-              </span>
-            )}
-            {badge === 'limited' && (
-              <span className="px-2.5 py-1 bg-red-600 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
-                Limited Stock
+            {badge && (
+              <span className={cn(
+                "px-1.5 md:px-2.5 py-0.5 md:py-1 text-white text-[10px] md:text-xs font-bold rounded-full shadow-lg uppercase tracking-wider",
+                badge === 'bestseller' ? "bg-amber-500" : 
+                badge === 'new' ? "bg-blue-500" : "bg-red-600 animate-pulse"
+              )}>
+                {badge.replace('-', ' ')}
               </span>
             )}
           </div>
 
-          {/* Wishlist heart */}
+          {/* Wishlist heart - Fix 11: 44x44px tap target */}
           <button
             onClick={handleWishlist}
             className={cn(
-              "absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shadow-md z-10",
+              "absolute top-2 right-2 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-md z-10",
               wishlisted
                 ? "bg-red-500 text-white scale-110"
                 : "bg-white/80 dark:bg-black/40 backdrop-blur-sm text-muted-foreground hover:bg-red-500 hover:text-white"
             )}
             aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
-            <Heart size={14} className={wishlisted ? "fill-current" : ""} />
+            <Heart size={18} className={wishlisted ? "fill-current" : ""} />
           </button>
 
           {/* Out of stock */}
           {stock <= 0 && (
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center">
-              <span className="px-4 py-2 bg-background/80 text-foreground text-sm font-medium rounded-full border border-border">
+              <span className="px-4 py-2 bg-background/80 text-foreground text-xs md:text-sm font-medium rounded-full border border-border">
                 Out of Stock
               </span>
             </div>
           )}
 
-          {/* Quick actions overlay */}
-          <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-            <div className="flex gap-2">
-              {variantId && stock > 0 && (
-                <button
-                  onClick={handleQuickAdd}
-                  className="flex-1 py-2.5 bg-primary text-primary-foreground text-xs font-semibold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 shadow-xl"
-                >
-                  <ShoppingBag size={14} />
-                  Quick Add
-                </button>
-              )}
-              <Link
-                href={`/products/${slug}`}
-                className="py-2.5 px-3 glass rounded-xl hover:bg-white/30 dark:hover:bg-white/10 transition-colors shadow-xl"
-                onClick={(e) => e.stopPropagation()}
+          {/* Quick Add Overlay - Fix 4: Visible on mobile, hover on desktop */}
+          <div className="absolute inset-x-0 bottom-0 p-2 md:p-3 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
+            {variantId && stock > 0 && (
+              <button
+                onClick={handleQuickAdd}
+                className="w-full py-2.5 bg-primary text-primary-foreground text-[10px] md:text-xs font-bold rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-xl min-h-[44px] md:min-h-0"
               >
-                <Eye size={14} />
-              </Link>
-            </div>
+                <ShoppingBag size={14} />
+                Quick Add
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Info */}
+        {/* Info - Fix 4: Compact mobile typography */}
         <div className="px-1">
-          <h3 className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
+          <h3 className="text-xs md:text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
             {title}
           </h3>
-          <div className="flex items-center gap-2 mt-1.5">
-            <span className="text-base font-bold">{formatCurrency(price)}</span>
+          <div className="flex items-center gap-2 mt-1 md:mt-1.5">
+            <span className="text-sm md:text-base font-bold">{formatCurrency(price)}</span>
             {comparePrice && comparePrice > price && (
-              <span className="text-sm text-muted-foreground line-through">
+              <span className="text-[10px] md:text-sm text-muted-foreground line-through">
                 {formatCurrency(comparePrice)}
               </span>
             )}
           </div>
           {reviewCount > 0 && (
-            <div className="flex items-center gap-1 mt-1.5">
+            <div className="flex items-center gap-1 mt-1 md:mt-1.5">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    size={12}
+                    size={10}
                     className={cn(
+                      "md:size-3",
                       i < Math.round(rating || 0)
                         ? "text-amber-400 fill-amber-400"
                         : "text-muted-foreground/30"
@@ -193,7 +179,7 @@ export function ProductCard({
                   />
                 ))}
               </div>
-              <span className="text-xs text-muted-foreground">({reviewCount})</span>
+              <span className="text-[10px] md:text-xs text-muted-foreground">({reviewCount})</span>
             </div>
           )}
         </div>
