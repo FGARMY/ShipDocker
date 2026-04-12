@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface WishlistContextType {
   wishlist: string[];
@@ -13,48 +13,28 @@ const WishlistContext = createContext<WishlistContextType | undefined>(undefined
 
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [wishlist, setWishlist] = useState<string[]>([]);
-  const [mounted, setMounted] = useState(false);
 
-  // Load from local storage on mount
   useEffect(() => {
-    setMounted(true);
-    try {
-      const stored = localStorage.getItem("shipdocker_wishlist");
-      if (stored) {
+    const stored = localStorage.getItem("shipdocker-wishlist");
+    if (stored) {
+      try {
         setWishlist(JSON.parse(stored));
-      }
-    } catch (e) {
-      console.error("Failed to load wishlist:", e);
+      } catch (e) {}
     }
   }, []);
 
-  // Save to local storage when changed
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem("shipdocker_wishlist", JSON.stringify(wishlist));
-    }
-  }, [wishlist, mounted]);
-
   const toggle = (slug: string) => {
-    setWishlist((current) => {
-      if (current.includes(slug)) {
-        return current.filter((item) => item !== slug);
-      }
-      return [...current, slug];
+    setWishlist((prev) => {
+      const next = prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug];
+      localStorage.setItem("shipdocker-wishlist", JSON.stringify(next));
+      return next;
     });
   };
 
   const isWishlisted = (slug: string) => wishlist.includes(slug);
 
-  const value = {
-    wishlist,
-    toggle,
-    isWishlisted,
-    count: wishlist.length,
-  };
-
   return (
-    <WishlistContext.Provider value={value}>
+    <WishlistContext.Provider value={{ wishlist, toggle, isWishlisted, count: wishlist.length }}>
       {children}
     </WishlistContext.Provider>
   );
@@ -62,8 +42,6 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
 
 export function useWishlist() {
   const context = useContext(WishlistContext);
-  if (context === undefined) {
-    throw new Error("useWishlist must be used within a WishlistProvider");
-  }
+  if (!context) throw new Error("useWishlist must be used within WishlistProvider");
   return context;
 }

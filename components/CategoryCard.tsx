@@ -27,8 +27,8 @@ export function CategoryCard({ slug, image, title, count }: CategoryCardProps) {
           src={image}
           alt={title}
           fill
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          quality={60}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          quality={85}
           className="object-cover group-hover:scale-110 transition-transform duration-700"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
