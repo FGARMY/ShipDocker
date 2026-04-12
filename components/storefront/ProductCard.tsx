@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShoppingBag, Star, Eye, Heart } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
-import { useWishlistStore } from "@/lib/store/wishlist";
+import { useWishlist } from "@/context/WishlistContext";
 import { formatCurrency } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
 
@@ -39,8 +39,8 @@ export function ProductCard({
   priority = false,
 }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
-  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
-  const wishlisted = isInWishlist(id);
+  const { toggle, isWishlisted } = useWishlist();
+  const wishlisted = isWishlisted(slug);
   const discount = comparePrice ? Math.round(((comparePrice - price) / comparePrice) * 100) : 0;
 
   const handleQuickAdd = (e: React.MouseEvent) => {
@@ -64,11 +64,7 @@ export function ProductCard({
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (wishlisted) {
-      removeFromWishlist(id);
-    } else {
-      addToWishlist({ productId: id, title, slug, image, price, comparePrice });
-    }
+    toggle(slug);
   };
 
   return (

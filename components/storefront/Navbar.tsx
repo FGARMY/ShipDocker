@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, Search, User, Menu, X, Sun, Moon } from "lucide-react";
+import { ShoppingBag, Search, User, Menu, X, Sun, Moon, Heart } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
+import { useWishlist } from "@/context/WishlistContext";
 import { useThemeStore } from "@/lib/store/theme";
 import { cn } from "@/lib/utils/cn";
 
@@ -21,6 +22,7 @@ export function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const itemCount = useCartStore((s) => s.getItemCount());
+  const { count: wishlistCount } = useWishlist();
   const { theme, setTheme } = useThemeStore();
 
   useEffect(() => {
@@ -103,6 +105,22 @@ export function Navbar() {
                 aria-label="Account"
               >
                 <User size={18} />
+              </Link>
+              <Link
+                href="/wishlist"
+                className="relative p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                aria-label="Wishlist"
+              >
+                <Heart size={18} />
+                {wishlistCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute top-0.5 right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-md"
+                  >
+                    {wishlistCount > 99 ? "99+" : wishlistCount}
+                  </motion.span>
+                )}
               </Link>
               <Link
                 href="/cart"
