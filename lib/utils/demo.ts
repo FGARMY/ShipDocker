@@ -3,7 +3,7 @@ export interface Product {
   title: string;
   slug: string;
   image: string;
-  images?: string[];
+  images: string[];
   price: number;
   comparePrice?: number;
   stock: number;
@@ -13,6 +13,9 @@ export interface Product {
   sku: string;
   badge?: 'bestseller' | 'new' | 'limited';
   description?: string;
+  shippingDays?: number;
+  variants?: any[];
+  reviews?: any[];
 }
 
 export const FEATURED_PRODUCTS: Product[] = [
@@ -42,6 +45,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     title: "Smart Watch Ultra Fitness", 
     slug: "smart-watch-ultra-fitness", 
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+    images: ["https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800"],
     price: 1799, 
     comparePrice: 2499, 
     stock: 150, 
@@ -55,6 +59,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     title: "Wireless NC Headphones", 
     slug: "wireless-nc-headphones", 
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800", 
+    images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800"],
     price: 2499, 
     comparePrice: 3499, 
     stock: 80, 
@@ -69,6 +74,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     title: "Urban Travel Backpack", 
     slug: "urban-travel-backpack", 
     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800", 
+    images: ["https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800"],
     price: 1299, 
     comparePrice: 1699, 
     stock: 250, 
@@ -82,6 +88,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     title: "Polarized Aviator Sunglasses", 
     slug: "polarized-aviator-sunglasses", 
     image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800", 
+    images: ["https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800"],
     price: 699, 
     comparePrice: 999, 
     stock: 300, 
@@ -96,6 +103,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     title: "Portable Bluetooth Speaker", 
     slug: "portable-bluetooth-speaker", 
     image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800", 
+    images: ["https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800"],
     price: 1199, 
     comparePrice: 1599, 
     stock: 120, 
@@ -110,6 +118,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     title: "Magnetic Phone Mount", 
     slug: "magnetic-phone-mount", 
     image: "https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=800", 
+    images: ["https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=800"],
     price: 399, 
     comparePrice: 599, 
     stock: 500, 
@@ -124,6 +133,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     title: "LED Desk Lamp + Charger", 
     slug: "led-desk-lamp-charger", 
     image: "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=800", 
+    images: ["https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=800"],
     price: 1599, 
     comparePrice: 2199, 
     stock: 100, 

@@ -8,11 +8,12 @@ import {
   ShoppingBag, Heart, Share2, Truck, Shield, RotateCcw,
   Star, ChevronLeft, ChevronRight, Check, Minus, Plus,
 } from "lucide-react";
+import { useCartStore } from "@/lib/store/cart";
 import { useWishlist } from "@/context/WishlistContext";
 import { formatCurrency } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
 import { ProductCard } from "@/components/storefront/ProductCard";
-import { FEATURED_PRODUCTS } from "@/lib/utils/demo";
+import { FEATURED_PRODUCTS, type Product } from "@/lib/utils/demo";
 
 // Demo product data for the dynamic route
 // Using shared demo data
@@ -32,13 +33,15 @@ const COLOR_MAP: Record<string, string> = {
 };
 
 export default function ProductDetailPage() {
-  const product = FEATURED_PRODUCTS[0]; // For demo, always show first product
-  const [selectedVariant, setSelectedVariant] = useState({ id: "v1-bk", title: "Black", sku: "WL-001-BK", sellPrice: 599, comparePrice: 899, costPrice: 280, stock: 200, options: { color: "Black" } });
+  const product: Product = FEATURED_PRODUCTS[0]; // For demo, always show first product
+  const [selectedVariant, setSelectedVariant] = useState(
+    product.variants?.[0] || { id: product.variantId, title: "Default", sku: product.sku, sellPrice: product.price, comparePrice: product.comparePrice, stock: product.stock }
+  );
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { toggle, isWishlisted } = useWishlist();
   const wishlisted = isWishlisted(product.slug);
-  const addItem = useCartStore((s) => s.addItem);
+  const addItem = useCartStore((s: any) => s.addItem);
 
   const discount = selectedVariant.comparePrice
     ? Math.round(((selectedVariant.comparePrice - selectedVariant.sellPrice) / selectedVariant.comparePrice) * 100)
@@ -145,13 +148,13 @@ export default function ProductDetailPage() {
                       key={i}
                       size={16}
                       className={cn(
-                        i < Math.round(product.avgRating) ? "text-amber-400 fill-amber-400" : "text-muted-foreground/30"
+                        i < Math.round(product.rating) ? "text-amber-400 fill-amber-400" : "text-muted-foreground/30"
                       )}
                     />
                   ))}
                 </div>
                 <span className="text-sm text-muted-foreground">
-                  {product.avgRating} ({product.reviewCount} reviews)
+                  {product.rating} ({product.reviewCount} reviews)
                 </span>
               </div>
             </div>
@@ -188,7 +191,7 @@ export default function ProductDetailPage() {
           <div className="mt-6">
             <p className="text-sm font-medium mb-3">Color: <span className="text-muted-foreground">{selectedVariant.title}</span></p>
             <div className="flex flex-wrap gap-2">
-              {product.variants.map((v) => (
+              {(product.variants || []).map((v: any) => (
                 <button
                   key={v.id}
                   onClick={() => setSelectedVariant(v)}
@@ -199,7 +202,7 @@ export default function ProductDetailPage() {
                       : "border-border hover:border-foreground/30"
                   )}
                 >
-                  <span className={cn("w-4 h-4 rounded-full", COLOR_MAP[v.options.color] || "bg-gray-500")} />
+                  <span className={cn("w-4 h-4 rounded-full", COLOR_MAP[v.options?.color || "Default"] || "bg-gray-500")} />
                   {v.title}
                   {selectedVariant.id === v.id && <Check size={14} className="text-primary" />}
                 </button>
@@ -246,7 +249,7 @@ export default function ProductDetailPage() {
           {/* Trust badges */}
           <div className="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-border">
             {[
-              { icon: Truck, label: `Delivery in ${product.shippingDays} days` },
+              { icon: Truck, label: `Delivery in ${product.shippingDays || 7} days` },
               { icon: Shield, label: "Secure Payment" },
               { icon: RotateCcw, label: "30-Day Returns" },
             ].map((b) => (
@@ -271,7 +274,7 @@ export default function ProductDetailPage() {
       <section className="mt-16 pt-8 border-t border-border">
         <h2 className="text-2xl font-bold mb-6">Customer Reviews</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {product.reviews.map((review) => (
+          {(product.reviews || []).map((review: any) => (
             <div key={review.id} className="p-5 rounded-2xl border border-border bg-card">
               <div className="flex items-center gap-1 mb-2">
                 {[...Array(5)].map((_, i) => (
