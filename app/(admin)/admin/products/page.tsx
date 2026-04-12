@@ -141,8 +141,8 @@ export default function AdminProductsPage() {
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-accent/30 flex-shrink-0">
-                          <img src={product.image} alt="" className="w-full h-full object-cover" />
+                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-accent/30 flex-shrink-0 relative">
+                          <Image src={product.image} alt={product.title} fill sizes="40px" className="object-cover" />
                         </div>
                         <div>
                           <p className="font-medium truncate max-w-[200px]">{product.title}</p>

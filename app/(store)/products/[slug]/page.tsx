@@ -8,45 +8,15 @@ import {
   ShoppingBag, Heart, Share2, Truck, Shield, RotateCcw,
   Star, ChevronLeft, ChevronRight, Check, Minus, Plus,
 } from "lucide-react";
-import { useCartStore } from "@/lib/store/cart";
+import { useWishlist } from "@/context/WishlistContext";
 import { formatCurrency } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
 import { ProductCard } from "@/components/storefront/ProductCard";
+import { FEATURED_PRODUCTS } from "@/lib/utils/demo";
 
 // Demo product data for the dynamic route
-const DEMO_PRODUCT = {
-  id: "1",
-  title: "Minimalist Leather Wallet",
-  slug: "minimalist-leather-wallet",
-  description:
-    "Premium genuine leather bifold wallet with RFID protection. Crafted from full-grain Italian leather, this slim-profile wallet features 6 card slots, a bill compartment, and a hidden pocket. The RFID-blocking technology protects your cards from unauthorized scanning.\n\nDesigned to age beautifully over time, developing a unique patina that tells your story. Fits perfectly in your front pocket without any bulk.",
-  images: [
-    "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800",
-    "https://images.unsplash.com/photo-1612902456551-404b9a18b646?w=800",
-    "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800",
-    "https://images.unsplash.com/photo-1606503825008-909a67e63c3d?w=800",
-  ],
-  variants: [
-    { id: "v1-bk", title: "Black", sku: "WL-001-BK", sellPrice: 599, comparePrice: 899, costPrice: 280, stock: 200, options: { color: "Black" } },
-    { id: "v1-br", title: "Brown", sku: "WL-001-BR", sellPrice: 599, comparePrice: 899, costPrice: 280, stock: 150, options: { color: "Brown" } },
-    { id: "v1-tn", title: "Tan", sku: "WL-001-TN", sellPrice: 649, comparePrice: 899, costPrice: 290, stock: 100, options: { color: "Tan" } },
-  ],
-  reviews: [
-    { id: "r1", author: "Rahul S.", rating: 5, title: "Excellent quality!", body: "The leather quality is amazing. Very slim and fits perfectly.", createdAt: "2024-12-15" },
-    { id: "r2", author: "Priya M.", rating: 4, title: "Great wallet", body: "Very well made. The RFID protection is a nice touch.", createdAt: "2024-12-10" },
-    { id: "r3", author: "Amit K.", rating: 5, title: "Perfect gift", body: "Bought this as a gift and it was a hit. Highly recommend!", createdAt: "2024-11-28" },
-  ],
-  avgRating: 4.7,
-  reviewCount: 124,
-  shippingDays: 5,
-};
-
-const RELATED = [
-  { id: "5", title: "Polarized Aviator Sunglasses", slug: "polarized-aviator-sunglasses", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600", price: 699, comparePrice: 999, stock: 300, reviewCount: 156, rating: 4.6, variantId: "v5", sku: "SG-005" },
-  { id: "4", title: "Urban Travel Backpack", slug: "urban-travel-backpack", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600", price: 1299, comparePrice: 1699, stock: 250, reviewCount: 67, rating: 4.3, variantId: "v4", sku: "BG-004" },
-  { id: "7", title: "Magnetic Phone Mount", slug: "magnetic-phone-mount", image: "https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=600", price: 399, comparePrice: 599, stock: 500, reviewCount: 45, rating: 4.2, variantId: "v7", sku: "PH-007" },
-  { id: "6", title: "Portable Bluetooth Speaker", slug: "portable-bluetooth-speaker", image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600", price: 1199, comparePrice: 1599, stock: 120, reviewCount: 92, rating: 4.4, variantId: "v6", sku: "SP-006" },
-];
+// Using shared demo data
+const RELATED = FEATURED_PRODUCTS.slice(4, 8);
 
 const COLOR_MAP: Record<string, string> = {
   Black: "bg-gray-900",
@@ -62,11 +32,12 @@ const COLOR_MAP: Record<string, string> = {
 };
 
 export default function ProductDetailPage() {
-  const product = DEMO_PRODUCT;
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  const product = FEATURED_PRODUCTS[0]; // For demo, always show first product
+  const [selectedVariant, setSelectedVariant] = useState({ id: "v1-bk", title: "Black", sku: "WL-001-BK", sellPrice: 599, comparePrice: 899, costPrice: 280, stock: 200, options: { color: "Black" } });
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [wishlist, setWishlist] = useState(false);
+  const { toggle, isWishlisted } = useWishlist();
+  const wishlisted = isWishlisted(product.slug);
   const addItem = useCartStore((s) => s.addItem);
 
   const discount = selectedVariant.comparePrice
@@ -118,7 +89,8 @@ export default function ProductDetailPage() {
                   alt={product.title}
                   fill
                   priority
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={85}
                   className="object-cover"
                 />
               </motion.div>
@@ -185,13 +157,13 @@ export default function ProductDetailPage() {
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => setWishlist(!wishlist)}
+                onClick={() => toggle(product.slug)}
                 className={cn(
                   "p-2.5 rounded-xl border transition-all",
-                  wishlist ? "bg-red-500/10 border-red-500/30 text-red-500" : "border-border hover:bg-accent"
+                  wishlisted ? "bg-red-500/10 border-red-500/30 text-red-500" : "border-border hover:bg-accent"
                 )}
               >
-                <Heart size={18} fill={wishlist ? "currentColor" : "none"} />
+                <Heart size={18} fill={wishlisted ? "currentColor" : "none"} />
               </button>
               <button className="p-2.5 rounded-xl border border-border hover:bg-accent transition-all">
                 <Share2 size={18} />

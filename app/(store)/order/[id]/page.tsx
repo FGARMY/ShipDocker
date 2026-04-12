@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { Package, Clock, Truck, CheckCircle2, ArrowLeft, ExternalLink, MapPin } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
@@ -135,8 +136,8 @@ export default function OrderTrackingPage() {
           <h2 className="font-bold mb-4">Items</h2>
           {order.items.map((item, i) => (
             <div key={i} className="flex gap-4">
-              <div className="w-16 h-16 rounded-xl bg-accent/30 overflow-hidden flex-shrink-0">
-                <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+              <div className="w-16 h-16 rounded-xl bg-accent/30 overflow-hidden flex-shrink-0 relative">
+                <Image src={item.image} alt={item.title} fill sizes="64px" className="object-cover" />
               </div>
               <div className="flex-1">
                 <p className="text-sm font-medium">{item.title}</p>

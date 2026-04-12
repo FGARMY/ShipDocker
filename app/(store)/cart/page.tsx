@@ -187,7 +187,7 @@ function CartItemRow({
     >
       <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-accent/30 flex-shrink-0">
         {item.image ? (
-          <Image src={item.image} alt={item.title} fill sizes="112px" className="object-cover" />
+          <Image src={item.image} alt={item.title} fill sizes="120px" quality={85} className="object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center"><ShoppingBag size={24} className="text-muted-foreground" /></div>
         )}

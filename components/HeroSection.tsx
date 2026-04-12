@@ -73,7 +73,7 @@ export function HeroSection() {
               href="/collections/trending"
               className="inline-flex items-center gap-2 px-8 py-3.5 border border-border bg-card/50 backdrop-blur-sm font-semibold rounded-xl hover:bg-accent hover:border-border/80 transition-all"
             >
-              See what's trending →
+              See what&apos;s trending →
             </Link>
           </div>
 
