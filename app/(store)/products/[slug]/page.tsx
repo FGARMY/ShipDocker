@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ShoppingBag, Heart, Share2, Truck, Shield, RotateCcw,
-  Star, ChevronLeft, ChevronRight, Check, Minus, Plus,
+  Star, ChevronLeft, ChevronRight, Check, Minus, Plus, Zap,
 } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlist } from "@/context/WishlistContext";

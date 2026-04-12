@@ -164,6 +164,8 @@ export default function HomePage() {
             <CategoryCard key={col.slug} {...col} />
           ))}
         </motion.div>
+      </section>
+
       {/* ═══ PROMOTIONAL BANNER (User Provided) ═══ */}
       <section className="px-4 sm:px-6 lg:px-8 py-10">
         <motion.div
@@ -232,7 +234,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ TESTIMONIALS (Problem 3) ═══ */}
+      {/* ═══ TESTIMONIALS ═══ */}
       <TestimonialsSection />
 
       {/* ═══ PROMO BANNER ═══ */}
