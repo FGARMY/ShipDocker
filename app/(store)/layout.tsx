@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/storefront/Navbar";
 import { Footer } from "@/components/storefront/Footer";
-import { TrustBar } from "@/components/storefront/TrustBar";
+import { TrustBar } from "@/components/TrustBar";
 import { WhatsAppButton } from "@/components/storefront/WhatsAppButton";
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {

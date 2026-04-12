@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Tag, ArrowLeft } from "lucide-react";
-import { TrustBarCompact } from "@/components/storefront/TrustBar";
+import { TrustBar } from "@/components/TrustBar";
 import { useCartStore, type CartItem } from "@/lib/store/cart";
 import { formatCurrency } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
@@ -158,7 +158,9 @@ export default function CartPage() {
               Taxes calculated at checkout
             </p>
 
-            <TrustBarCompact />
+            <div className="mt-4 pt-4 border-t border-border -mx-6 px-6 sm:mx-0 sm:px-0">
+              <TrustBar />
+            </div>
           </div>
         </div>
       </div>
