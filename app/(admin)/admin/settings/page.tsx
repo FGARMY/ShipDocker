@@ -78,11 +78,11 @@ export default function AdminSettingsPage() {
                 <h3 className="font-bold">Store Information</h3>
                 <div>
                   <label className="block text-sm font-medium mb-1.5">Store Name</label>
-                  <input defaultValue="ShipDocker Store" className="w-full px-4 py-2.5 text-sm bg-background border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary/50" />
+                  <input defaultValue="SMDrop Store" className="w-full px-4 py-2.5 text-sm bg-background border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary/50" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1.5">Store Domain</label>
-                  <input defaultValue="store.shipdocker.com" className="w-full px-4 py-2.5 text-sm bg-background border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary/50" />
+                  <input defaultValue="store.smdrop.com" className="w-full px-4 py-2.5 text-sm bg-background border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary/50" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -156,7 +156,7 @@ export default function AdminSettingsPage() {
               <h3 className="font-bold">Email Configuration</h3>
               <div>
                 <label className="block text-sm font-medium mb-1.5">From Address</label>
-                <input defaultValue="orders@shipdocker.com" className="w-full px-4 py-2.5 text-sm bg-background border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary/50" />
+                <input defaultValue="orders@smdrop.com" className="w-full px-4 py-2.5 text-sm bg-background border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary/50" />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1.5">Resend API Key</label>

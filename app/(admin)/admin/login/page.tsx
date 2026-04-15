@@ -7,7 +7,7 @@ import { Lock, Mail, Loader2 } from "lucide-react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@shipdocker.com");
+  const [email, setEmail] = useState("admin@smdrop.com");
   const [password, setPassword] = useState("admin123456");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -49,10 +49,10 @@ export default function AdminLoginPage() {
       >
         <div className="text-center mb-8">
           <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30 mb-4">
-            <span className="text-white font-bold text-lg">SD</span>
+            <span className="text-white font-bold text-lg">SM</span>
           </div>
           <h1 className="text-2xl font-bold">Admin Login</h1>
-          <p className="text-sm text-muted-foreground mt-1">Sign in to ShipDocker Dashboard</p>
+          <p className="text-sm text-muted-foreground mt-1">Sign in to SMDrop Dashboard</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4 p-6 rounded-2xl border border-border bg-card">
@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
-              placeholder="admin@shipdocker.com"
+              placeholder="admin@smdrop.com"
               className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-sm"
               required
             />
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
           </button>
 
           <p className="text-xs text-muted-foreground text-center pt-2">
-            Demo: admin@shipdocker.com / admin123456
+            Demo: admin@smdrop.com / admin123456
           </p>
         </form>
       </motion.div>

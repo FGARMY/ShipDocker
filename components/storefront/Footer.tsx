@@ -194,11 +194,11 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest font-bold">
-          <p>© {new Date().getFullYear()} ShipDocker India. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} SMDrop India. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 grayscale opacity-50">
               <Package size={14} />
-              Powered by ShipDocker
+              Powered by SMDrop
             </span>
           </div>
         </div>
@@ -211,9 +211,9 @@ function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5 min-h-[44px]">
       <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
-        <span className="text-white font-bold text-sm">SD</span>
+        <span className="text-white font-bold text-sm">SM</span>
       </div>
-      <span className="text-lg font-bold">ShipDocker</span>
+      <span className="text-lg font-bold">SMDrop</span>
     </Link>
   );
 }

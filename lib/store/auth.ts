@@ -35,6 +35,6 @@ export const useAuthStore = create<AuthStore>()(
 
       setToken: (token) => set({ token }),
     }),
-    { name: "shipdocker-auth" }
+    { name: "smdrop-auth" }
   )
 );

@@ -48,6 +48,6 @@ export const useWishlistStore = create<WishlistStore>()(
 
       getCount: () => get().items.length,
     }),
-    { name: "shipdocker-wishlist" }
+    { name: "smdrop-wishlist" }
   )
 );

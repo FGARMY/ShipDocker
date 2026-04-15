@@ -12,7 +12,7 @@ async function main() {
     update: {},
     create: {
       id: "default-store",
-      name: "ShipDocker Store",
+      name: "SMDrop Store",
       domain: "localhost",
       currency: "INR",
       timezone: "Asia/Kolkata",
@@ -28,11 +28,11 @@ async function main() {
   // 2. Create admin user
   const adminPassword = await hashPassword(process.env.ADMIN_PASSWORD || "admin123456");
   const admin = await prisma.user.upsert({
-    where: { email: "admin@shipdocker.com" },
+    where: { email: "admin@smdrop.com" },
     update: {},
     create: {
       storeId: store.id,
-      email: "admin@shipdocker.com",
+      email: "admin@smdrop.com",
       passwordHash: adminPassword,
       firstName: "Admin",
       lastName: "User",
@@ -268,7 +268,7 @@ async function main() {
       storeId: store.id,
       title: "About Us",
       slug: "about",
-      content: "# About ShipDocker\n\nWe curate the finest products from global suppliers and deliver them to your doorstep. Our mission is to make premium products accessible to everyone at fair prices.\n\n## Our Promise\n- 🚚 Free shipping on orders over ₹999\n- 🔄 30-day hassle-free returns\n- 🛡️ Secure payments with Razorpay\n- ⭐ 10,000+ happy customers",
+      content: "# About SMDrop\n\nWe curate the finest products from global suppliers and deliver them to your doorstep. Our mission is to make premium products accessible to everyone at fair prices.\n\n## Our Promise\n- 🚚 Free shipping on orders over ₹999\n- 🔄 30-day hassle-free returns\n- 🛡️ Secure payments with Razorpay\n- ⭐ 10,000+ happy customers",
       publishedAt: new Date(),
     },
   });

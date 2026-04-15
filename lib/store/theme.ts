@@ -16,6 +16,6 @@ export const useThemeStore = create<ThemeStore>()(
       theme: "dark",
       setTheme: (theme) => set({ theme }),
     }),
-    { name: "shipdocker-theme" }
+    { name: "smdrop-theme" }
   )
 );

@@ -1,25 +1,25 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: shipdocker-postgres
+    container_name: smdrop-postgres
     restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: shipdocker
-      POSTGRES_PASSWORD: shipdocker_dev_2024
-      POSTGRES_DB: shipdocker
+      POSTGRES_USER: smdrop
+      POSTGRES_PASSWORD: smdrop_dev_2024
+      POSTGRES_DB: smdrop
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U shipdocker"]
+      test: ["CMD-SHELL", "pg_isready -U smdrop"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   redis:
     image: redis:7-alpine
-    container_name: shipdocker-redis
+    container_name: smdrop-redis
     restart: unless-stopped
     ports:
       - "6379:6379"
@@ -33,13 +33,13 @@ services:
 
   meilisearch:
     image: getmeili/meilisearch:v1.6
-    container_name: shipdocker-meilisearch
+    container_name: smdrop-meilisearch
     restart: unless-stopped
     ports:
       - "7700:7700"
     environment:
       MEILI_ENV: development
-      MEILI_MASTER_KEY: shipdocker_meili_dev_key
+      MEILI_MASTER_KEY: smdrop_meili_dev_key
     volumes:
       - meili_data:/meili_data
 

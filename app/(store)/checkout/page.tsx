@@ -76,7 +76,7 @@ export default function CheckoutPage() {
         key: data.key,
         amount: Math.round(data.amount * 100),
         currency: data.currency,
-        name: "ShipDocker",
+        name: "SMDrop",
         description: "Order Payment",
         order_id: data.razorpayOrderId,
         handler: async function (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) {

@@ -15,7 +15,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [wishlist, setWishlist] = useState<string[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem("shipdocker-wishlist");
+    const stored = localStorage.getItem("smdrop-wishlist");
     if (stored) {
       try {
         setWishlist(JSON.parse(stored));
@@ -26,7 +26,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const toggle = (slug: string) => {
     setWishlist((prev) => {
       const next = prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug];
-      localStorage.setItem("shipdocker-wishlist", JSON.stringify(next));
+      localStorage.setItem("smdrop-wishlist", JSON.stringify(next));
       return next;
     });
   };

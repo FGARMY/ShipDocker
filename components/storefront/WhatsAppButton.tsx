@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const PHONE_NUMBER = "919XXXXXXXXX"; // Replace with actual WhatsApp Business number
 const PRE_FILLED_MESSAGE = encodeURIComponent(
-  "Hi ShipDocker! I'm interested in your products. Can you help me with:"
+  "Hi SMDrop! I'm interested in your products. Can you help me with:"
 );
 
 const QUICK_QUESTIONS = [
@@ -54,7 +54,7 @@ export function WhatsAppButton() {
                   <MessageCircle size={18} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-white text-sm font-semibold">ShipDocker Support</p>
+                  <p className="text-white text-sm font-semibold">SMDrop Support</p>
                   <p className="text-white/70 text-xs">Typically replies within 30 min</p>
                 </div>
               </div>

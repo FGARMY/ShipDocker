@@ -13,8 +13,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "ShipDocker — Premium Dropshipping Store",
-    template: "%s | ShipDocker",
+    default: "SMDrop — Premium Dropshipping Store",
+    template: "%s | SMDrop",
   },
   description:
     "Discover premium products at unbeatable prices. Free shipping on orders over ₹999. Fast delivery, easy returns.",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    siteName: "ShipDocker",
+    siteName: "SMDrop",
   },
   robots: { index: true, follow: true },
 };
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                var theme = localStorage.getItem('shipdocker-theme');
+                var theme = localStorage.getItem('smdrop-theme');
                 if (theme) {
                   try { theme = JSON.parse(theme).state.theme; } catch(e) {}
                 }

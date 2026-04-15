@@ -82,11 +82,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="flex items-center justify-between h-16 px-4 border-b border-border">
           <Link href="/admin" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg shadow-primary/25 flex-shrink-0">
-              <span className="text-white font-bold text-xs">SD</span>
+              <span className="text-white font-bold text-xs">SM</span>
             </div>
             {sidebarOpen && (
               <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm font-bold">
-                ShipDocker
+                SMDrop
               </motion.span>
             )}
           </Link>

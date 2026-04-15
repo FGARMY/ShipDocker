@@ -94,6 +94,6 @@ export const useCartStore = create<CartStore>()(
         return get().items.reduce((sum, item) => sum + item.quantity, 0);
       },
     }),
-    { name: "shipdocker-cart" }
+    { name: "smdrop-cart" }
   )
 );

@@ -5,10 +5,10 @@ Here are your deep links for various customer scenarios. You can embed these in 
 ## 1. Pre-filled Deep Links
 
 - **General Enquiry:**
-  `https://wa.me/91XXXXXXXXXX?text=Hi%2C%20ShipDocker%21%20I%20have%20a%20general%20question%20about%20your%20store.`
+  `https://wa.me/91XXXXXXXXXX?text=Hi%2C%20SMDrop%21%20I%20have%20a%20general%20question%20about%20your%20store.`
   
 - **Order Tracking:**
-  `https://wa.me/91XXXXXXXXXX?text=Hi%2C%20ShipDocker%21%20Could%20you%20help%20me%20track%20my%20recent%20order%3F%20My%20order%20ID%20is%3A%20`
+  `https://wa.me/91XXXXXXXXXX?text=Hi%2C%20SMDrop%21%20Could%20you%20help%20me%20track%20my%20recent%20order%3F%20My%20order%20ID%20is%3A%20`
   
 - **Return/Refund Request:**
   `https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20need%20to%20request%20a%20return%2Frefund%20for%20my%20recent%20purchase.%20Can%20you%20guide%20me%3F`
@@ -35,7 +35,7 @@ Save these in your WhatsApp Business app under **Quick Replies** so your support
 
 ### Product Authenticity
 `Shortcut: /genuine`
-> "Hello! ✅ Yes, absolutely. All ShipDocker products are 100% genuine and sourced directly from verified manufacturers. We do not sell fakes or replicas. This is why we confidently offer our 7-Day Money-Back Guarantee and 256-bit secure checkout. You're in safe hands!"
+> "Hello! ✅ Yes, absolutely. All SMDrop products are 100% genuine and sourced directly from verified manufacturers. We do not sell fakes or replicas. This is why we confidently offer our 7-Day Money-Back Guarantee and 256-bit secure checkout. You're in safe hands!"
 
 ### Cash on Delivery (COD)
 `Shortcut: /cod`
