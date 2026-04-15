@@ -37,23 +37,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => setMounted(true), []);
 
-  // Check auth (simplified for demo)
+  // Check auth
   const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("admin_token");
     if (!token && pathname !== "/admin/login") {
-      // For demo, auto-authenticate
-      setIsAuth(true);
+      router.push("/admin/login");
     } else {
       setIsAuth(true);
     }
-  }, [pathname]);
+  }, [pathname, router]);
 
   if (pathname === "/admin/login") {
     return <>{children}</>;
   }
 
-  if (!mounted) return null;
+  if (!mounted || !isAuth) return null;
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -81,9 +80,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="flex items-center justify-between h-16 px-4 border-b border-border">
           <Link href="/admin" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg shadow-primary/25 flex-shrink-0">
-              <span className="text-white font-bold text-xs">SM</span>
-            </div>
+            <img src="/logo.png" alt="SMDrop Logo" className="w-8 h-8 object-contain" />
             {sidebarOpen && (
               <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm font-bold">
                 SMDrop

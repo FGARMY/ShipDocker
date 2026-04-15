@@ -210,9 +210,7 @@ export function Footer() {
 function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5 min-h-[44px]">
-      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
-        <span className="text-white font-bold text-sm">SM</span>
-      </div>
+      <img src="/logo.png" alt="SMDrop Logo" className="w-10 h-10 object-contain" />
       <span className="text-lg font-bold">SMDrop</span>
     </Link>
   );

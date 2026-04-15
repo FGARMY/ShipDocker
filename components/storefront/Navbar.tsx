@@ -55,12 +55,10 @@ export function Navbar() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Left: Logo */}
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex items-center gap-2.5 group min-h-[44px]">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg shadow-primary/25">
-                  <span className="text-white font-bold text-sm">SD</span>
-                </div>
-                <span className="text-lg font-bold tracking-tight">
-                  Ship<span className="gradient-text">Docker</span>
+              <Link href="/" className="flex items-center gap-2 group min-h-[44px]">
+                <img src="/favicon.png" alt="SMDrop Logo" className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-xl font-bold tracking-tight">
+                  SM<span className="gradient-text">Drop</span>
                 </span>
               </Link>
             </div>
@@ -88,7 +86,7 @@ export function Navbar() {
               >
                 <Search size={20} />
               </button>
-              
+
               <Link
                 href="/wishlist"
                 className="relative p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -105,7 +103,7 @@ export function Navbar() {
                   </motion.span>
                 )}
               </Link>
-              
+
               <Link
                 href="/cart"
                 className="relative p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -122,7 +120,7 @@ export function Navbar() {
                   </motion.span>
                 )}
               </Link>
-              
+
               <button
                 onClick={toggleTheme}
                 className="hidden sm:flex p-2.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground min-w-[44px] min-h-[44px] items-center justify-center"
