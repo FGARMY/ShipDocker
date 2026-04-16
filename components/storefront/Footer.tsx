@@ -2,25 +2,25 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Package, Mail, Instagram, Twitter, Facebook, Check, Loader2 } from "lucide-react";
+import { Package, Mail, Instagram, Twitter, Facebook, Check, Loader2, ShieldCheck, Truck, RotateCcw, Zap, CreditCard, Lock } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 const FOOTER_LINKS = {
-  Shop: [
-    { label: "All Products", href: "/products" },
+  "Shop Lifestyle": [
     { label: "New Arrivals", href: "/collections/new-arrivals" },
-    { label: "Trending", href: "/collections/trending" },
-    { label: "Sale", href: "/collections/sale" },
+    { label: "Bestsellers", href: "/collections/trending" },
+    { label: "Electronics", href: "/collections/electronics" },
+    { label: "Accessories", href: "/collections/accessories" },
   ],
-  Support: [
-    { label: "Contact Us", href: "/pages/contact" },
-    { label: "FAQ", href: "/pages/faq" },
-    { label: "Shipping Info", href: "/pages/shipping" },
-    { label: "Returns Policy", href: "/pages/returns" },
+  "Our Service": [
+    { label: "Track Order", href: "/account/orders" },
+    { label: "Shipping Policy", href: "/pages/shipping" },
+    { label: "Returns Center", href: "/pages/returns" },
+    { label: "Help Center (FAQ)", href: "/pages/faq" },
   ],
-  Company: [
-    { label: "About Us", href: "/pages/about" },
-    { label: "Blog", href: "/blog" },
+  "The Company": [
+    { label: "About SMDrop", href: "/pages/about" },
+    { label: "Authenticity", href: "/pages/authenticity" },
     { label: "Privacy Policy", href: "/pages/privacy" },
     { label: "Terms of Service", href: "/pages/terms" },
   ],
@@ -31,204 +31,145 @@ function NewsletterForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const isValidEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) { setErrorMsg("Please enter your email"); return; }
-    if (!isValidEmail(email)) { setErrorMsg("Please enter a valid email"); return; }
-
+    if (!email.trim()) return;
     setStatus("loading");
-    setErrorMsg("");
-
-    // Simulate API call — replace with actual newsletter endpoint
-    await new Promise((r) => setTimeout(r, 800));
+    await new Promise((r) => setTimeout(r, 1000));
     setStatus("success");
     setEmail("");
   };
 
   if (status === "success") {
     return (
-      <div className="flex items-center gap-3 px-4 py-3 bg-green-500/10 border border-green-500/20 rounded-xl">
-        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-          <Check size={16} className="text-white" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-green-600 dark:text-green-400">You&apos;re in! 🎉</p>
-          <p className="text-xs text-muted-foreground">Check your inbox for your 10% off code.</p>
-        </div>
+      <div className="flex items-center gap-3 px-4 py-3 bg-green-500/5 border border-green-500/10 rounded-2xl">
+        <Check size={18} className="text-green-500" />
+        <p className="text-sm font-semibold text-green-600">You're in! 🎉</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full md:w-auto">
-      <div className="flex gap-2">
-        <div className="relative flex-1 md:w-72">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => { setEmail(e.target.value); setErrorMsg(""); }}
-            placeholder="Enter your email"
-            className="w-full pl-10 pr-4 py-2.5 text-sm bg-background border border-border rounded-lg outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-            aria-label="Email for newsletter"
-          />
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <div className="relative group">
+        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={18} />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email address"
+          className="w-full pl-12 pr-4 py-4 bg-accent/30 border border-border/30 rounded-2xl outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium"
+        />
         <button
           type="submit"
-          disabled={status === "loading"}
-          className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap disabled:opacity-60 flex items-center gap-2"
+          className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20"
         >
-          {status === "loading" ? (
-            <><Loader2 size={14} className="animate-spin" /> Subscribing...</>
-          ) : (
-            "Get 10% Off"
-          )}
+          Join
         </button>
       </div>
-      {errorMsg && <p className="text-xs text-red-500 mt-1.5 ml-1">{errorMsg}</p>}
     </form>
   );
 }
 
 export function Footer() {
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-
-  const toggleSection = (title: string) => {
-    setOpenSections(prev => ({ ...prev, [title]: !prev[title] }));
-  };
-
   return (
-    <footer className="bg-card border-t border-border mt-auto pt-12 pb-8">
+    <footer className="bg-background border-t border-border mt-24 pt-24 pb-12">
       <div className="container-max">
-        {/* Top Section: Desktop layout */}
-        <div className="hidden lg:flex flex-row gap-12 mb-16">
-          {/* Logo & Tagline */}
-          <div className="flex-1 max-w-sm">
-            <Logo />
-            <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-              Premium products, unbeatable prices. Your one-stop shop for trending products delivered across India.
-            </p>
-            <SocialLinks />
-          </div>
-
-          {/* Links Grid */}
-          <div className="flex-[2] grid grid-cols-3 gap-8">
-            {Object.entries(FOOTER_LINKS).map(([title, links]) => (
-              <div key={title}>
-                <h4 className="font-bold text-sm mb-6 uppercase tracking-widest">{title}</h4>
-                <ul className="space-y-4">
-                  {links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* Top: Trust Badges (Minimal) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pb-16 border-b border-border mb-16">
+            {[
+                { icon: ShieldCheck, title: "100% Secure", desc: "Trusted SSL" },
+                { icon: CreditCard, title: "Payments", desc: "UPI, Cards, EMI" },
+                { icon: Lock, title: "Privacy", desc: "Data Encrypted" },
+                { icon: Truck, title: "Express", desc: "Fast Delivery" },
+            ].map((item) => (
+                <div key={item.title} className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-accent/50 flex items-center justify-center text-primary flex-shrink-0">
+                        <item.icon size={20} />
+                    </div>
+                    <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest">{item.title}</h4>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">{item.desc}</p>
+                    </div>
+                </div>
             ))}
-          </div>
-
-          {/* Newsletter */}
-          <div className="flex-1 max-w-sm">
-            <h4 className="font-bold text-sm mb-6 uppercase tracking-widest text-primary">Get 10% Off</h4>
-            <p className="text-sm text-muted-foreground mb-6">
-              Join 8,000+ Indian shoppers. Get exclusive deals & your discount code instantly.
-            </p>
-            <NewsletterForm />
-          </div>
         </div>
 
-        {/* Mobile/Tablet Layout */}
-        <div className="lg:hidden flex flex-col gap-10">
-          {/* Tablet Grid for Links */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-            {/* Logo Section (Mobile/Tablet) */}
-            <div className="md:col-span-1">
-              <Logo />
-              <p className="text-sm text-muted-foreground mt-4 mb-6">
-                Premium products delivered across India.
-              </p>
-              <SocialLinks />
-            </div>
-
-            {/* Newsletter (Mobile/Tablet) */}
-            <div className="md:col-span-1">
-              <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-primary">Stay in the loop</h4>
-              <NewsletterForm />
-            </div>
-
-            {/* Links - Accordion on Mobile, Static on Tablet */}
-            {Object.entries(FOOTER_LINKS).map(([title, links]) => (
-              <div key={title} className="border-b border-border md:border-none">
-                <button
-                  onClick={() => toggleSection(title)}
-                  className="w-full py-4 flex items-center justify-between md:cursor-default md:pointer-events-none min-h-[44px]"
-                >
-                  <h4 className="font-bold text-sm uppercase tracking-widest">{title}</h4>
-                  <span className={cn(
-                    "md:hidden transition-transform duration-200",
-                    openSections[title] ? "rotate-180" : ""
-                  )}>
-                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </span>
-                </button>
-                <ul className={cn(
-                  "space-y-3 pb-4 md:pb-0 md:block",
-                  openSections[title] ? "block" : "hidden"
-                )}>
-                  {links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="text-[13px] md:text-sm text-muted-foreground hover:text-foreground py-2 block min-h-[44px]">
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-16">
+          {/* Brand Info */}
+          <div className="lg:col-span-2 space-y-8">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-xl shadow-primary/20">
+                <Package className="text-white" size={22} />
               </div>
-            ))}
+              <span className="text-xl font-bold tracking-tight">
+                SM<span className="gradient-text">Drop</span>
+              </span>
+            </Link>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+              Your destination for premium electronics and lifestyle gear. 
+              Join 10,000+ satisfied customers across India.
+            </p>
+            <div className="flex gap-4">
+              {[Instagram, Twitter, Facebook].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-10 h-10 rounded-xl bg-accent/50 hover:bg-primary/10 hover:text-primary flex items-center justify-center transition-all duration-300"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Links */}
+          {Object.entries(FOOTER_LINKS).map(([title, links]) => (
+            <div key={title} className="lg:col-span-1">
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-foreground mb-8">
+                {title}
+              </h4>
+              <ul className="space-y-4">
+                {links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Newsletter */}
+          <div className="lg:col-span-1 min-w-[200px]">
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-foreground mb-8">
+              Join the Insider
+            </h4>
+            <NewsletterForm />
+            <p className="text-[10px] text-muted-foreground mt-4 leading-relaxed uppercase tracking-widest font-semibold opacity-50">
+                Early drops & exclusive price-cuts.
+            </p>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest font-bold">
-          <p>© {new Date().getFullYear()} SMDrop India. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 grayscale opacity-50">
-              <Package size={14} />
-              Powered by SMDrop
-            </span>
+        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex items-center gap-8">
+            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+              © {new Date().getFullYear()} SMDrop India. All Rights Reserved.
+            </p>
+          </div>
+          
+          <div className="flex items-center gap-6 grayscale opacity-30">
+            {/* Payment Icons Simulation */}
+            <span className="text-[9px] font-bold uppercase tracking-widest">VISA</span>
+            <span className="text-[9px] font-bold uppercase tracking-widest">MASTERCARD</span>
+            <span className="text-[9px] font-bold uppercase tracking-widest">UPI</span>
+            <span className="text-[9px] font-bold uppercase tracking-widest">RAZORPAY</span>
           </div>
         </div>
       </div>
     </footer>
-  );
-}
-
-function Logo() {
-  return (
-    <Link href="/" className="flex items-center gap-2.5 min-h-[44px]">
-      <img src="/logo.png" alt="SMDrop Logo" className="w-10 h-10 object-contain" />
-      <span className="text-lg font-bold">SMDrop</span>
-    </Link>
-  );
-}
-
-function SocialLinks() {
-  return (
-    <div className="flex items-center gap-3">
-      {[Instagram, Twitter, Facebook].map((Icon, i) => (
-        <a
-          key={i}
-          href="#"
-          className="w-11 h-11 rounded-xl bg-accent hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-200"
-          aria-label="Social"
-        >
-          <Icon size={18} />
-        </a>
-      ))}
-    </div>
   );
 }

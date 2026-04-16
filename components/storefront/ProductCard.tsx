@@ -74,20 +74,20 @@ export function ProductCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="group"
+      className="group relative"
     >
       <Link href={`/products/${slug}`} className="block">
         {/* Image Container */}
-        <div className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden bg-accent/50 mb-3 border border-transparent group-hover:border-border transition-colors duration-300">
+        <div className="relative aspect-square md:aspect-[4/5] rounded-[2rem] overflow-hidden bg-accent/30 mb-4 border border-transparent group-hover:border-primary/20 transition-all duration-500 shadow-sm group-hover:shadow-2xl group-hover:shadow-primary/10">
           {image ? (
             <Image
               src={image}
               alt={title}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              quality={85}
+              quality={90}
               priority={priority}
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
@@ -95,93 +95,90 @@ export function ProductCard({
             </div>
           )}
 
-          {/* Badges Container - Fix 4: Smaller on mobile */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1 z-10 items-start pointer-events-none">
+          {/* Glass Overlay on Hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          {/* Badges Container */}
+          <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 items-start pointer-events-none">
             {discount > 0 && (
-              <span className="px-1.5 md:px-2.5 py-0.5 md:py-1 bg-red-500 text-white text-[10px] md:text-xs font-bold rounded-full shadow-lg uppercase tracking-wider">
-                -{discount}%
+              <span className="px-3 py-1 bg-red-500 text-white text-[10px] md:text-xs font-black rounded-lg shadow-xl uppercase tracking-widest">
+                {discount}% OFF
               </span>
             )}
             {badge && (
               <span className={cn(
-                "px-1.5 md:px-2.5 py-0.5 md:py-1 text-white text-[10px] md:text-xs font-bold rounded-full shadow-lg uppercase tracking-wider",
+                "px-3 py-1 text-white text-[10px] md:text-xs font-black rounded-lg shadow-xl uppercase tracking-widest",
                 badge === 'bestseller' ? "bg-amber-500" : 
-                badge === 'new' ? "bg-blue-500" : "bg-red-600 animate-pulse"
+                badge === 'new' ? "bg-blue-600" : "bg-primary animate-pulse"
               )}>
                 {badge.replace('-', ' ')}
               </span>
             )}
           </div>
 
-          {/* Wishlist heart - Fix 11: 44x44px tap target */}
+          {/* Wishlist heart */}
           <button
             onClick={handleWishlist}
             className={cn(
-              "absolute top-2 right-2 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-md z-10",
+              "absolute top-4 right-4 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-xl z-20 backdrop-blur-md",
               wishlisted
                 ? "bg-red-500 text-white scale-110"
-                : "bg-white/80 dark:bg-black/40 backdrop-blur-sm text-muted-foreground hover:bg-red-500 hover:text-white"
+                : "bg-white/10 text-white hover:bg-red-500 hover:text-white border border-white/20"
             )}
             aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
-            <Heart size={18} className={wishlisted ? "fill-current" : ""} />
+            <Heart size={20} className={wishlisted ? "fill-current" : ""} />
           </button>
 
           {/* Out of stock */}
           {stock <= 0 && (
-            <div className="absolute inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center">
-              <span className="px-4 py-2 bg-background/80 text-foreground text-xs md:text-sm font-medium rounded-full border border-border">
-                Out of Stock
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-30">
+              <span className="px-6 py-2 bg-white text-black text-xs md:text-sm font-black rounded-full uppercase tracking-widest">
+                Sold Out
               </span>
             </div>
           )}
 
-          {/* Quick Add Overlay - Fix 4: Visible on mobile, hover on desktop */}
-          <div className="absolute inset-x-0 bottom-0 p-2 md:p-3 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
+          {/* Quick Add Overlay - Glassmorphic */}
+          <div className="absolute inset-x-4 bottom-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out z-20">
             {variantId && stock > 0 && (
               <button
                 onClick={handleQuickAdd}
-                className="w-full py-2.5 bg-primary text-primary-foreground text-[10px] md:text-xs font-bold rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-xl min-h-[44px] md:min-h-0"
+                className="w-full py-4 bg-white/90 backdrop-blur-md text-black text-xs font-black rounded-2xl hover:bg-white transition-all flex items-center justify-center gap-2 shadow-2xl min-h-[44px]"
               >
-                <ShoppingBag size={14} />
-                Quick Add
+                <ShoppingBag size={16} />
+                ADD TO CART
               </button>
             )}
           </div>
         </div>
 
-        {/* Info - Fix 4: Compact mobile typography */}
-        <div className="px-1">
-          <h3 className="text-xs md:text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
-            {title}
-          </h3>
-          <div className="flex items-center gap-2 mt-1 md:mt-1.5">
-            <span className="text-sm md:text-base font-bold">{formatCurrency(price)}</span>
-            {comparePrice && comparePrice > price && (
-              <span className="text-[10px] md:text-sm text-muted-foreground line-through">
-                {formatCurrency(comparePrice)}
-              </span>
+        {/* Info */}
+        <div className="px-2 space-y-1">
+          <div className="flex justify-between items-start gap-2">
+            <h3 className="text-sm md:text-base font-bold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+              {title}
+            </h3>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-base md:text-lg font-black tracking-tight">{formatCurrency(price)}</span>
+              {comparePrice && comparePrice > price && (
+                <span className="text-xs md:text-sm text-muted-foreground line-through decoration-red-500/50">
+                  {formatCurrency(comparePrice)}
+                </span>
+              )}
+            </div>
+            
+            {reviewCount > 0 && (
+              <div className="flex items-center gap-1 bg-amber-400/10 px-2 py-0.5 rounded-md">
+                <Star size={12} className="text-amber-500 fill-amber-500" />
+                <span className="text-[10px] md:text-xs font-bold text-amber-600">{rating}</span>
+                <span className="text-[10px] text-muted-foreground ml-0.5">({reviewCount})</span>
+              </div>
             )}
           </div>
-          {reviewCount > 0 && (
-            <div className="flex items-center gap-1 mt-1 md:mt-1.5">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={10}
-                    className={cn(
-                      "md:size-3",
-                      i < Math.round(rating || 0)
-                        ? "text-amber-400 fill-amber-400"
-                        : "text-muted-foreground/30"
-                    )}
-                  />
-                ))}
-              </div>
-              <span className="text-[10px] md:text-xs text-muted-foreground">({reviewCount})</span>
-            </div>
-          )}
         </div>
       </Link>
     </motion.div>

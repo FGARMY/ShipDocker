@@ -7,73 +7,52 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   Truck,
-  Shield,
+  ShieldCheck,
   RotateCcw,
   Zap,
-  Star,
   TrendingUp,
   Package,
   Sparkles,
   Clock,
   Copy,
   Check,
+  Star,
+  Users,
+  Award,
 } from "lucide-react";
 import { HeroSection } from "@/components/HeroSection";
-import { ProductCard, ProductCardSkeleton } from "@/components/storefront/ProductCard";
+import { ProductCard } from "@/components/storefront/ProductCard";
 import { CategoryCard } from "@/components/CategoryCard";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { FEATURED_PRODUCTS, COLLECTIONS } from "@/lib/utils/demo";
+import { cn } from "@/lib/utils/cn";
 
 const TRUST_BADGES = [
-  { icon: Truck, title: "Free Shipping", desc: "On orders over ₹999" },
-  { icon: Shield, title: "Secure Payments", desc: "UPI, Cards & COD accepted" },
-  { icon: RotateCcw, title: "Easy Returns", desc: "7-day no-questions-asked" },
-  { icon: Zap, title: "Fast Delivery", desc: "3–7 business days PAN India" },
+  { icon: Truck, title: "Shipping", desc: "Fast PAN India" },
+  { icon: ShieldCheck, title: "Quality", desc: "Cerified Genuine" },
+  { icon: RotateCcw, title: "Returns", desc: "7-Day No-Questions" },
+  { icon: Zap, title: "Secure", desc: "UPI, Cards, EMI" },
 ];
 
 const stagger = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
-const item = {
+const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
-
-function CouponCopyButton() {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = () => {
-    navigator.clipboard.writeText("FIRST10");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-  return (
-    <button
-      onClick={handleCopy}
-      className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-mono text-white transition-colors"
-    >
-      FIRST10
-      {copied ? <Check size={14} /> : <Copy size={14} />}
-    </button>
-  );
-}
 
 function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    // Set deadline to midnight tonight
-    const getDeadline = () => {
+    const updateTimer = () => {
       const now = new Date();
       const deadline = new Date(now);
       deadline.setHours(23, 59, 59, 999);
-      return deadline;
-    };
-
-    const updateTimer = () => {
-      const now = new Date().getTime();
-      const distance = getDeadline().getTime() - now;
+      const distance = deadline.getTime() - now.getTime();
       if (distance <= 0) return;
       setTimeLeft({
         hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
@@ -81,73 +60,69 @@ function CountdownTimer() {
         seconds: Math.floor((distance % (1000 * 60)) / 1000),
       });
     };
-
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="inline-flex items-center gap-2 text-sm">
-      <Clock size={14} className="text-amber-400" />
-      <span className="text-muted-foreground">Ends in</span>
-      <div className="flex gap-1">
-        {[
-          { v: timeLeft.hours, l: "h" },
-          { v: timeLeft.minutes, l: "m" },
-          { v: timeLeft.seconds, l: "s" },
-        ].map((u) => (
-          <span key={u.l} className="px-1.5 py-0.5 bg-foreground/10 rounded font-mono text-xs font-bold">
-            {String(u.v).padStart(2, "0")}{u.l}
+    <div className="flex gap-2">
+      {[
+        { v: timeLeft.hours, l: "h" },
+        { v: timeLeft.minutes, l: "m" },
+        { v: timeLeft.seconds, l: "s" },
+      ].map((u) => (
+        <div key={u.l} className="flex flex-col items-center">
+          <span className="w-10 h-10 flex items-center justify-center bg-accent text-foreground rounded-lg font-bold text-lg shadow-sm">
+            {String(u.v).padStart(2, "0")}
           </span>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }
 
 export default function HomePage() {
   return (
-    <>
+    <div className="bg-background">
       {/* ═══ HERO ═══ */}
       <HeroSection />
 
-      {/* ═══ TRUST BADGES ═══ */}
-      <section className="border-y border-border bg-card/50 section-padding">
-        <div className="container-max">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {TRUST_BADGES.map((badge, i) => (
-              <motion.div
-                key={badge.title}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center gap-3"
-              >
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                  <badge.icon size={20} />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold">{badge.title}</p>
-                  <p className="text-xs text-muted-foreground">{badge.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+      {/* ═══ TRUST BAR (Minimal) ═══ */}
+      <section className="relative z-20 -mt-10 lg:-mt-16 container-max mb-16 lg:mb-24">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {TRUST_BADGES.map((badge, i) => (
+            <motion.div
+              key={badge.title}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + i * 0.1 }}
+              className="bg-card border border-border/50 shadow-sm p-4 sm:p-6 rounded-[1.5rem] flex items-center gap-4"
+            >
+              <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary">
+                <badge.icon size={20} />
+              </div>
+              <div className="space-y-0.5">
+                <p className="text-xs font-bold tracking-tight uppercase">{badge.title}</p>
+                <p className="text-[10px] text-muted-foreground leading-tight">{badge.desc}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* ═══ COLLECTIONS ═══ */}
+      {/* ═══ CATEGORIES ═══ */}
       <section className="container-max section-padding">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold">Shop by Category</h1>
-            <p className="text-muted-foreground mt-1 text-sm">Browse our curated collections</p>
+        <div className="flex items-end justify-between mb-10">
+          <div className="space-y-1">
+            <p className="text-[10px] font-bold text-primary tracking-widest uppercase">Collections</p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Shop by <span className="gradient-text">Category.</span>
+            </h2>
           </div>
           <Link
-            href="/collections"
-            className="text-sm font-medium text-primary hover:underline hidden sm:flex items-center gap-1 min-h-[44px]"
+            href="/products"
+            className="hidden sm:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all h-11"
           >
             View All <ArrowRight size={14} />
           </Link>
@@ -157,54 +132,33 @@ export default function HomePage() {
           variants={stagger}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8"
         >
           {COLLECTIONS.map((col) => (
-            <CategoryCard key={col.slug} {...col} />
+            <motion.div key={col.slug} variants={fadeInUp}>
+              <CategoryCard {...col} />
+            </motion.div>
           ))}
         </motion.div>
       </section>
 
-      {/* ═══ PROMOTIONAL BANNER (User Provided) ═══ */}
-      <section className="px-4 sm:px-6 lg:px-8 py-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative h-[250px] sm:h-[400px] rounded-[2rem] overflow-hidden group shadow-2xl shadow-primary/10"
-        >
-          <Image
-            src="/home-banner.png"
-            alt="Flash Deals - SM Drop"
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-1000"
-            priority
-          />
-          <Link 
-            href="/products" 
-            className="absolute inset-0 z-10"
-            aria-label="Shop now"
-          />
-        </motion.div>
-      </section>
-
-      {/* ═══ TRENDING PRODUCTS ═══ */}
-      <section className="bg-accent/30 section-padding">
+      {/* ═══ TRENDING PRODUCTS (Minimal) ═══ */}
+      <section className="bg-accent/10 py-20 lg:py-32 overflow-hidden border-y border-border/30">
         <div className="container-max">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-[10px] font-semibold text-primary mb-3">
-                <TrendingUp size={12} />
-                TRENDING NOW
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-bold">Most Popular Products</h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div className="space-y-1">
+              <p className="text-[10px] font-bold text-primary tracking-widest uppercase">Top Rated</p>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Trending <span className="gradient-text">Now.</span>
+              </h2>
             </div>
             <Link
               href="/products"
-              className="text-sm font-medium text-primary hover:underline hidden sm:flex items-center gap-1 min-h-[44px]"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-white text-xs font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/10 h-14"
             >
-              See All <ArrowRight size={14} />
+              Shop All Products
+              <ArrowRight size={16} />
             </Link>
           </div>
 
@@ -212,73 +166,88 @@ export default function HomePage() {
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] lg:grid-cols-4 gap-4 sm:gap-6"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
           >
-            {FEATURED_PRODUCTS.map((product, i) => (
-              <motion.div key={product.id} variants={item}>
-                <ProductCard {...product} priority={i < 4} />
+            {FEATURED_PRODUCTS.slice(0, 4).map((product) => (
+              <motion.div key={product.id} variants={fadeInUp}>
+                <ProductCard {...product} />
               </motion.div>
             ))}
           </motion.div>
-
-          <div className="mt-10 text-center sm:hidden">
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground text-sm font-semibold rounded-xl"
-            >
-              View All Products
-              <ArrowRight size={16} />
-            </Link>
-          </div>
         </div>
+      </section>
+
+      {/* ═══ PROMO (Minimal) ═══ */}
+      <section className="container-max section-padding">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="relative overflow-hidden rounded-[2.5rem] bg-accent/30 border border-border/50 p-8 sm:p-16 lg:p-24"
+        >
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest">
+                Insider Pass
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold tracking-tight leading-none">
+                Get ₹250 OFF <br />
+                <span className="text-muted-foreground">Your First Order.</span>
+              </h2>
+              <p className="text-base text-muted-foreground max-w-md">
+                Join the SMDrop community and unlock your exclusive welcome discount. Valid for new members only.
+              </p>
+              
+              <div className="flex flex-wrap gap-6 items-center">
+                <div className="px-5 py-3 bg-white border border-border rounded-xl flex items-center gap-4">
+                  <div className="space-y-0.5">
+                    <p className="text-[9px] font-bold text-muted-foreground/60 uppercase tracking-widest">Code</p>
+                    <p className="text-lg font-bold tracking-tight text-primary">FIRST10</p>
+                  </div>
+                  <button className="w-9 h-9 rounded-lg bg-primary/5 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all">
+                    <Copy size={16} />
+                  </button>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CountdownTimer />
+                </div>
+              </div>
+              
+              <Link
+                href="/products"
+                className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-primary text-white text-sm font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/10 h-16"
+              >
+                Claim Now
+                <ArrowRight size={20} />
+              </Link>
+            </div>
+
+            <div className="hidden lg:block relative aspect-square">
+                <Image 
+                    src="/hero_premium_electronics_1776321124309.png" 
+                    alt="SMDrop Essentials" 
+                    fill 
+                    className="object-contain drop-shadow-2xl opacity-20 dark:opacity-40"
+                />
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* ═══ TESTIMONIALS ═══ */}
       <TestimonialsSection />
 
-      {/* ═══ PROMO BANNER ═══ */}
-      <section className="container-max section-padding">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-purple-600 to-blue-600 p-8 sm:p-12 lg:p-16"
-        >
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-60 h-60 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-
-          <div className="relative max-w-xl">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white">
-              First Time Here? Save ₹250+
-            </h2>
-            <p className="mt-3 text-white/80 text-lg">
-              Use code <CouponCopyButton /> at checkout.
-              Valid on orders above ₹499. Today only.
-            </p>
-            <div className="mt-4">
-              <CountdownTimer />
-            </div>
-            <Link
-              href="/products"
-              className="mt-6 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-white/90 transition-all shadow-2xl min-h-[44px]"
-            >
-              Claim My 10% Off
-              <ArrowRight size={18} />
-            </Link>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ═══ STATS ═══ */}
-      <section className="border-t border-border bg-card/50 section-padding">
+      {/* ═══ STATS (Minimal) ═══ */}
+      <section className="bg-background py-24 section-padding">
         <div className="container-max">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
             {[
-              { value: "8,000+", label: "Happy Indian Customers" },
-              { value: "500+", label: "Premium Products" },
-              { value: "2,400+", label: "Verified Reviews" },
-              { value: "4.8★", label: "Average Rating" },
+              { icon: Users, value: "10,000+", label: "Happy Shoppers" },
+              { icon: ShieldCheck, value: "500+", label: "Vetted Items" },
+              { icon: Star, value: "4.8★", label: "Store Rating" },
+              { icon: Award, value: "100%", label: "Authentic" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -286,9 +255,15 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
+                className="flex flex-col items-center text-center gap-4"
               >
-                <p className="text-3xl sm:text-4xl font-bold gradient-text">{stat.value}</p>
-                <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                <div className="w-12 h-12 rounded-xl bg-accent/30 flex items-center justify-center text-primary">
+                  <stat.icon size={22} />
+                </div>
+                <div>
+                  <p className="text-3xl font-bold tracking-tight gradient-text">{stat.value}</p>
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-1">{stat.label}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -297,6 +272,6 @@ export default function HomePage() {
 
       {/* ═══ NEWSLETTER ═══ */}
       <NewsletterSection />
-    </>
+    </div>
   );
 }
