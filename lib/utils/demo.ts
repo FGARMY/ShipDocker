@@ -18,6 +18,7 @@ export interface Product {
   reviews?: any[];
   viewers?: number;
   soldCount?: number;
+  benefits?: string[];
 }
 
 export const FEATURED_PRODUCTS: Product[] = [
