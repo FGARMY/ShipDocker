@@ -66,11 +66,19 @@ export function HeroSection() {
               <span className="gradient-text">Hear Every Detail.</span>
             </h1>
 
-            <p className="text-base text-muted-foreground mb-6 leading-relaxed max-w-md">
+            <p className="text-base text-muted-foreground mb-4 leading-relaxed max-w-md">
               Noise-cancelling headphones that block the world out and let the music in.
               Premium quality at a price that doesn&apos;t hurt.
               <span className="font-bold text-foreground"> Loved by 10,000+ Indians.</span>
             </p>
+
+            {/* Urgency line */}
+            <div className="flex items-center gap-2 mb-6 text-sm">
+              <span className="live-dot" />
+              <span className="font-bold text-red-500 animate-pulse">
+                🔥 Only {heroProduct.stock} left in stock — selling fast
+              </span>
+            </div>
 
             {/* Product quick info card */}
             <div className="flex items-center gap-4 mb-6 p-4 rounded-2xl bg-accent/40 border border-border/50 max-w-sm">
