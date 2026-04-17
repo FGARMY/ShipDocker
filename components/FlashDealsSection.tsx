@@ -125,7 +125,7 @@ function FlashDealCard({ product }: { product: typeof FLASH_DEALS[0] }) {
             className="w-full flex items-center justify-center gap-2 py-3.5 bg-primary text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20 min-h-[48px]"
           >
             <ShoppingBag size={18} />
-            Grab Before It&apos;s Gone
+            Don&apos;t Miss Out — Buy Now
           </button>
         </div>
       </div>
@@ -144,10 +144,10 @@ export function FlashDealsSection() {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 text-red-500 text-[10px] font-bold uppercase tracking-widest">
               <Zap size={12} className="fill-current" />
-              Limited Time Deals
+              ⚡ Selling Out Fast
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              Flash <span className="text-gradient-gold">Sale.</span>
+              These Deals Won&apos;t <span className="text-gradient-gold">Last.</span>
             </h2>
           </div>
 
