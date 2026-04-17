@@ -6,29 +6,29 @@ import { Truck, ShieldCheck, Sparkles, RotateCcw } from "lucide-react";
 const FEATURES = [
   {
     icon: Truck,
-    title: "Lightning Fast Delivery",
-    description: "Free PAN-India shipping on orders above ₹999. Most orders delivered in 2-5 business days.",
+    title: "Never Wait Too Long",
+    description: "Your order ships within 24 hours. Free delivery on orders above ₹999 — right to your doorstep, PAN India.",
     color: "text-blue-500",
     bg: "bg-blue-500/10",
   },
   {
     icon: ShieldCheck,
-    title: "100% Secure Payments",
-    description: "All transactions are secured with 256-bit SSL encryption. We accept UPI, Cards, Net Banking & COD.",
+    title: "Your Money Is Safe",
+    description: "Pay how you want — UPI, Cards, Net Banking, or Cash on Delivery. Every transaction is encrypted and secure.",
     color: "text-green-500",
     bg: "bg-green-500/10",
   },
   {
     icon: Sparkles,
-    title: "Quality Guaranteed",
-    description: "Every product goes through a 3-step quality check before dispatch. We only source from verified suppliers.",
+    title: "No More Cheap Knockoffs",
+    description: "Every product passes a 3-step quality check before it ships. If it's not premium, we don't sell it. Period.",
     color: "text-purple-500",
     bg: "bg-purple-500/10",
   },
   {
     icon: RotateCcw,
-    title: "Hassle-Free Returns",
-    description: "Not satisfied? Return within 7 days — no questions asked. Refund processed within 48 hours.",
+    title: "Don't Love It? Send It Back",
+    description: "Changed your mind? No problem. Return within 7 days — no questions asked. Full refund in 48 hours.",
     color: "text-amber-500",
     bg: "bg-amber-500/10",
   },
@@ -54,9 +54,12 @@ export function WhyChooseUs() {
         <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">
           Why 10,000+ Customers Trust Us
         </p>
-        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-          The SMDrop <span className="gradient-text">Promise.</span>
+        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+          Shopping Should Feel <span className="gradient-text">Effortless.</span>
         </h2>
+        <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+          We built SMDrop for people who are tired of cheap products, slow shipping, and terrible customer service.
+        </p>
       </div>
 
       <motion.div
