@@ -11,6 +11,7 @@ import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { FlashDealsSection } from "@/components/FlashDealsSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { NewsletterSection } from "@/components/NewsletterSection";
+import { ProductStorySection } from "@/components/ProductStorySection";
 import { FEATURED_PRODUCTS, COLLECTIONS } from "@/lib/utils/demo";
 import { useCartStore } from "@/lib/store/cart";
 import { formatCurrency } from "@/lib/utils/format";
@@ -50,7 +51,10 @@ export default function HomePage() {
       {/* ═══ 2. TRUST STRIP — Instant Credibility ═══ */}
       <TrustStrip />
 
-      {/* ═══ 3. BEST SELLERS — 6 Products Only ═══ */}
+      {/* ═══ 3. PRODUCT STORY — Problem → Solution ═══ */}
+      <ProductStorySection />
+
+      {/* ═══ 4. BEST SELLERS — 6 Products Only ═══ */}
       <section className="bg-accent/20 py-16 lg:py-24 border-y border-border/30">
         <div className="container-max">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
