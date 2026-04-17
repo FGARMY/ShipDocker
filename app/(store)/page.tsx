@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, ShieldCheck, Star, Award } from "lucide-react";
+import { ArrowRight, Users, ShieldCheck, Star, Award, MessageCircle, Truck, RotateCcw, CreditCard } from "lucide-react";
 import { HeroSection } from "@/components/HeroSection";
 import { TrustStrip } from "@/components/TrustStrip";
 import { ProductCard } from "@/components/storefront/ProductCard";
@@ -15,27 +15,71 @@ import { FEATURED_PRODUCTS, COLLECTIONS } from "@/lib/utils/demo";
 
 const stagger = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 export default function HomePage() {
   return (
     <div className="bg-background">
-      {/* ═══ 1. HERO ═══ */}
+      {/* ═══ 1. HERO — Single Product Focus ═══ */}
       <HeroSection />
 
-      {/* ═══ 2. TRUST STRIP ═══ */}
+      {/* ═══ 2. TRUST STRIP — Instant Credibility ═══ */}
       <TrustStrip />
 
-      {/* ═══ 3. SHOP BY CATEGORY ═══ */}
+      {/* ═══ 3. TRENDING PRODUCTS — 6 Products Only ═══ */}
+      <section className="bg-accent/20 py-16 lg:py-24 border-y border-border/30">
+        <div className="container-max">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+            <div className="space-y-1">
+              <p className="text-[10px] font-bold text-red-500 tracking-widest uppercase">🔥 Trending Now</p>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Our <span className="gradient-text">Best Sellers.</span>
+              </h2>
+              <p className="text-sm text-muted-foreground max-w-md">
+                Handpicked products loved by thousands. Quality guaranteed or your money back.
+              </p>
+            </div>
+            <Link
+              href="/products"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/10 min-h-[48px] whitespace-nowrap"
+            >
+              View All Products
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
+          >
+            {FEATURED_PRODUCTS.slice(0, 6).map((product, i) => (
+              <motion.div key={product.id} variants={fadeInUp}>
+                <ProductCard {...product} priority={i < 2} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══ 4. WHY CHOOSE US — Trust Building ═══ */}
+      <WhyChooseUs />
+
+      {/* ═══ 5. FLASH DEALS — Urgency + Conversion ═══ */}
+      <FlashDealsSection />
+
+      {/* ═══ 6. SHOP BY CATEGORY ═══ */}
       <section className="container-max section-padding">
         <div className="flex items-end justify-between mb-10">
           <div className="space-y-1">
-            <p className="text-[10px] font-bold text-primary tracking-widest uppercase">Collections</p>
+            <p className="text-[10px] font-bold text-primary tracking-widest uppercase">Browse</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
               Shop by <span className="gradient-text">Category.</span>
             </h2>
@@ -63,51 +107,45 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* ═══ 4. TRENDING PRODUCTS ═══ */}
-      <section className="bg-accent/20 py-16 lg:py-24 border-y border-border/30 overflow-hidden">
-        <div className="container-max">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-            <div className="space-y-1">
-              <p className="text-[10px] font-bold text-primary tracking-widest uppercase">🔥 Hot Right Now</p>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                Trending <span className="gradient-text">Products.</span>
-              </h2>
-            </div>
-            <Link
-              href="/products"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/10"
-            >
-              Shop All Products
-              <ArrowRight size={16} />
-            </Link>
-          </div>
+      {/* ═══ 7. CUSTOMER REVIEWS — Social Proof ═══ */}
+      <TestimonialsSection />
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
-          >
-            {FEATURED_PRODUCTS.slice(0, 8).map((product, i) => (
-              <motion.div key={product.id} variants={fadeInUp}>
-                <ProductCard {...product} priority={i < 2} />
+      {/* ═══ 8. TRUST & LEGITIMACY — Full-Width ═══ */}
+      <section className="bg-accent/20 border-y border-border/30 py-16 lg:py-20">
+        <div className="container-max">
+          <div className="text-center mb-12">
+            <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">Your Safety Matters</p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Shop with <span className="gradient-text">Confidence.</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {[
+              { icon: CreditCard, title: "COD Available", desc: "Pay at your doorstep. No online payment needed.", color: "text-green-500", bg: "bg-green-500/10" },
+              { icon: RotateCcw, title: "7-Day Returns", desc: "Not happy? Easy returns within 7 days, no questions.", color: "text-blue-500", bg: "bg-blue-500/10" },
+              { icon: ShieldCheck, title: "Secure Checkout", desc: "256-bit SSL encryption. Your data is always safe.", color: "text-purple-500", bg: "bg-purple-500/10" },
+              { icon: MessageCircle, title: "WhatsApp Support", desc: "Chat with us anytime. We reply within 30 minutes.", color: "text-emerald-500", bg: "bg-emerald-500/10" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08 }}
+                viewport={{ once: true }}
+                className="text-center group"
+              >
+                <div className={`w-14 h-14 rounded-2xl ${item.bg} flex items-center justify-center ${item.color} mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <item.icon size={24} />
+                </div>
+                <h3 className="text-sm font-bold mb-1">{item.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ═══ 5. WHY CHOOSE US ═══ */}
-      <WhyChooseUs />
-
-      {/* ═══ 6. FLASH DEALS ═══ */}
-      <FlashDealsSection />
-
-      {/* ═══ 7. TESTIMONIALS ═══ */}
-      <TestimonialsSection />
-
-      {/* ═══ 8. STATS ═══ */}
+      {/* ═══ 9. STATS — Social Proof Numbers ═══ */}
       <section className="bg-background section-padding">
         <div className="container-max">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -138,7 +176,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 9. NEWSLETTER ═══ */}
+      {/* ═══ 10. NEWSLETTER — Lead Capture ═══ */}
       <NewsletterSection />
     </div>
   );
