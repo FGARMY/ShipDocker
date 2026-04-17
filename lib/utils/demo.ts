@@ -45,6 +45,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 3,
     viewers: 47,
     soldCount: 1847,
+    benefits: ["RFID-blocking technology", "Full-grain Italian leather", "Fits 8 cards + cash"],
     variants: [
       { id: "v1-black", title: "Black Leather", price: 599, stock: 12 },
       { id: "v1-brown", title: "Cognac Brown", price: 649, stock: 6 },
@@ -74,6 +75,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 2,
     viewers: 73,
     soldCount: 2341,
+    benefits: ["AMOLED display, 10-day battery", "Heart rate + SpO2 tracking", "IP68 water resistant"],
     variants: [
       { id: "v2-silver", title: "Space Silver", price: 1799, stock: 8 },
       { id: "v2-black", title: "Midnight Black", price: 1799, stock: 7 },
@@ -102,6 +104,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 4,
     viewers: 89,
     soldCount: 3120,
+    benefits: ["40hr battery, fast charging", "Active noise cancellation", "Memory foam ear cushions"],
   },
   { 
     id: "4", 
@@ -124,6 +127,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 3,
     viewers: 34,
     soldCount: 892,
+    benefits: ["Water-resistant material", "Hidden anti-theft zip pocket", "USB charging port built-in"],
   },
   { 
     id: "5", 
@@ -147,6 +151,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 3,
     viewers: 56,
     soldCount: 1543,
+    benefits: ["UV400 + polarized lenses", "Ultra-light titanium frame", "Scratch-resistant coating"],
   },
   { 
     id: "6", 
@@ -170,6 +175,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 2,
     viewers: 41,
     soldCount: 1102,
+    benefits: ["IPX7 fully waterproof", "12hr playtime, deep bass", "Compact & portable design"],
   },
   { 
     id: "7", 
@@ -192,6 +198,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 3,
     viewers: 28,
     soldCount: 567,
+    benefits: ["N52 neodymium magnet", "360° adjustable rotation", "Works with all phones"],
   },
   { 
     id: "8", 
@@ -214,6 +221,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     shippingDays: 3,
     viewers: 63,
     soldCount: 934,
+    benefits: ["10W wireless fast charger", "5 brightness + 3 color modes", "USB-C powered"],
   },
 ];
 
