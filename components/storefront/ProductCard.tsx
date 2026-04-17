@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingBag, Star, Heart, Eye, TrendingUp, Flame } from "lucide-react";
+import { ShoppingBag, Star, Heart, Eye, TrendingUp, Flame, Check } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlist } from "@/context/WishlistContext";
 import { formatCurrency } from "@/lib/utils/format";
@@ -26,11 +26,12 @@ interface ProductCardProps {
   badge?: 'bestseller' | 'new' | 'limited';
   viewers?: number;
   soldCount?: number;
+  benefits?: string[];
 }
 
 const BADGE_CONFIG = {
   bestseller: { label: "Best Seller", icon: TrendingUp, class: "bg-amber-500" },
-  new: { label: "New Arrival", icon: Star, class: "bg-blue-600" },
+  new: { label: "Hot Deal", icon: Flame, class: "bg-blue-600" },
   limited: { label: "Limited Stock", icon: Flame, class: "bg-red-500 animate-pulse" },
 };
 
@@ -50,6 +51,7 @@ export function ProductCard({
   badge,
   viewers,
   soldCount,
+  benefits,
 }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
   const { toggle, isWishlisted } = useWishlist();
@@ -100,7 +102,7 @@ export function ProductCard({
     >
       <Link href={`/products/${slug}`} className="block">
         {/* Image Container */}
-        <div className="relative aspect-square md:aspect-[4/5] rounded-2xl overflow-hidden bg-accent/30 mb-3 border border-transparent group-hover:border-primary/20 transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:shadow-primary/5">
+        <div className="relative aspect-square rounded-2xl overflow-hidden bg-accent/30 mb-3 border border-transparent group-hover:border-primary/20 transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:shadow-primary/5">
           {image ? (
             <Image
               src={image}
@@ -181,8 +183,20 @@ export function ProductCard({
             {title}
           </h3>
 
+          {/* Benefits (2-3 bullet points) */}
+          {benefits && benefits.length > 0 && (
+            <div className="space-y-0.5 pt-0.5">
+              {benefits.slice(0, 2).map((b) => (
+                <div key={b} className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                  <Check size={10} className="text-green-500 flex-shrink-0" />
+                  <span className="line-clamp-1">{b}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Price + Rating row */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pt-1">
             <div className="flex items-center gap-2">
               <span className="text-base font-black tracking-tight">{formatCurrency(price)}</span>
               {comparePrice && comparePrice > price && (
@@ -201,10 +215,10 @@ export function ProductCard({
 
           {/* Urgency triggers */}
           <div className="flex items-center justify-between pt-0.5">
-            {stock > 0 && stock <= 30 && (
+            {stock > 0 && stock <= 50 && (
               <span className="text-[10px] font-bold text-red-500 flex items-center gap-1">
                 <Flame size={10} className="fill-current" />
-                Only {stock} left
+                {stock <= 10 ? `Only ${stock} left!` : `Selling fast`}
               </span>
             )}
             {liveViewers > 0 && (
@@ -226,8 +240,9 @@ export function ProductCardSkeleton() {
       <div className="aspect-square rounded-2xl skeleton mb-3" />
       <div className="px-1 space-y-2">
         <div className="h-4 skeleton rounded w-3/4" />
+        <div className="h-3 skeleton rounded w-full" />
+        <div className="h-3 skeleton rounded w-2/3" />
         <div className="h-5 skeleton rounded w-1/3" />
-        <div className="h-3 skeleton rounded w-1/2" />
       </div>
     </div>
   );

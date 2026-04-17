@@ -3,150 +3,187 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, ShieldCheck, Truck, Banknote, RotateCcw } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, Truck, Banknote, RotateCcw, Star, Check, Eye } from "lucide-react";
 import { FEATURED_PRODUCTS } from "@/lib/utils/demo";
 import { formatCurrency } from "@/lib/utils/format";
+import { useCartStore } from "@/lib/store/cart";
 
 const HERO_TRUST = [
   { icon: Truck, text: "Free Shipping" },
-  { icon: Banknote, text: "COD Available" },
-  { icon: RotateCcw, text: "Easy Returns" },
+  { icon: Banknote, text: "Cash on Delivery" },
+  { icon: RotateCcw, text: "7-Day Easy Returns" },
   { icon: ShieldCheck, text: "Secure Checkout" },
 ];
 
 export function HeroSection() {
-  const showcaseProducts = FEATURED_PRODUCTS.slice(0, 4);
+  const heroProduct = FEATURED_PRODUCTS[2]; // NC Headphones — best seller
+  const addItem = useCartStore((s) => s.addItem);
+  const discount = heroProduct.comparePrice
+    ? Math.round(((heroProduct.comparePrice - heroProduct.price) / heroProduct.comparePrice) * 100)
+    : 0;
+
+  const handleAddToCart = () => {
+    addItem({
+      variantId: heroProduct.variantId,
+      productId: heroProduct.id,
+      title: heroProduct.title,
+      variantTitle: "Default",
+      price: heroProduct.price,
+      comparePrice: heroProduct.comparePrice,
+      image: heroProduct.image,
+      stock: heroProduct.stock,
+      sku: heroProduct.sku,
+    });
+  };
 
   return (
-    <section className="relative min-h-[600px] lg:min-h-[720px] flex items-center overflow-hidden bg-background">
+    <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden bg-background">
       {/* Subtle background mesh */}
-      <div className="absolute inset-0 bg-gradient-mesh opacity-50" />
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute inset-0 bg-gradient-mesh opacity-40" />
+      <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-primary/5 rounded-full blur-3xl -translate-y-1/3 translate-x-1/4" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4" />
 
-      <div className="container-max relative z-10 w-full pt-16 pb-12 lg:pt-24 lg:pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="container-max relative z-10 w-full py-12 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="max-w-2xl"
+            className="max-w-xl order-2 lg:order-1"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-bold uppercase tracking-widest mb-5">
               <Sparkles size={12} />
-              Trending Products · Delivered Fast
+              ⭐ Best Seller — 3,000+ Sold
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
-              Premium Products,
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
+              Upgrade Your
               <br />
-              <span className="gradient-text">Unbeatable Prices.</span>
+              Everyday Life with
+              <br />
+              <span className="gradient-text">Smart Products.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-muted-foreground mb-8 leading-relaxed max-w-lg">
-              Curated quality products at wholesale prices. Free shipping,
-              easy returns, and COD available across India.
+            <p className="text-base text-muted-foreground mb-6 leading-relaxed max-w-md">
+              Premium quality, unbeatable prices, and free shipping across India.
+              Loved by <span className="font-bold text-foreground">10,000+ customers</span>.
             </p>
 
+            {/* Product quick info */}
+            <div className="flex items-center gap-4 mb-6 p-4 rounded-2xl bg-accent/40 border border-border/50 max-w-sm">
+              <div className="w-14 h-14 rounded-xl overflow-hidden relative flex-shrink-0 border border-border/50">
+                <Image src={heroProduct.image} alt={heroProduct.title} fill className="object-cover" />
+              </div>
+              <div>
+                <p className="text-xs font-bold line-clamp-1">{heroProduct.title}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-lg font-black text-primary">{formatCurrency(heroProduct.price)}</span>
+                  {heroProduct.comparePrice && (
+                    <span className="text-xs text-muted-foreground line-through">{formatCurrency(heroProduct.comparePrice)}</span>
+                  )}
+                  {discount > 0 && (
+                    <span className="text-[10px] font-bold text-red-500 bg-red-500/10 px-1.5 py-0.5 rounded">{discount}% OFF</span>
+                  )}
+                </div>
+              </div>
+            </div>
+
             {/* Dual CTAs */}
-            <div className="flex flex-wrap gap-4 mb-10">
+            <div className="flex flex-wrap gap-3 mb-8">
               <Link
-                href="/products"
+                href={`/products/${heroProduct.slug}`}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white text-sm font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/20 min-h-[52px]"
               >
                 Shop Now
                 <ArrowRight size={18} />
               </Link>
-              <Link
-                href="/collections/trending"
+              <button
+                onClick={handleAddToCart}
                 className="inline-flex items-center gap-2 px-8 py-4 border-2 border-border text-foreground text-sm font-bold rounded-2xl hover:bg-accent hover:border-primary/30 transition-all min-h-[52px]"
               >
-                Explore Deals
-              </Link>
+                Add to Cart
+              </button>
             </div>
 
-            {/* Trust badges - inline */}
-            <div className="flex flex-wrap gap-x-6 gap-y-3">
+            {/* Trust badges */}
+            <div className="grid grid-cols-2 gap-x-6 gap-y-3">
               {HERO_TRUST.map((item) => (
-                <div key={item.text} className="flex items-center gap-2 text-muted-foreground">
-                  <item.icon size={16} className="text-primary" />
-                  <span className="text-xs font-bold uppercase tracking-wider">{item.text}</span>
+                <div key={item.text} className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                    <item.icon size={16} />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{item.text}</span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right: Product showcase grid */}
+          {/* Right: Hero Product Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="hidden lg:block"
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="relative order-1 lg:order-2"
           >
-            <div className="grid grid-cols-2 gap-4">
-              {showcaseProducts.map((product, i) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
-                >
-                  <Link
-                    href={`/products/${product.slug}`}
-                    className={`group relative block overflow-hidden rounded-2xl bg-accent/30 border border-border/50 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 ${
-                      i === 0 ? "row-span-1" : ""
-                    }`}
-                  >
-                    <div className="relative aspect-square">
-                      <Image
-                        src={product.image}
-                        alt={product.title}
-                        fill
-                        sizes="(max-width: 1024px) 50vw, 25vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
-                      {/* Quick info overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                        <p className="text-white text-xs font-bold truncate">{product.title}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-white text-sm font-black">{formatCurrency(product.price)}</span>
-                          {product.comparePrice && (
-                            <span className="text-white/60 text-xs line-through">{formatCurrency(product.comparePrice)}</span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+            <Link href={`/products/${heroProduct.slug}`} className="block group">
+              <div className="relative aspect-square max-w-[540px] mx-auto rounded-3xl overflow-hidden bg-accent/30 border border-border/50 shadow-2xl shadow-primary/5 group-hover:shadow-primary/10 transition-all duration-500">
+                <Image
+                  src={heroProduct.image}
+                  alt={heroProduct.title}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
 
-                    {/* Badge */}
-                    {product.badge && (
-                      <span className={`absolute top-3 left-3 px-2.5 py-1 text-white text-[9px] font-black rounded-md shadow-lg uppercase tracking-wider ${
-                        product.badge === 'bestseller' ? 'bg-amber-500' :
-                        product.badge === 'new' ? 'bg-blue-600' : 'bg-primary'
-                      }`}>
-                        {product.badge === 'bestseller' ? '⭐ Best Seller' :
-                         product.badge === 'new' ? '✨ New' : '🔥 Limited'}
-                      </span>
-                    )}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+                {/* Discount badge */}
+                {discount > 0 && (
+                  <div className="absolute top-5 left-5 px-4 py-2 bg-red-500 text-white text-sm font-black rounded-xl shadow-xl animate-bounce-subtle">
+                    {discount}% OFF
+                  </div>
+                )}
+
+                {/* Rating overlay */}
+                <div className="absolute top-5 right-5 flex items-center gap-1.5 px-3 py-2 bg-white/90 dark:bg-black/70 backdrop-blur-md rounded-xl shadow-lg">
+                  <Star size={14} className="text-amber-500 fill-amber-500" />
+                  <span className="text-sm font-bold">{heroProduct.rating}</span>
+                  <span className="text-xs text-muted-foreground">({heroProduct.reviewCount})</span>
+                </div>
+
+                {/* Viewers overlay */}
+                <div className="absolute bottom-5 left-5 flex items-center gap-2 px-3 py-2 bg-white/90 dark:bg-black/70 backdrop-blur-md rounded-xl shadow-lg">
+                  <Eye size={14} className="text-primary" />
+                  <span className="text-xs font-bold">{heroProduct.viewers} people viewing</span>
+                </div>
+
+                {/* Benefits overlay */}
+                <div className="absolute bottom-5 right-5 px-4 py-3 bg-white/90 dark:bg-black/70 backdrop-blur-md rounded-xl shadow-lg hidden sm:block">
+                  <div className="space-y-1.5">
+                    {heroProduct.benefits?.slice(0, 3).map((b) => (
+                      <div key={b} className="flex items-center gap-2 text-xs font-medium">
+                        <Check size={12} className="text-green-500 flex-shrink-0" />
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Link>
 
             {/* Social proof counter */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mt-6 flex items-center justify-center gap-3 py-3 px-5 bg-card border border-border/50 rounded-2xl"
+              transition={{ delay: 0.6 }}
+              className="mt-5 flex items-center justify-center gap-3 py-3 px-5 bg-card border border-border/50 rounded-2xl max-w-[540px] mx-auto"
             >
               <div className="flex -space-x-2">
-                {["PS", "RV", "AI", "VN"].map((initial, i) => (
+                {["PS", "RV", "AI", "VN", "SP"].map((initial, i) => (
                   <div
                     key={initial}
                     className={`w-7 h-7 rounded-full border-2 border-background flex items-center justify-center text-[9px] font-bold text-white ${
-                      ["bg-pink-500", "bg-blue-500", "bg-purple-500", "bg-green-500"][i]
+                      ["bg-pink-500", "bg-blue-500", "bg-purple-500", "bg-green-500", "bg-amber-500"][i]
                     }`}
                   >
                     {initial}
@@ -162,7 +199,7 @@ export function HeroSection() {
       </div>
 
       {/* Bottom gradient blend */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 }
