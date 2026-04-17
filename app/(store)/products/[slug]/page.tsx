@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlist } from "@/context/WishlistContext";
+import { useParams } from "next/navigation";
 import { formatCurrency } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
 import { ProductCard } from "@/components/storefront/ProductCard";
@@ -33,9 +34,13 @@ const COLOR_MAP: Record<string, string> = {
 };
 
 export default function ProductDetailPage() {
-  const product: Product = FEATURED_PRODUCTS[0]; // For demo, always show first product
+  const params = useParams();
+  const slug = params.slug as string;
+  
+  const product = FEATURED_PRODUCTS.find(p => p.slug === slug) || FEATURED_PRODUCTS[0];
+  
   const [selectedVariant, setSelectedVariant] = useState(
-    product.variants?.[0] || { id: product.variantId, title: "Default", sku: product.sku, sellPrice: product.price, comparePrice: product.comparePrice, stock: product.stock }
+    product.variants?.[0] || { id: product.variantId, title: "Default", sku: product.sku, price: product.price, comparePrice: product.comparePrice, stock: product.stock }
   );
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -44,7 +49,7 @@ export default function ProductDetailPage() {
   const addItem = useCartStore((s: any) => s.addItem);
 
   const discount = selectedVariant.comparePrice
-    ? Math.round(((selectedVariant.comparePrice - selectedVariant.sellPrice) / selectedVariant.comparePrice) * 100)
+    ? Math.round(((selectedVariant.comparePrice - (selectedVariant.price || selectedVariant.sellPrice)) / selectedVariant.comparePrice) * 100)
     : 0;
 
   const handleAddToCart = () => {
@@ -54,7 +59,7 @@ export default function ProductDetailPage() {
         productId: product.id,
         title: product.title,
         variantTitle: selectedVariant.title,
-        price: selectedVariant.sellPrice,
+        price: selectedVariant.price || selectedVariant.sellPrice,
         comparePrice: selectedVariant.comparePrice,
         image: product.images[0],
         stock: selectedVariant.stock,
@@ -176,12 +181,12 @@ export default function ProductDetailPage() {
 
           {/* Price */}
           <div className="flex items-baseline gap-3 mt-6">
-            <span className="text-3xl font-bold">{formatCurrency(selectedVariant.sellPrice)}</span>
+            <span className="text-3xl font-bold">{formatCurrency(selectedVariant.price || selectedVariant.sellPrice)}</span>
             {selectedVariant.comparePrice && (
               <>
                 <span className="text-lg text-muted-foreground line-through">{formatCurrency(selectedVariant.comparePrice)}</span>
                 <span className="px-2 py-0.5 bg-green-500/10 text-green-600 dark:text-green-400 text-sm font-semibold rounded-md">
-                  Save {formatCurrency(selectedVariant.comparePrice - selectedVariant.sellPrice)}
+                  Save {formatCurrency(selectedVariant.comparePrice - (selectedVariant.price || selectedVariant.sellPrice))}
                 </span>
               </>
             )}
@@ -242,7 +247,7 @@ export default function ProductDetailPage() {
               className="w-full flex items-center justify-center gap-2 py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:opacity-90 transition-all shadow-xl shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ShoppingBag size={18} />
-              Add to Cart — {formatCurrency(selectedVariant.sellPrice * quantity)}
+              Add to Cart — {formatCurrency((selectedVariant.price || selectedVariant.sellPrice) * quantity)}
             </motion.button>
             
             {/* Urgency/Promo Banner */}
