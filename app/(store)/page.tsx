@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, ShieldCheck, Star, Award, MessageCircle, Truck, RotateCcw, CreditCard } from "lucide-react";
+import { ArrowRight, Users, ShieldCheck, Star, Award, MessageCircle, Truck, RotateCcw, CreditCard, Zap } from "lucide-react";
 import { HeroSection } from "@/components/HeroSection";
 import { TrustStrip } from "@/components/TrustStrip";
 import { ProductCard } from "@/components/storefront/ProductCard";
@@ -12,6 +12,8 @@ import { FlashDealsSection } from "@/components/FlashDealsSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { FEATURED_PRODUCTS, COLLECTIONS } from "@/lib/utils/demo";
+import { useCartStore } from "@/lib/store/cart";
+import { formatCurrency } from "@/lib/utils/format";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -23,32 +25,49 @@ const fadeInUp = {
 };
 
 export default function HomePage() {
+  const addItem = useCartStore((s) => s.addItem);
+  const heroProduct = FEATURED_PRODUCTS[2];
+
+  const handleMobileBuy = () => {
+    addItem({
+      variantId: heroProduct.variantId,
+      productId: heroProduct.id,
+      title: heroProduct.title,
+      variantTitle: "Default",
+      price: heroProduct.price,
+      comparePrice: heroProduct.comparePrice,
+      image: heroProduct.image,
+      stock: heroProduct.stock,
+      sku: heroProduct.sku,
+    });
+  };
+
   return (
     <div className="bg-background">
-      {/* ═══ 1. HERO — Single Product Focus ═══ */}
+      {/* ═══ 1. HERO — One Winning Product ═══ */}
       <HeroSection />
 
       {/* ═══ 2. TRUST STRIP — Instant Credibility ═══ */}
       <TrustStrip />
 
-      {/* ═══ 3. TRENDING PRODUCTS — 6 Products Only ═══ */}
+      {/* ═══ 3. BEST SELLERS — 6 Products Only ═══ */}
       <section className="bg-accent/20 py-16 lg:py-24 border-y border-border/30">
         <div className="container-max">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
-            <div className="space-y-1">
-              <p className="text-[10px] font-bold text-red-500 tracking-widest uppercase">🔥 Trending Now</p>
+            <div className="space-y-1.5">
+              <p className="text-[10px] font-bold text-red-500 tracking-widest uppercase">🔥 Flying Off The Shelves</p>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                Our <span className="gradient-text">Best Sellers.</span>
+                Products People Can&apos;t Stop <span className="gradient-text">Buying.</span>
               </h2>
               <p className="text-sm text-muted-foreground max-w-md">
-                Handpicked products loved by thousands. Quality guaranteed or your money back.
+                Handpicked by our team. Loved by thousands. If it&apos;s here, it&apos;s worth it.
               </p>
             </div>
             <Link
               href="/products"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary text-white text-xs font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/10 min-h-[48px] whitespace-nowrap"
             >
-              View All Products
+              See All Products
               <ArrowRight size={16} />
             </Link>
           </div>
@@ -69,17 +88,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 4. WHY CHOOSE US — Trust Building ═══ */}
+      {/* ═══ 4. WHY CHOOSE US — Pain Point Resolution ═══ */}
       <WhyChooseUs />
 
-      {/* ═══ 5. FLASH DEALS — Urgency + Conversion ═══ */}
+      {/* ═══ 5. FLASH DEALS — Urgency + FOMO ═══ */}
       <FlashDealsSection />
 
       {/* ═══ 6. SHOP BY CATEGORY ═══ */}
       <section className="container-max section-padding">
         <div className="flex items-end justify-between mb-10">
           <div className="space-y-1">
-            <p className="text-[10px] font-bold text-primary tracking-widest uppercase">Browse</p>
+            <p className="text-[10px] font-bold text-primary tracking-widest uppercase">Find What You Need</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
               Shop by <span className="gradient-text">Category.</span>
             </h2>
@@ -107,24 +126,27 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* ═══ 7. CUSTOMER REVIEWS — Social Proof ═══ */}
+      {/* ═══ 7. CUSTOMER REVIEWS — Real Social Proof ═══ */}
       <TestimonialsSection />
 
-      {/* ═══ 8. TRUST & LEGITIMACY — Full-Width ═══ */}
+      {/* ═══ 8. TRUST & LEGITIMACY ═══ */}
       <section className="bg-accent/20 border-y border-border/30 py-16 lg:py-20">
         <div className="container-max">
           <div className="text-center mb-12">
-            <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">Your Safety Matters</p>
+            <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">Your Peace of Mind</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              Shop with <span className="gradient-text">Confidence.</span>
+              We&apos;ve Got You <span className="gradient-text">Covered.</span>
             </h2>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto mt-3">
+              No hidden charges. No surprises. Just honest shopping.
+            </p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {[
-              { icon: CreditCard, title: "COD Available", desc: "Pay at your doorstep. No online payment needed.", color: "text-green-500", bg: "bg-green-500/10" },
-              { icon: RotateCcw, title: "7-Day Returns", desc: "Not happy? Easy returns within 7 days, no questions.", color: "text-blue-500", bg: "bg-blue-500/10" },
-              { icon: ShieldCheck, title: "Secure Checkout", desc: "256-bit SSL encryption. Your data is always safe.", color: "text-purple-500", bg: "bg-purple-500/10" },
-              { icon: MessageCircle, title: "WhatsApp Support", desc: "Chat with us anytime. We reply within 30 minutes.", color: "text-emerald-500", bg: "bg-emerald-500/10" },
+              { icon: CreditCard, title: "Pay at Your Door", desc: "Don't trust online payments? No problem. Pay cash when your order arrives.", color: "text-green-500", bg: "bg-green-500/10" },
+              { icon: RotateCcw, title: "Changed Your Mind?", desc: "Return any product within 7 days. No questions asked. We'll pick it up for free.", color: "text-blue-500", bg: "bg-blue-500/10" },
+              { icon: ShieldCheck, title: "Your Data Is Safe", desc: "Bank-grade 256-bit encryption. We never store your card details. Ever.", color: "text-purple-500", bg: "bg-purple-500/10" },
+              { icon: MessageCircle, title: "Talk to a Real Human", desc: "Not a chatbot. Real support on WhatsApp. We reply within 30 minutes, guaranteed.", color: "text-emerald-500", bg: "bg-emerald-500/10" },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
@@ -145,7 +167,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 9. STATS — Social Proof Numbers ═══ */}
+      {/* ═══ 9. STATS ═══ */}
       <section className="bg-background section-padding">
         <div className="container-max">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -176,8 +198,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 10. NEWSLETTER — Lead Capture ═══ */}
+      {/* ═══ 10. NEWSLETTER ═══ */}
       <NewsletterSection />
+
+      {/* ═══ MOBILE STICKY BUY BAR ═══ */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-background/95 backdrop-blur-xl border-t border-border/50 shadow-[0_-4px_30px_rgba(0,0,0,0.1)] px-4 py-3 safe-area-bottom">
+        <div className="flex items-center gap-3">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold line-clamp-1">{heroProduct.title}</p>
+            <div className="flex items-center gap-2 mt-0.5">
+              <span className="text-base font-black text-primary">{formatCurrency(heroProduct.price)}</span>
+              {heroProduct.comparePrice && (
+                <span className="text-[10px] text-muted-foreground line-through">{formatCurrency(heroProduct.comparePrice)}</span>
+              )}
+            </div>
+          </div>
+          <button
+            onClick={handleMobileBuy}
+            className="flex items-center gap-2 px-6 py-3 bg-primary text-white text-xs font-bold rounded-xl shadow-lg shadow-primary/20 whitespace-nowrap min-h-[44px] animate-glow-pulse"
+          >
+            <Zap size={14} className="fill-current" />
+            Buy Now
+          </button>
+        </div>
+      </div>
+
+      {/* Spacer for mobile sticky bar */}
+      <div className="h-[72px] lg:hidden" />
     </div>
   );
 }
