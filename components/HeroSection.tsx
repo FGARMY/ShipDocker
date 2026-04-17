@@ -3,14 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, ShieldCheck, Truck, Banknote, RotateCcw, Star, Check, Eye } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, Truck, Banknote, RotateCcw, Star, Check, Eye, Zap } from "lucide-react";
 import { FEATURED_PRODUCTS } from "@/lib/utils/demo";
 import { formatCurrency } from "@/lib/utils/format";
 import { useCartStore } from "@/lib/store/cart";
 
 const HERO_TRUST = [
-  { icon: Truck, text: "Free Shipping" },
   { icon: Banknote, text: "Cash on Delivery" },
+  { icon: Truck, text: "Free Shipping" },
   { icon: RotateCcw, text: "7-Day Easy Returns" },
   { icon: ShieldCheck, text: "Secure Checkout" },
 ];
@@ -22,7 +22,7 @@ export function HeroSection() {
     ? Math.round(((heroProduct.comparePrice - heroProduct.price) / heroProduct.comparePrice) * 100)
     : 0;
 
-  const handleAddToCart = () => {
+  const handleBuyNow = () => {
     addItem({
       variantId: heroProduct.variantId,
       productId: heroProduct.id,
@@ -37,7 +37,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden bg-background">
+    <section className="relative min-h-[620px] lg:min-h-[720px] flex items-center overflow-hidden bg-background">
       {/* Subtle background mesh */}
       <div className="absolute inset-0 bg-gradient-mesh opacity-40" />
       <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-primary/5 rounded-full blur-3xl -translate-y-1/3 translate-x-1/4" />
@@ -54,23 +54,25 @@ export function HeroSection() {
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-bold uppercase tracking-widest mb-5">
               <Sparkles size={12} />
-              ⭐ Best Seller — 3,000+ Sold
+              ⭐ #1 Best Seller — 3,000+ Sold
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
-              Upgrade Your
+            {/* Problem → Solution Headline */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-bold tracking-tight leading-[1.1] mb-4">
+              Stop Settling for
               <br />
-              Everyday Life with
+              <span className="text-muted-foreground/40 line-through decoration-red-400 decoration-2">Cheap Audio.</span>
               <br />
-              <span className="gradient-text">Smart Products.</span>
+              <span className="gradient-text">Hear Every Detail.</span>
             </h1>
 
             <p className="text-base text-muted-foreground mb-6 leading-relaxed max-w-md">
-              Premium quality, unbeatable prices, and free shipping across India.
-              Loved by <span className="font-bold text-foreground">10,000+ customers</span>.
+              Noise-cancelling headphones that block the world out and let the music in.
+              Premium quality at a price that doesn&apos;t hurt.
+              <span className="font-bold text-foreground"> Loved by 10,000+ Indians.</span>
             </p>
 
-            {/* Product quick info */}
+            {/* Product quick info card */}
             <div className="flex items-center gap-4 mb-6 p-4 rounded-2xl bg-accent/40 border border-border/50 max-w-sm">
               <div className="w-14 h-14 rounded-xl overflow-hidden relative flex-shrink-0 border border-border/50">
                 <Image src={heroProduct.image} alt={heroProduct.title} fill className="object-cover" />
@@ -78,28 +80,28 @@ export function HeroSection() {
               <div>
                 <p className="text-xs font-bold line-clamp-1">{heroProduct.title}</p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-lg font-black text-primary">{formatCurrency(heroProduct.price)}</span>
+                  <span className="text-xl font-black text-primary">{formatCurrency(heroProduct.price)}</span>
                   {heroProduct.comparePrice && (
                     <span className="text-xs text-muted-foreground line-through">{formatCurrency(heroProduct.comparePrice)}</span>
                   )}
                   {discount > 0 && (
-                    <span className="text-[10px] font-bold text-red-500 bg-red-500/10 px-1.5 py-0.5 rounded">{discount}% OFF</span>
+                    <span className="text-[10px] font-bold text-white bg-red-500 px-1.5 py-0.5 rounded">SAVE {discount}%</span>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Dual CTAs */}
+            {/* CTAs */}
             <div className="flex flex-wrap gap-3 mb-8">
               <Link
                 href={`/products/${heroProduct.slug}`}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white text-sm font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/20 min-h-[52px]"
+                className="inline-flex items-center gap-2 px-10 py-4 bg-primary text-white text-sm font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/25 min-h-[52px] animate-glow-pulse"
               >
-                Shop Now
-                <ArrowRight size={18} />
+                <Zap size={18} className="fill-current" />
+                Buy Now
               </Link>
               <button
-                onClick={handleAddToCart}
+                onClick={handleBuyNow}
                 className="inline-flex items-center gap-2 px-8 py-4 border-2 border-border text-foreground text-sm font-bold rounded-2xl hover:bg-accent hover:border-primary/30 transition-all min-h-[52px]"
               >
                 Add to Cart
@@ -107,13 +109,13 @@ export function HeroSection() {
             </div>
 
             {/* Trust badges */}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+            <div className="grid grid-cols-2 gap-x-5 gap-y-3">
               {HERO_TRUST.map((item) => (
                 <div key={item.text} className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-600 dark:text-green-400 flex-shrink-0">
                     <item.icon size={16} />
                   </div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{item.text}</span>
+                  <span className="text-xs font-bold text-muted-foreground">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -153,8 +155,9 @@ export function HeroSection() {
 
                 {/* Viewers overlay */}
                 <div className="absolute bottom-5 left-5 flex items-center gap-2 px-3 py-2 bg-white/90 dark:bg-black/70 backdrop-blur-md rounded-xl shadow-lg">
+                  <div className="live-dot" />
                   <Eye size={14} className="text-primary" />
-                  <span className="text-xs font-bold">{heroProduct.viewers} people viewing</span>
+                  <span className="text-xs font-bold">{heroProduct.viewers} viewing now</span>
                 </div>
 
                 {/* Benefits overlay */}
@@ -171,7 +174,7 @@ export function HeroSection() {
               </div>
             </Link>
 
-            {/* Social proof counter */}
+            {/* Social proof bar */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -191,7 +194,7 @@ export function HeroSection() {
                 ))}
               </div>
               <p className="text-xs text-muted-foreground">
-                <span className="font-bold text-foreground">10,000+</span> happy customers across India
+                Trusted by <span className="font-bold text-foreground">10,000+</span> customers across India
               </p>
             </motion.div>
           </motion.div>
