@@ -109,10 +109,10 @@ export function TestimonialsSection() {
         <div className="flex items-end justify-between mb-10">
           <div className="space-y-1">
             <p className="text-[10px] font-bold text-primary tracking-widest uppercase">
-              Real Reviews · Real Customers
+              Don&apos;t Take Our Word For It
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              Loved by <span className="gradient-text">10,000+</span> Shoppers.
+              See Why People Keep <span className="gradient-text">Coming Back.</span>
             </h2>
           </div>
 
