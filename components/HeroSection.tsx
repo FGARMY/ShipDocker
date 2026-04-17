@@ -1,154 +1,168 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight, Search, Sparkles, ShieldCheck, Zap, Star } from "lucide-react";
-import { cn } from "@/lib/utils/cn";
+import { motion } from "framer-motion";
+import { ArrowRight, Sparkles, ShieldCheck, Truck, Banknote, RotateCcw } from "lucide-react";
+import { FEATURED_PRODUCTS } from "@/lib/utils/demo";
+import { formatCurrency } from "@/lib/utils/format";
+
+const HERO_TRUST = [
+  { icon: Truck, text: "Free Shipping" },
+  { icon: Banknote, text: "COD Available" },
+  { icon: RotateCcw, text: "Easy Returns" },
+  { icon: ShieldCheck, text: "Secure Checkout" },
+];
 
 export function HeroSection() {
-  const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 59, seconds: 59 });
-  const [searchFocused, setSearchFocused] = useState(false);
-
-  useEffect(() => {
-    const endTime = new Date().getTime() + 24 * 60 * 60 * 1000;
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = endTime - now;
-      if (distance < 0) {
-        clearInterval(timer);
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-      setTimeLeft({
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const showcaseProducts = FEATURED_PRODUCTS.slice(0, 4);
 
   return (
-    <section className="relative min-h-[600px] lg:min-h-[750px] flex items-center overflow-hidden bg-background text-foreground">
-      {/* Background Image with optimized quality - Sophisticated Minimalism */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/hero_premium_electronics_1776321124309.png"
-          alt="Premium Electronics"
-          fill
-          priority
-          className="object-cover opacity-10 dark:opacity-20 scale-100"
-        />
-        {/* Subtle radial lighting instead of heavy shadows */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,transparent_20%,rgba(var(--background),0.8)_80%)]" />
-      </div>
+    <section className="relative min-h-[600px] lg:min-h-[720px] flex items-center overflow-hidden bg-background">
+      {/* Subtle background mesh */}
+      <div className="absolute inset-0 bg-gradient-mesh opacity-50" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
-      <div className="container-max relative z-10 w-full pt-20 pb-16 lg:pt-32 lg:pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column: Content */}
+      <div className="container-max relative z-10 w-full pt-16 pb-12 lg:pt-24 lg:pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left: Content */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className="max-w-2xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest mb-6">
               <Sparkles size={12} />
-              Refined Tech & Essentials
+              Trending Products · Delivered Fast
             </div>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
-              Quality Above <br />
-              <span className="gradient-text">Everything Else.</span>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
+              Premium Products,
+              <br />
+              <span className="gradient-text">Unbeatable Prices.</span>
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-lg">
-              Curated selection of high-performance electronics and premium goods. 
-              Designed for the modern professional.
+            <p className="text-base sm:text-lg text-muted-foreground mb-8 leading-relaxed max-w-lg">
+              Curated quality products at wholesale prices. Free shipping,
+              easy returns, and COD available across India.
             </p>
 
-            {/* Search Bar - Minimalist Integration */}
-            <div className={cn(
-              "relative max-w-lg transition-all duration-300 mb-10",
-              searchFocused ? "shadow-2xl shadow-primary/5 ring-1 ring-primary/20" : "shadow-sm shadow-black/5"
-            )}>
-              <div className="relative flex items-center bg-card border border-border rounded-2xl p-1 group">
-                <Search className="ml-4 text-muted-foreground/50" size={18} />
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  onFocus={() => setSearchFocused(true)}
-                  onBlur={() => setSearchFocused(false)}
-                  className="w-full bg-transparent border-none outline-none px-4 py-3.5 text-sm font-medium"
-                />
-                <button className="bg-primary text-white px-6 py-3 rounded-xl text-xs font-bold hover:opacity-90 transition-all shadow-lg shadow-primary/10">
-                  Find
-                </button>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-6 items-center">
+            {/* Dual CTAs */}
+            <div className="flex flex-wrap gap-4 mb-10">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-2xl hover:opacity-95 transition-all shadow-xl shadow-primary/20 min-h-[44px]"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white text-sm font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/20 min-h-[52px]"
               >
-                Explore Shop
+                Shop Now
                 <ArrowRight size={18} />
               </Link>
-              
-              <div className="flex items-center gap-3 text-xs font-semibold text-muted-foreground">
-                <div className="flex items-center gap-2 px-3 py-1 bg-accent/50 rounded-lg">
-                  <Star className="text-yellow-500 fill-yellow-500" size={12} />
-                  <span>Trusted by 10,000+ Customers</span>
+              <Link
+                href="/collections/trending"
+                className="inline-flex items-center gap-2 px-8 py-4 border-2 border-border text-foreground text-sm font-bold rounded-2xl hover:bg-accent hover:border-primary/30 transition-all min-h-[52px]"
+              >
+                Explore Deals
+              </Link>
+            </div>
+
+            {/* Trust badges - inline */}
+            <div className="flex flex-wrap gap-x-6 gap-y-3">
+              {HERO_TRUST.map((item) => (
+                <div key={item.text} className="flex items-center gap-2 text-muted-foreground">
+                  <item.icon size={16} className="text-primary" />
+                  <span className="text-xs font-bold uppercase tracking-wider">{item.text}</span>
                 </div>
-              </div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Right Column: Countdown (Minimalist) */}
+          {/* Right: Product showcase grid */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:flex flex-col items-center justify-center"
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="hidden lg:block"
           >
-            <div className="bg-card glass border border-border p-10 rounded-[2.5rem] relative">
-              <div className="text-center space-y-6 relative z-10">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground italic">Flash Offer Ending Soon</p>
-                <div className="flex gap-4">
-                  {[
-                    { label: "HRS", value: timeLeft.hours },
-                    { label: "MIN", value: timeLeft.minutes },
-                    { label: "SEC", value: timeLeft.seconds },
-                  ].map((unit) => (
-                    <div key={unit.label} className="flex flex-col items-center">
-                      <div className="w-16 h-20 bg-accent/50 flex items-center justify-center rounded-2xl text-3xl font-bold mb-1">
-                        {String(unit.value).padStart(2, "0")}
+            <div className="grid grid-cols-2 gap-4">
+              {showcaseProducts.map((product, i) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                >
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className={`group relative block overflow-hidden rounded-2xl bg-accent/30 border border-border/50 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 ${
+                      i === 0 ? "row-span-1" : ""
+                    }`}
+                  >
+                    <div className="relative aspect-square">
+                      <Image
+                        src={product.image}
+                        alt={product.title}
+                        fill
+                        sizes="(max-width: 1024px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      {/* Quick info overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                        <p className="text-white text-xs font-bold truncate">{product.title}</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-white text-sm font-black">{formatCurrency(product.price)}</span>
+                          {product.comparePrice && (
+                            <span className="text-white/60 text-xs line-through">{formatCurrency(product.comparePrice)}</span>
+                          )}
+                        </div>
                       </div>
-                      <span className="text-[8px] font-bold text-muted-foreground/60">{unit.label}</span>
                     </div>
-                  ))}
-                </div>
-                <div className="pt-6 border-t border-border mt-6 grid grid-cols-2 gap-8">
-                  <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                    <ShieldCheck className="text-green-500" size={14} />
-                    Secure
-                  </div>
-                  <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                    <Zap className="text-yellow-500" size={14} />
-                    Instant
-                  </div>
-                </div>
-              </div>
+
+                    {/* Badge */}
+                    {product.badge && (
+                      <span className={`absolute top-3 left-3 px-2.5 py-1 text-white text-[9px] font-black rounded-md shadow-lg uppercase tracking-wider ${
+                        product.badge === 'bestseller' ? 'bg-amber-500' :
+                        product.badge === 'new' ? 'bg-blue-600' : 'bg-primary'
+                      }`}>
+                        {product.badge === 'bestseller' ? '⭐ Best Seller' :
+                         product.badge === 'new' ? '✨ New' : '🔥 Limited'}
+                      </span>
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
             </div>
+
+            {/* Social proof counter */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="mt-6 flex items-center justify-center gap-3 py-3 px-5 bg-card border border-border/50 rounded-2xl"
+            >
+              <div className="flex -space-x-2">
+                {["PS", "RV", "AI", "VN"].map((initial, i) => (
+                  <div
+                    key={initial}
+                    className={`w-7 h-7 rounded-full border-2 border-background flex items-center justify-center text-[9px] font-bold text-white ${
+                      ["bg-pink-500", "bg-blue-500", "bg-purple-500", "bg-green-500"][i]
+                    }`}
+                  >
+                    {initial}
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                <span className="font-bold text-foreground">10,000+</span> happy customers across India
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </div>
-      
-      {/* Decorative gradient overlay at bottom to blend with next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+
+      {/* Bottom gradient blend */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 }

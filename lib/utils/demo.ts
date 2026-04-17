@@ -16,12 +16,14 @@ export interface Product {
   shippingDays?: number;
   variants?: any[];
   reviews?: any[];
+  viewers?: number;
+  soldCount?: number;
 }
 
 export const FEATURED_PRODUCTS: Product[] = [
   { 
     id: "1", 
-    title: "Minimalist Leather Wallet", 
+    title: "Premium RFID Leather Wallet — Slim & Durable", 
     slug: "minimalist-leather-wallet", 
     image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800",
     images: [
@@ -32,7 +34,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 599, 
     comparePrice: 899, 
-    stock: 200, 
+    stock: 23, 
     reviewCount: 124, 
     rating: 4.5, 
     variantId: "v1", 
@@ -40,15 +42,17 @@ export const FEATURED_PRODUCTS: Product[] = [
     badge: 'bestseller',
     description: "Premium genuine leather bifold wallet with RFID protection. Crafted from full-grain Italian leather, this minimalist design fits comfortably in your pocket while holding all your essentials.",
     shippingDays: 3,
+    viewers: 47,
+    soldCount: 1847,
     variants: [
-      { id: "v1-black", title: "Black Leather", price: 599, stock: 100 },
-      { id: "v1-brown", title: "Cognac Brown", price: 649, stock: 50 },
-      { id: "v1-tan", title: "British Tan", price: 599, stock: 50 },
+      { id: "v1-black", title: "Black Leather", price: 599, stock: 12 },
+      { id: "v1-brown", title: "Cognac Brown", price: 649, stock: 6 },
+      { id: "v1-tan", title: "British Tan", price: 599, stock: 5 },
     ]
   },
   { 
     id: "2", 
-    title: "Smart Watch Ultra Fitness", 
+    title: "Ultra Fitness Smartwatch — Heart Rate & SpO2", 
     slug: "smart-watch-ultra-fitness", 
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
     images: [
@@ -59,7 +63,7 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 1799, 
     comparePrice: 2499, 
-    stock: 150, 
+    stock: 15, 
     reviewCount: 89, 
     rating: 4.7, 
     variantId: "v2", 
@@ -67,14 +71,16 @@ export const FEATURED_PRODUCTS: Product[] = [
     badge: 'new',
     description: "The ultimate fitness companion. Track your heart rate, sleep, steps, and blood oxygen levels with precision. Features a high-resolution AMOLED display and 10-day battery life.",
     shippingDays: 2,
+    viewers: 73,
+    soldCount: 2341,
     variants: [
-      { id: "v2-silver", title: "Space Silver", price: 1799, stock: 80 },
-      { id: "v2-black", title: "Midnight Black", price: 1799, stock: 70 },
+      { id: "v2-silver", title: "Space Silver", price: 1799, stock: 8 },
+      { id: "v2-black", title: "Midnight Black", price: 1799, stock: 7 },
     ]
   },
   { 
     id: "3", 
-    title: "Wireless NC Headphones", 
+    title: "Active Noise Cancelling Wireless Headphones", 
     slug: "wireless-nc-headphones", 
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800", 
     images: [
@@ -85,18 +91,20 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 2499, 
     comparePrice: 3499, 
-    stock: 80, 
+    stock: 8, 
     reviewCount: 203, 
     rating: 4.8, 
     variantId: "v3", 
     sku: "HP-003", 
     badge: 'bestseller',
     description: "Immerse yourself in sound. Our Active Noise Cancelling technology blocks background noise so you can focus on your music. Features premium memory foam ear cushions and 40-hour playback.",
-    shippingDays: 4
+    shippingDays: 4,
+    viewers: 89,
+    soldCount: 3120,
   },
   { 
     id: "4", 
-    title: "Urban Travel Backpack", 
+    title: "Anti-Theft Urban Travel Backpack — USB Charging", 
     slug: "urban-travel-backpack", 
     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800", 
     images: [
@@ -106,17 +114,19 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 1299, 
     comparePrice: 1699, 
-    stock: 250, 
+    stock: 31, 
     reviewCount: 67, 
     rating: 4.3, 
     variantId: "v4", 
     sku: "BG-004",
     description: "Designed for the modern traveller. This water-resistant backpack features a 16-inch laptop compartment, hidden anti-theft pockets, and an integrated USB charging port.",
-    shippingDays: 3
+    shippingDays: 3,
+    viewers: 34,
+    soldCount: 892,
   },
   { 
     id: "5", 
-    title: "Polarized Aviator Sunglasses", 
+    title: "UV400 Polarized Aviator Sunglasses — Titanium Frame", 
     slug: "polarized-aviator-sunglasses", 
     image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800", 
     images: [
@@ -126,18 +136,20 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 699, 
     comparePrice: 999, 
-    stock: 300, 
+    stock: 42, 
     reviewCount: 156, 
     rating: 4.6, 
     variantId: "v5", 
     sku: "SG-005", 
     badge: 'new',
     description: "Classic style meets modern protection. Our polarized lenses eliminate glare and block 100% of harmful UV rays. Features lightweight titanium frames for all-day comfort.",
-    shippingDays: 3
+    shippingDays: 3,
+    viewers: 56,
+    soldCount: 1543,
   },
   { 
     id: "6", 
-    title: "Portable Bluetooth Speaker", 
+    title: "IPX7 Waterproof Bluetooth Speaker — Deep Bass", 
     slug: "portable-bluetooth-speaker", 
     image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800", 
     images: [
@@ -147,18 +159,20 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 1199, 
     comparePrice: 1599, 
-    stock: 120, 
+    stock: 19, 
     reviewCount: 92, 
     rating: 4.4, 
     variantId: "v6", 
     sku: "SP-006", 
     badge: 'new',
     description: "Big sound in a small package. This IPX7 waterproof speaker delivers deep bass and crystal clear highs. Perfect for the beach, the pool, or your living room.",
-    shippingDays: 2
+    shippingDays: 2,
+    viewers: 41,
+    soldCount: 1102,
   },
   { 
     id: "7", 
-    title: "Magnetic Phone Mount", 
+    title: "N52 Magnetic Car Phone Mount — 360° Rotation", 
     slug: "magnetic-phone-mount", 
     image: "https://images.unsplash.com/photo-1586953208270-767889fa9b55?w=800", 
     images: [
@@ -167,18 +181,20 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 399, 
     comparePrice: 599, 
-    stock: 500, 
+    stock: 67, 
     reviewCount: 45, 
     rating: 4.2, 
     variantId: "v7", 
     sku: "PH-007", 
     badge: 'limited',
     description: "Secure your device on any road. This cradle-less magnetic mounting system works with all smartphones. Features a powerful N52 neodymium magnet and 360-degree rotation.",
-    shippingDays: 3
+    shippingDays: 3,
+    viewers: 28,
+    soldCount: 567,
   },
   { 
     id: "8", 
-    title: "LED Desk Lamp + Charger", 
+    title: "Smart LED Desk Lamp — Wireless Fast Charger Built-in", 
     slug: "led-desk-lamp-charger", 
     image: "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=800", 
     images: [
@@ -188,13 +204,52 @@ export const FEATURED_PRODUCTS: Product[] = [
     ],
     price: 1599, 
     comparePrice: 2199, 
-    stock: 100, 
+    stock: 11, 
     reviewCount: 78, 
     rating: 4.5, 
     variantId: "v8", 
     sku: "LT-008",
     description: "The perfect workspace companion. Adjust the brightness and color temperature to suit your mood. Features a built-in 10W wireless fast charger and USB charging port.",
-    shippingDays: 3
+    shippingDays: 3,
+    viewers: 63,
+    soldCount: 934,
+  },
+];
+
+export const FLASH_DEALS: Product[] = [
+  {
+    id: "fd1",
+    title: "Active Noise Cancelling Wireless Headphones",
+    slug: "wireless-nc-headphones",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+    images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800"],
+    price: 1999,
+    comparePrice: 3499,
+    stock: 8,
+    reviewCount: 203,
+    rating: 4.8,
+    variantId: "v3",
+    sku: "HP-003",
+    badge: 'bestseller',
+    viewers: 89,
+    soldCount: 3120,
+  },
+  {
+    id: "fd2",
+    title: "Ultra Fitness Smartwatch — Heart Rate & SpO2",
+    slug: "smart-watch-ultra-fitness",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+    images: ["https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800"],
+    price: 1499,
+    comparePrice: 2499,
+    stock: 5,
+    reviewCount: 89,
+    rating: 4.7,
+    variantId: "v2",
+    sku: "WH-002",
+    badge: 'limited',
+    viewers: 73,
+    soldCount: 2341,
   },
 ];
 
@@ -212,6 +267,8 @@ export const TESTIMONIALS = [
     product: "Wireless NC Headphones",
     rating: 5,
     review: "The active noise cancellation is a lifesaver for my daily commute on the local train. Super comfortable and the battery easily lasts a week.",
+    initial: "PS",
+    color: "bg-pink-500",
   },
   {
     name: "Rahul Verma",
@@ -219,20 +276,26 @@ export const TESTIMONIALS = [
     product: "Smart Watch Ultra Fitness",
     rating: 5,
     review: "Extremely accurate step and heart rate tracking. Syncs beautifully with my phone and the display is super bright even in direct sunlight.",
+    initial: "RV",
+    color: "bg-blue-500",
   },
   {
     name: "Ananya Iyer",
     city: "Chennai",
     product: "Polarized Aviator Sunglasses",
     rating: 5,
-    review: "These sunglasses look so premium! They completely block out the harsh afternoon sun and are surprisingly lightweight.",
+    review: "These sunglasses look so premium! They completely block out the harsh afternoon sun and are surprisingly lightweight. Worth every rupee.",
+    initial: "AI",
+    color: "bg-purple-500",
   },
   {
     name: "Vikram Nair",
     city: "Hyderabad",
     product: "Magnetic Phone Mount",
     rating: 4,
-    review: "Sticks to my car dashboard like glue. The magnet is incredibly strong; my phone has never fallen even on bad city roads.",
+    review: "Sticks to my car dashboard like glue. The magnet is incredibly strong; my phone has never fallen even on bad city roads. Great product!",
+    initial: "VN",
+    color: "bg-green-500",
   },
   {
     name: "Sneha Patel",
@@ -240,6 +303,8 @@ export const TESTIMONIALS = [
     product: "Portable Bluetooth Speaker",
     rating: 5,
     review: "Unbelievable bass for such a compact speaker. Took it to a family picnic and everyone was amazed by how loud and clear it gets.",
+    initial: "SP",
+    color: "bg-amber-500",
   },
   {
     name: "Arjun Mehta",
@@ -247,5 +312,25 @@ export const TESTIMONIALS = [
     product: "Minimalist Leather Wallet",
     rating: 5,
     review: "The leather quality is top-notch and it genuinely feels like a luxury product. Holds all my cards without adding bulk to my pocket.",
+    initial: "AM",
+    color: "bg-red-500",
+  },
+  {
+    name: "Divya Krishnan",
+    city: "Kochi",
+    product: "LED Desk Lamp + Charger",
+    rating: 5,
+    review: "Perfect for late-night study sessions and WFH. The wireless charger is a bonus I didn't know I needed. My desk looks so clean now!",
+    initial: "DK",
+    color: "bg-teal-500",
+  },
+  {
+    name: "Karan Singh",
+    city: "Jaipur",
+    product: "Urban Travel Backpack",
+    rating: 5,
+    review: "Used this for a week-long trip across Rajasthan. The anti-theft zip and USB port are game changers. Fits my laptop, camera, everything!",
+    initial: "KS",
+    color: "bg-indigo-500",
   },
 ];

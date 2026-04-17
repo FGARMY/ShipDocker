@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { Loader2, CheckCircle2, Sparkles } from "lucide-react";
+import { Loader2, CheckCircle2, Sparkles, Copy, Check, ArrowRight } from "lucide-react";
 
 export function NewsletterSection() {
-  // FILE: components/NewsletterSection.tsx
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const validateEmail = (e: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
@@ -24,99 +23,108 @@ export function NewsletterSection() {
     }
 
     setStatus("loading");
-
-    // Simulate API call
     setTimeout(() => {
       setStatus("success");
     }, 1000);
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText("FIRST250");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   if (status === "success") {
     return (
-      <section className="relative py-20 px-4 overflow-hidden bg-black">
-        <Image
-          src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600"
-          alt="Success Background"
-          fill
-          className="object-cover opacity-40 grayscale"
-        />
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center p-4 bg-green-500 rounded-full mb-6 shadow-xl shadow-green-500/40">
-            <CheckCircle2 className="text-white w-8 h-8" />
+      <section className="section-padding">
+        <div className="container-max">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/5 via-purple-500/5 to-blue-500/5 border border-border/50 p-12 sm:p-16 text-center">
+            <div className="inline-flex items-center justify-center p-4 bg-green-500 rounded-full mb-6 shadow-xl shadow-green-500/20">
+              <CheckCircle2 className="text-white w-8 h-8" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
+              You&apos;re in! 🎉
+            </h2>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              Check your inbox for your exclusive <span className="font-bold text-primary">₹250 off</span> coupon code.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
-            You&apos;re in! <br />
-            <span className="text-green-400">Check your inbox for your 10% off code.</span>
-          </h2>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="relative overflow-hidden bg-black">
-      {/* Dynamic Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="https://images.unsplash.com/photo-1534452203294-49c8913721b2?w=1600"
-          alt="Newsletter Background"
-          fill
-          sizes="100vw"
-          quality={85}
-          className="object-cover opacity-40 grayscale"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-      </div>
+    <section className="section-padding">
+      <div className="container-max">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/5 via-purple-500/5 to-blue-500/5 border border-border/50 p-8 sm:p-12 lg:p-16">
+          {/* Decorative blobs */}
+          <div className="absolute top-0 right-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-56 h-56 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
-      <div className="relative z-10 container-max section-padding">
-        <div className="glass-strong p-6 sm:p-12 rounded-[2.5rem] border border-white/10 text-center shadow-2xl overflow-hidden backdrop-blur-2xl">
-          {/* Decorative mesh */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold text-white mb-6 uppercase tracking-widest border border-white/5">
-            <Sparkles size={12} className="text-amber-400" />
-            Join the inner circle
-          </div>
+          <div className="relative z-10 max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary/10 rounded-full text-[10px] font-bold text-primary mb-6 uppercase tracking-widest">
+              <Sparkles size={12} />
+              Exclusive Offer
+            </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
-            Stay in the loop. <br />
-            <span className="text-white/50 italic font-serif">Get 10% off today.</span>
-          </h1>
-          <p className="text-white/60 text-base md:text-lg mb-8 md:mb-10 max-w-lg mx-auto font-medium">
-            Be the first to hear about new drops, exclusive deals and 
-            limited edition colorways.
-          </p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+              Get <span className="gradient-text">₹250 Off</span> Your First Order.
+            </h2>
+            <p className="text-muted-foreground text-base mb-8 max-w-lg mx-auto">
+              Join 10,000+ insiders who get early access to new drops, flash sales,
+              and members-only discounts.
+            </p>
 
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={status === "loading"}
-                placeholder="Enter your email address"
-                className="w-full sm:flex-1 px-6 py-4 h-12 md:h-14 bg-white/5 border border-white/10 rounded-2xl md:rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-white placeholder:text-white/30 transition-all font-medium backdrop-blur-md text-sm md:text-base"
-              />
+            {/* Promo code */}
+            <div className="inline-flex items-center gap-3 px-5 py-3 bg-card border border-border/50 rounded-xl mb-8 shadow-sm">
+              <div className="space-y-0.5">
+                <p className="text-[9px] font-bold text-muted-foreground/60 uppercase tracking-widest">Your Code</p>
+                <p className="text-lg font-black tracking-tight text-primary">FIRST250</p>
+              </div>
               <button
-                type="submit"
-                disabled={status === "loading"}
-                className="w-full sm:w-[140px] h-12 md:h-14 bg-white text-black font-black rounded-2xl md:rounded-xl hover:bg-white/90 transition-all disabled:opacity-50 flex items-center gap-2 justify-center shadow-xl shadow-white/10 text-sm uppercase tracking-wider"
+                onClick={handleCopy}
+                className="w-9 h-9 rounded-lg bg-primary/5 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
               >
-                {status === "loading" ? (
-                  <Loader2 size={18} className="animate-spin" />
-                ) : (
-                  "Subscribe"
-                )}
+                {copied ? <Check size={16} /> : <Copy size={16} />}
               </button>
             </div>
-            {error && (
-              <p className="mt-4 text-sm text-red-400 font-bold">{error}</p>
-            )}
-          </form>
-          
-          <p className="mt-6 text-[10px] text-white/30 uppercase tracking-widest font-bold">
-            No spam. No bullshit. Just good products.
-          </p>
+
+            {/* Email form */}
+            <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={status === "loading"}
+                  placeholder="Enter your email address"
+                  className="w-full sm:flex-1 px-5 py-4 bg-card border border-border/50 rounded-xl outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium text-sm"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-xl hover:opacity-90 transition-all disabled:opacity-50 flex items-center gap-2 justify-center shadow-lg shadow-primary/20 text-sm min-h-[52px]"
+                >
+                  {status === "loading" ? (
+                    <Loader2 size={18} className="animate-spin" />
+                  ) : (
+                    <>
+                      Claim Now
+                      <ArrowRight size={16} />
+                    </>
+                  )}
+                </button>
+              </div>
+              {error && (
+                <p className="mt-3 text-sm text-red-500 font-medium">{error}</p>
+              )}
+            </form>
+
+            <p className="mt-6 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold">
+              No spam, ever. Unsubscribe anytime.
+            </p>
+          </div>
         </div>
       </div>
     </section>
