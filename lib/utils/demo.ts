@@ -256,7 +256,7 @@ export const FLASH_DEALS: Product[] = [
 export const COLLECTIONS = [
   { title: "Electronics", slug: "electronics", image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800", count: 24 },
   { title: "Accessories", slug: "accessories", image: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=800", count: 18 },
-  { title: "Home & Living", slug: "home-living", image: "https://images.unsplash.com/photo-1484101403633-562f891dc8d7?w=800", count: 15 },
+  { title: "Home & Living", slug: "home-living", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800", count: 15 },
   { title: "Sports & Fitness", slug: "sports-fitness", image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800", count: 12 },
 ];
 
